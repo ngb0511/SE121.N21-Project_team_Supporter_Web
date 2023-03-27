@@ -1,0 +1,138 @@
+.wrapper {
+  min-height: 100%;
+  width: 100%;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 200px;
+  width: 100%;
+  background-image: linear-gradient(#2980b9, #6dd5fa, #ffffff);
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 15px;
+}
+
+.text-cointainer {
+  margin: auto;
+  width: 50%;
+}
+
+.search {
+  background-image: linear-gradient(#373b44, #4286f4);
+  height: 50px;
+  align-items: center;
+  width: 100%;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+.search-btn {
+  width: 10%;
+  height: 100%;
+  font-size: 1.6rem;
+  background-image: linear-gradient(#373b44, #4286f4);
+  color: white;
+  border: none;
+  border-radius: 15px;
+}
+
+.search-input {
+  width: 80%;
+  background-color: transparent;
+  font-size: 1.6rem;
+  height: 50%;
+  border: none;
+  color: white;
+}
+
+.img-cointainer {
+  width: 30%;
+  height: 50%;
+  align-items: center;
+  font-size: 7.2rem;
+  margin: auto;
+  color: #ffffff;
+}
+
+.inner {
+  margin: auto;
+  width: 95%;
+  height: 1200px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.action-cointainer {
+  height: 5%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.tittle {
+  font-size: 2rem;
+}
+
+.filter {
+  font-size: 2rem;
+  width: 50%;
+  height: 50px;
+}
+
+.project {
+  width: 100%;
+  height: 90%;
+}
+
+.project-cointainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  list-style: none;
+}
+
+.project-item {
+  width: 100%;
+  background-color: #ffffff;
+  height: 20%;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.project-name {
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 70%;
+  border-bottom: #373b44 dotted 1px;
+}
+
+.detail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.project-fee {
+  margin-left: 5px;
+  margin-top: 5px;
+  height: 30%;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.page {
+  text-align: right;
+}
