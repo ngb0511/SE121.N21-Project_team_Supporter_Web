@@ -1,0 +1,61 @@
+.wrapper {
+  height: 600px;
+  width: 90%;
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.text-cointainer {
+  width: 53%;
+  height: 100%;
+  display: flex;
+}
+
+.text {
+  margin: auto;
+  height: 50%;
+  width: 90%;
+}
+.form-cointainer {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  background-image: linear-gradient(#2980b9, #6dd5fa, #ffffff);
+  border-radius: 15px;
+  box-shadow: 5px 5px 8px blue, 10px 10px 8px red, 15px 15px 8px green;
+}
+
+.form {
+  height: 80%;
+  width: 80%;
+  margin: auto;
+}
+
+.input {
+  height: 8%;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  font-size: 2rem;
+}
+
+.register {
+  width: 95%;
+  height: 10%;
+  text-align: right;
+}
+
+.btn {
+  margin-bottom: 5px;
+  width: 50%;
+  height: 8%;
+  background-color: #4164e3;
+  font-size: 1.6rem;
+  font-weight: 600;
+  align-items: center;
+  border-radius: 15px;
+  color: #ffffff;
+}
