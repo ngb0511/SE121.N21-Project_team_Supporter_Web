@@ -1,0 +1,148 @@
+.wrapper {
+  min-height: 100%;
+  width: 100%;
+  border-radius: 15px;
+  display: flex;
+}
+
+.inner {
+  min-height: 1000px;
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.header {
+  height: 30%;
+  width: 100%;
+  border-bottom: black dotted 1px;
+}
+
+.header-cointainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+}
+
+.header-item {
+  height: 100%;
+  width: 30%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.img {
+  width: 100%;
+  height: 150px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: #4164e3;
+}
+
+#i1 {
+  background-image: url('/assets/images/create.jpg');
+}
+
+#i2 {
+  background-image: url('/assets/images/find.jpg');
+}
+
+.btn {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  width: 30%;
+  height: 10%;
+  background-color: #4164e3;
+  font-size: 1.4rem;
+  font-weight: 600;
+  align-items: center;
+  border-radius: 15px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.body {
+  height: 58%;
+  width: 100%;
+}
+
+.nav {
+  margin-top: 20px;
+  overflow: hidden;
+}
+.active {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 1.8rem;
+  border-bottom: #4164e3 solid 2px;
+}
+
+.nav-btn {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  font-size: 1.8rem;
+}
+
+.project {
+  margin-top: 25px;
+  width: 100%;
+  height: 90%;
+}
+
+.project-cointainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  list-style: none;
+}
+
+.project-item {
+  width: 100%;
+  background-color: #ffffff;
+  height: 20%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.project-name {
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 70%;
+  border-bottom: #373b44 dotted 1px;
+}
+
+.detail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.project-fee {
+  margin-left: 5px;
+  margin-top: 5px;
+  height: 30%;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.page {
+  text-align: right;
+}

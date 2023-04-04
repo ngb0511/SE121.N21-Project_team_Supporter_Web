@@ -19,7 +19,7 @@ function Login() {
         </div>
       </div>
       <div className={cx('form-cointainer')}>
-        <form className={cx('form')} action="Home">
+        <form className={cx('form')} action='Home'>
           <h1>Đăng nhập</h1>
           <br></br>
           <label for="fname">Tên đăng nhập:</label>

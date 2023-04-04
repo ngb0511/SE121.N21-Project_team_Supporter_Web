@@ -43,22 +43,56 @@ function Header() {
               Theo
             </option>
             {arr.map((option, index) => (
-              <option c key={index} value={option.value}>
+              <option key={index} value={option.value}>
                 {option.text}
               </option>
             ))}
           </select>
         </div>
         <div className={cx('icon-cointainer')}>
-          <button className={cx('icon-btn') + cx(' envelope')}>
-            <FontAwesomeIcon icon={faEnvelope} />
-          </button>
-          <button className={cx('icon-btn') + cx(' bell')}>
-            <FontAwesomeIcon icon={faBell} />
-          </button>
-          <button className={cx('icon-btn') + cx(' maximize')}>
-            <FontAwesomeIcon icon={faMaximize} />
-          </button>
+          <div className={cx('icon-envelope')}>
+            <button className={cx('icon-btn') + cx(' envelope')}>
+              <FontAwesomeIcon icon={faEnvelope} />
+            </button>
+            <div className={cx('envelope-content')}>
+              {arr.map((option, index) => (
+                <a href="Profile" key={index}>
+                  <FontAwesomeIcon icon={faUser} />
+                  {option.value}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className={cx('icon-envelope')}>
+            <button className={cx('icon-btn') + cx(' envelope')}>
+              <FontAwesomeIcon icon={faBell} />
+            </button>
+            <div className={cx('envelope-content')}>
+              <a href="Home">Link 1</a>
+              <a href="Profile">
+                <FontAwesomeIcon icon={faUser} /> Thông tin tài khoản
+              </a>
+              <a href="Login">
+                <FontAwesomeIcon icon={faRightFromBracket} />
+                Đăng xuất
+              </a>
+            </div>
+          </div>
+          <div className={cx('icon-envelope')}>
+            <button className={cx('icon-btn') + cx(' envelope')}>
+              <FontAwesomeIcon icon={faMaximize} />
+            </button>
+            <div className={cx('envelope-content')}>
+              <a href="Home">Link 1</a>
+              <a href="Profile">
+                <FontAwesomeIcon icon={faUser} /> Thông tin tài khoản
+              </a>
+              <a href="Login">
+                <FontAwesomeIcon icon={faRightFromBracket} />
+                Đăng xuất
+              </a>
+            </div>
+          </div>
           <div className={cx('user-cointainer')}>
             <img className={cx('user-img')} src={src} alt="error"></img>
             <div className={cx('user-name-cointainer')}>

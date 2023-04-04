@@ -6,7 +6,6 @@ import { faEarthAmerica, faUsers, faMagnifyingGlass } from '@fortawesome/free-so
 
 const cx = classNames.bind(styles);
 const name = 'kenza toras';
-const result = 10;
 const date = new Date();
 const arr = [
   { value: '', text: 'Tăng dần' },
@@ -59,7 +58,7 @@ function Home() {
       </div>
       <div className={cx('inner')}>
         <div className={cx('action-cointainer')}>
-          <p className={cx('tittle')}>{result} kết quả</p>
+          <p className={cx('tittle')}>{projectItem.length} kết quả</p>
           <select onChange={handleChange} className={cx('filter')}>
             <option value="" disabled selected hidden>
               --Sắp xếp--

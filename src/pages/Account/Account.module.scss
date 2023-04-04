@@ -1,0 +1,45 @@
+.wrapper {
+  height: 100%;
+  width: 100%;
+  border-radius: 15px;
+  display: flex;
+}
+
+.inner {
+  height: 1000px;
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.cointainer {
+  margin-top: 20px;
+  height: 90%;
+  width: 100%;
+  h2 {
+    margin-bottom: 15px;
+  }
+  table {
+    border: 2px solid forestgreen;
+    width: 100%;
+    min-height: 80%;
+  }
+
+  th {
+    height: 10%;
+    border-bottom: 1px solid black;
+    font-size: 2rem;
+  }
+
+  td {
+    height: 10%;
+    font-size: 1.6rem;
+    text-align: center;
+    button {
+      height: 50px;
+      width: 50px;
+    }
+  }
+}

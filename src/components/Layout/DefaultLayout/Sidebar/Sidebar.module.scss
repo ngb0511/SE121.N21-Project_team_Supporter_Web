@@ -16,6 +16,10 @@
 .sidebar-item {
   width: 95%;
   height: 50px;
+  border: black 2px solid;
+  border-radius: 15px;
+  display: flex;
+  margin-bottom: 5px;
 }
 
 .item-btn {

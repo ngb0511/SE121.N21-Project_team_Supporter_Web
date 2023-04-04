@@ -1,8 +1,8 @@
 import styles from './Sidebar.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleUser, faListCheck, faChartLine, faReceipt, faHome } from '@fortawesome/free-solid-svg-icons';
-
+import { faCircleUser, faListCheck, faChartLine, faReceipt, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
+import Button from '../../../Button';
 const cx = classNames.bind(styles);
 
 function Sidebar() {
@@ -10,40 +10,52 @@ function Sidebar() {
     <aside className={cx('wrapper')}>
       <ul className={cx('sidebar-cointainer')}>
         <li className={cx('sidebar-item')}>
-          <a href="Home">
-            <button className={cx('item-btn')}>
+          <Button to="/Home">
+            <div>
               <FontAwesomeIcon icon={faHome} />
-              <div className={cx('item-tittle')}>Home</div>
-            </button>
-          </a>
+              &nbsp; &nbsp;Trang chủ
+            </div>
+          </Button>
         </li>
         <li className={cx('sidebar-item')}>
-          <a href="Profile">
-            <button className={cx('item-btn')}>
+          <Button to="/Profile">
+            <div>
               <FontAwesomeIcon icon={faCircleUser} />
-              <div className={cx('item-tittle')}>Profile</div>
-            </button>
-          </a>
+              &nbsp; &nbsp;Thông tin cá nhân
+            </div>
+          </Button>
         </li>
         <li className={cx('sidebar-item')}>
-          <a href="Project">
-            <button className={cx('item-btn')}>
+          <Button to="/Project">
+            <div>
               <FontAwesomeIcon icon={faListCheck} />
-              <div className={cx('item-tittle')}>Dự án</div>
-            </button>
-          </a>
+              &nbsp; &nbsp;Dự án
+            </div>
+          </Button>
         </li>
         <li className={cx('sidebar-item')}>
-          <button className={cx('item-btn')}>
-            <FontAwesomeIcon icon={faChartLine} />
-            <div className={cx('item-tittle')}>Thống kê</div>
-          </button>
+          <Button to="/Account">
+            <div>
+              <FontAwesomeIcon icon={faChartLine} />
+              &nbsp; &nbsp;Thống kê
+            </div>
+          </Button>
         </li>
         <li className={cx('sidebar-item')}>
-          <button className={cx('item-btn')}>
-            <FontAwesomeIcon icon={faReceipt} />
-            <div className={cx('item-tittle')}>Tài nguyên</div>
-          </button>
+          <Button to="/Account">
+            <div>
+              <FontAwesomeIcon icon={faReceipt} />
+              &nbsp; &nbsp;Tài nguyên
+            </div>
+          </Button>
+        </li>
+        <li className={cx('sidebar-item')}>
+          <Button to="/Account">
+            <div>
+              <FontAwesomeIcon icon={faUser} />
+              &nbsp; &nbsp;Tài khoản
+            </div>
+          </Button>
         </li>
       </ul>
     </aside>
