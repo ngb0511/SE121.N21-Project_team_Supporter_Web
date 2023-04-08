@@ -1,22 +1,19 @@
 import classNames from 'classnames/bind';
 import styles from './Account.module.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-
+import * as accountServices from '../../apiServices/accountServices';
 const cx = classNames.bind(styles);
+
 function Account() {
   const [user, setUser] = useState([]);
-
-  const fetchData = () => {
-    return fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then((data) => setUser(data));
+  const fetchApi = async () => {
+    const result = await accountServices.account();
+    console.log(result);
+    setUser(result);
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  fetchApi();
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
@@ -26,6 +23,8 @@ function Account() {
             <tr>
               <th>STT</th>
               <th>Tên</th>
+              <th>Tên tài khoản</th>
+              <th>Email</th>
               <th>Thao tác</th>
             </tr>
             {user &&
@@ -34,6 +33,8 @@ function Account() {
                 <tr key={userObj.id}>
                   <td>{userObj.id}</td>
                   <td>{userObj.name}</td>
+                  <td>{userObj.username}</td>
+                  <td>{userObj.email}</td>
                   <td>
                     <button>
                       <FontAwesomeIcon icon={faTrash} />

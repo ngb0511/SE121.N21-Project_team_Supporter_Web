@@ -1,0 +1,17 @@
+.cointainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  list-style: none;
+}
+
+.project-item {
+  width: 100%;
+  background-color: #ffffff;
+  height: 20%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}

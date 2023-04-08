@@ -1,0 +1,24 @@
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+.pagination ul {
+  width: 30%;
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  border: 1px solid black;
+  align-items: center;
+}
+
+.page-item,
+.page-link {
+  padding: 2px;
+  cursor: pointer;
+  margin-left: 2px;
+}
+
+.active {
+  opacity: 0.5;
+}

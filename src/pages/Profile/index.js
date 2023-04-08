@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFloppyDisk, faLink, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
+import * as avatarServices from '../../apiServices/avatarServices';
 const cx = classNames.bind(styles);
 const name = 'kenza toras';
 const email = '12345678 @gmail.com';
@@ -16,10 +17,6 @@ const arr = [
   { value: '', text: 'Tiến sĩ' },
   { value: '', text: 'Thạc sĩ' },
 ];
-
-const handleChange = (event) => {
-  console.log(event.target.value);
-};
 
 /*function getLevel() {
   var select = document.getElementById('level');
@@ -65,6 +62,13 @@ function formatDate(date = new Date()) {
 
 function Profile() {
   const [file, setFile] = useState();
+  const handleChange = (event) => {
+    console.log(event.target.value);
+  };
+
+  function upload() {
+    avatarServices.upload(file);
+  }
   function handleChangeImg(e) {
     console.log(e.target.files);
     setFile(URL.createObjectURL(e.target.files[0]));
@@ -181,7 +185,7 @@ function Profile() {
               <FontAwesomeIcon icon={faLink} />
               <input className={cx('upload-input')} type="file" onChange={handleChangeImg} />
             </div>
-            <button className={cx('upload-btn')}>
+            <button className={cx('upload-btn')} onClick={upload}>
               <FontAwesomeIcon icon={faUpload} />
               &nbsp;&nbsp;Upload
             </button>

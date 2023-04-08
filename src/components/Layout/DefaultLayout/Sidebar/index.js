@@ -34,7 +34,7 @@ function Sidebar() {
           </Button>
         </li>
         <li className={cx('sidebar-item')}>
-          <Button to="/Account">
+          <Button to="/Statistic">
             <div>
               <FontAwesomeIcon icon={faChartLine} />
               &nbsp; &nbsp;Thống kê
@@ -42,10 +42,10 @@ function Sidebar() {
           </Button>
         </li>
         <li className={cx('sidebar-item')}>
-          <Button to="/Account">
+          <Button to="/Tag">
             <div>
               <FontAwesomeIcon icon={faReceipt} />
-              &nbsp; &nbsp;Tài nguyên
+              &nbsp; &nbsp;Thẻ
             </div>
           </Button>
         </li>

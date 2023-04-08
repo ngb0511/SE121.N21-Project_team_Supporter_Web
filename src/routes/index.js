@@ -9,6 +9,7 @@ import Tag from '../pages/Tag';
 import { NoneLayout } from '../components/Layout';
 import Project from '../pages/Project';
 import Account from '../pages/Account';
+import Statistic from '../pages/Statistic';
 
 //Public Routes (do not need login for use)
 const publicRoutes = [
@@ -20,6 +21,7 @@ const publicRoutes = [
   { path: '/Project', component: Project },
   { path: '/Tag', component: Tag },
   { path: '/Account', component: Account },
+  { path: '/Statistic', component: Statistic },
 ];
 
 //Private Routes

@@ -1,0 +1,22 @@
+.project-name {
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 70%;
+  border-bottom: #373b44 dotted 1px;
+}
+
+.detail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.project-fee {
+  margin-left: 5px;
+  margin-top: 5px;
+  height: 30%;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+}
