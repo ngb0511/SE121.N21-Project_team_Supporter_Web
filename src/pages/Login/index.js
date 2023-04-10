@@ -1,9 +1,20 @@
 //Login page
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
+import Button from '../../components/Button';
 
 const cx = classNames.bind(styles);
+let check = false;
+function handleChange() {
+  /*const username = document.getElementById('username');
+  const password = document.getElementById('password');
+  if (username.value === 'admin' && password.value === '1') {
+    document.getElementById('form').action = 'Home';
+  }*/
+  document.getElementById('form').action = 'Home';
+}
 function Login() {
+  console.log(check);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('text-cointainer')}>
@@ -19,20 +30,22 @@ function Login() {
         </div>
       </div>
       <div className={cx('form-cointainer')}>
-        <form className={cx('form')} action='Home'>
+        <form className={cx('form')} id="form" action="">
           <h1>Đăng nhập</h1>
           <br></br>
           <label for="fname">Tên đăng nhập:</label>
           <br></br>
-          <input type="text" id="fname" className={cx('input')}></input>
+          <input type="text" id="username" className={cx('input')}></input>
           <br></br>
           <label for="fname">Mật khẩu:</label>
           <br></br>
-          <input type="password" id="fname" className={cx('input')}></input>
+          <input type="password" id="password" className={cx('input')}></input>
           <div className={cx('register')}>
             Chưa có tài khoản, đăng kí <a href="Register">tại đây</a>
           </div>
-          <button className={cx('btn')}>Đăng nhập</button>
+          <Button id="btn" login onClick={handleChange}>
+            Đăng nhập
+          </Button>
         </form>
       </div>
     </div>
