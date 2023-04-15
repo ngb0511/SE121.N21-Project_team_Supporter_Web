@@ -13,7 +13,6 @@ import {
 import { faHandPeace } from '@fortawesome/free-regular-svg-icons';
 
 const cx = classNames.bind(styles);
-const name = 'kenza toras';
 const src = 'https://blog.hamtruyentranh.com/wp-content/uploads/2019/01/citrus-anime.jpg';
 const arr = [
   { value: '', text: 'Tên dự án' },
@@ -22,6 +21,9 @@ const arr = [
 ];
 
 function Header() {
+  var user = JSON.parse(sessionStorage.getItem('user'));
+  console.log(user);
+  const isLogIn = true;
   return (
     <header className={cx('wrapper')}>
       <div className={cx('inner')}>
@@ -29,7 +31,8 @@ function Header() {
           <h2 className={cx('logo-tittle')}>
             <a className={cx('logo-tittle')} href="http://localhost:3001">
               {' '}
-              <FontAwesomeIcon icon={faHandPeace} /> C I T R O S
+              <FontAwesomeIcon icon={faHandPeace} />
+              CITOS
             </a>
           </h2>
         </div>
@@ -49,56 +52,62 @@ function Header() {
             ))}
           </select>
         </div>
-        <div className={cx('icon-cointainer')}>
-          <div className={cx('icon-envelope')}>
-            <button className={cx('icon-btn') + cx(' envelope')}>
-              <FontAwesomeIcon icon={faEnvelope} />
-            </button>
-            <div className={cx('envelope-content')}>
-              {arr.map((option, index) => (
-                <a href="Profile" key={index}>
-                  <FontAwesomeIcon icon={faUser} />
-                  {option.value}
+        {isLogIn ? (
+          <div className={cx('icon-cointainer')}>
+            <div className={cx('icon-envelope')}>
+              <button className={cx('icon-btn') + cx(' envelope')}>
+                <FontAwesomeIcon icon={faEnvelope} />
+              </button>
+              <div className={cx('envelope-content')}>
+                {arr.map((option, index) => (
+                  <a href="Profile" key={index}>
+                    <FontAwesomeIcon icon={faUser} />
+                    {option.value}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div className={cx('icon-envelope')}>
+              <button className={cx('icon-btn') + cx(' envelope')}>
+                <FontAwesomeIcon icon={faBell} />
+              </button>
+              <div className={cx('envelope-content')}>
+                <a href="Home">Link 1</a>
+                <a href="Profile">
+                  <FontAwesomeIcon icon={faUser} /> Thông tin tài khoản
                 </a>
-              ))}
+                <a href="Login">
+                  <FontAwesomeIcon icon={faRightFromBracket} />
+                  Đăng xuất
+                </a>
+              </div>
+            </div>
+            <div className={cx('icon-envelope')}>
+              <button className={cx('icon-btn') + cx(' envelope')}>
+                <FontAwesomeIcon icon={faMaximize} />
+              </button>
+              <div className={cx('envelope-content')}>
+                <a href="Home">Link 1</a>
+                <a href="Profile">
+                  <FontAwesomeIcon icon={faUser} /> Thông tin tài khoản
+                </a>
+                <a href="Login">
+                  <FontAwesomeIcon icon={faRightFromBracket} />
+                  Đăng xuất
+                </a>
+              </div>
             </div>
           </div>
-          <div className={cx('icon-envelope')}>
-            <button className={cx('icon-btn') + cx(' envelope')}>
-              <FontAwesomeIcon icon={faBell} />
-            </button>
-            <div className={cx('envelope-content')}>
-              <a href="Home">Link 1</a>
-              <a href="Profile">
-                <FontAwesomeIcon icon={faUser} /> Thông tin tài khoản
-              </a>
-              <a href="Login">
-                <FontAwesomeIcon icon={faRightFromBracket} />
-                Đăng xuất
-              </a>
-            </div>
-          </div>
-          <div className={cx('icon-envelope')}>
-            <button className={cx('icon-btn') + cx(' envelope')}>
-              <FontAwesomeIcon icon={faMaximize} />
-            </button>
-            <div className={cx('envelope-content')}>
-              <a href="Home">Link 1</a>
-              <a href="Profile">
-                <FontAwesomeIcon icon={faUser} /> Thông tin tài khoản
-              </a>
-              <a href="Login">
-                <FontAwesomeIcon icon={faRightFromBracket} />
-                Đăng xuất
-              </a>
-            </div>
-          </div>
+        ) : (
+          <div className={cx('icon-cointainer')}></div>
+        )}
+        {isLogIn ? (
           <div className={cx('user-cointainer')}>
             <img className={cx('user-img')} src={src} alt="error"></img>
             <div className={cx('user-name-cointainer')}>
               <button className={cx('sort-btn')}>
                 <h3 className={cx('user-name')}>
-                  {name} <FontAwesomeIcon icon={faSortDown} />
+                  {user.userName} <FontAwesomeIcon icon={faSortDown} />
                 </h3>
               </button>
               <div className={cx('user-content')}>
@@ -113,7 +122,9 @@ function Header() {
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className={cx('icon-cointainer')}></div>
+        )}
       </div>
     </header>
   );

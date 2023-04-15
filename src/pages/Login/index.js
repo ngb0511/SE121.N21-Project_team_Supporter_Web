@@ -4,17 +4,19 @@ import styles from './Login.module.scss';
 import Button from '../../components/Button';
 
 const cx = classNames.bind(styles);
-let check = false;
+var user = { userName: 'admin', password: '12345' };
 function handleChange() {
   /*const username = document.getElementById('username');
   const password = document.getElementById('password');
   if (username.value === 'admin' && password.value === '1') {
     document.getElementById('form').action = 'Home';
   }*/
+  user.userName = document.getElementById('username').value;
+  user.password = document.getElementById('password').value;
+  sessionStorage.setItem('user', JSON.stringify(user));
   document.getElementById('form').action = 'Home';
 }
 function Login() {
-  console.log(check);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('text-cointainer')}>

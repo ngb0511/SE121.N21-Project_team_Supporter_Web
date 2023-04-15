@@ -21,7 +21,7 @@ function Sidebar() {
           <Button to="/Profile">
             <div>
               <FontAwesomeIcon icon={faCircleUser} />
-              &nbsp; &nbsp;Thông tin cá nhân
+              &nbsp; &nbsp;Cá nhân
             </div>
           </Button>
         </li>
@@ -54,6 +54,14 @@ function Sidebar() {
             <div>
               <FontAwesomeIcon icon={faUser} />
               &nbsp; &nbsp;Tài khoản
+            </div>
+          </Button>
+        </li>
+        <li className={cx('sidebar-item')}>
+          <Button to="/Detail">
+            <div>
+              <FontAwesomeIcon icon={faUser} />
+              &nbsp; &nbsp;Test
             </div>
           </Button>
         </li>

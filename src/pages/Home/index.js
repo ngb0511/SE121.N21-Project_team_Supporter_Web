@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import * as projectServices from '../../apiServices/projectItemServices';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { faEarthAmerica, faUsers, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Paginate from '../../components/Paginate';
 
@@ -20,13 +20,13 @@ const handleChange = (event) => {
 };
 function Home() {
   const [project, setproject] = useState([]);
-  const fetchApi = async () => {
-    const result = await projectServices.projectAllItem();
-    console.log(result);
-    setproject(result);
-  };
-  fetchApi();
-
+  useEffect(() => {
+    const fetchApi = async () => {
+      const result = await projectServices.projectAllItem();
+      setproject(result);
+    };
+    fetchApi();
+  }, []);
   //const childProject = project.slice(0, 6);
   return (
     <div className={cx('wrapper')}>

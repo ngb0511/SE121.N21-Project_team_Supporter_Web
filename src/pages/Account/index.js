@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Account.module.scss';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import * as accountServices from '../../apiServices/accountServices';
@@ -8,12 +8,15 @@ const cx = classNames.bind(styles);
 
 function Account() {
   const [user, setUser] = useState([]);
-  const fetchApi = async () => {
-    const result = await accountServices.account();
-    console.log(result);
-    setUser(result);
-  };
-  fetchApi();
+  useEffect(() => {
+    const fetchApi = async () => {
+      const result = await accountServices.account();
+      console.log(result);
+      setUser(result);
+    };
+    fetchApi();
+  }, []);
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>

@@ -9,8 +9,11 @@ function List({ currentItems }) {
     <div className={cx('cointainer')}>
       {currentItems &&
         currentItems.map((projectObj, index) => (
-          <li className={cx('project-item')}>
-            <ProjectItem date={date} projectName={projectObj.title} detail={projectObj.body} index={index} />
+          //lời khuyên nên để thẻ index vào thể cao nhất không nên để ở thẻ thấp hơn
+          <li className={cx('project-item')} index={index}>
+            <a href={`/project/${projectObj.id}`}>
+              <ProjectItem date={date} projectName={projectObj.title} detail={projectObj.body} />
+            </a>
           </li>
         ))}
     </div>

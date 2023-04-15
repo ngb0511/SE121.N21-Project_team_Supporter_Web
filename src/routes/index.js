@@ -6,10 +6,13 @@ import Login from '../pages/Login';
 import Tag from '../pages/Tag';
 
 //Layout
-import { NoneLayout } from '../components/Layout';
+import { NoneLayout, HeaderOnlyLayout } from '../components/Layout';
 import Project from '../pages/Project';
 import Account from '../pages/Account';
 import Statistic from '../pages/Statistic';
+import Detail from '../pages/Detail';
+import ProjectDetails from '../pages/ProjectDetails';
+import CreateProject from '../pages/CreateProject';
 
 //Public Routes (do not need login for use)
 const publicRoutes = [
@@ -22,6 +25,9 @@ const publicRoutes = [
   { path: '/Tag', component: Tag },
   { path: '/Account', component: Account },
   { path: '/Statistic', component: Statistic },
+  { path: '/Detail', component: Detail, layout: HeaderOnlyLayout },
+  { path: '/CreateProject', component: CreateProject },
+  { path: '/project/:id', component: ProjectDetails },
 ];
 
 //Private Routes

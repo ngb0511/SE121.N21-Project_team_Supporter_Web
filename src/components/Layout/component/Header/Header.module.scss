@@ -68,7 +68,7 @@
 }
 
 .icon-cointainer {
-  width: 40%;
+  width: 20%;
   margin-left: 15px;
   display: flex;
   justify-content: space-evenly;
@@ -88,7 +88,7 @@
 }
 
 .user-cointainer {
-  width: 40%;
+  width: 25%;
   height: 90%;
   display: flex;
   flex-direction: row;
@@ -103,12 +103,13 @@
 }
 
 .user-name-cointainer {
-  width: 75%;
+  width: 50%;
   height: 100%;
   color: #fff3df;
   align-items: center;
   position: relative;
   display: inline-block;
+  margin-right: 0;
 }
 
 .user-name {

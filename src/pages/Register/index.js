@@ -1,34 +1,78 @@
 //Register page
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
+import * as userServices from '../../apiServices/userServices';
+import * as accountServices from '../../apiServices/accountServices';
 
 const cx = classNames.bind(styles);
+function handleSubmit(e) {
+  e.preventDefault();
+  console.log('You clicked submit.');
+}
 function Register() {
+  //const [user, setUser] = useState([]);
+
+  //Account mẫu
+  const account = { account: 'bar', password: 'foo', userId: '' };
+  const user = { body: 'bar', tittle: 'foo' };
+
+  //Hàm tạo user
+  function createUser() {
+    const fetchApi = async () => {
+      const userResult = await userServices.createUser(user);
+      console.log(userResult.id);
+      account.userId = userResult.id;
+    };
+    fetchApi();
+  }
+
+  //Hàm tạo account
+  function createAccount() {
+    const fetchApi = async () => {
+      const accountResult = await accountServices.createAccount(account);
+      console.log(accountResult);
+    };
+    fetchApi();
+  }
+
+  //event đăng kí
+  function signUp() {
+    if (document.getElementById('password').value !== document.getElementById('repass').value) {
+      return;
+    }
+    user.userid = document.getElementById('account').value;
+    user.userid = document.getElementById('email').value;
+    user.userid = document.getElementById('password').value;
+    createUser();
+    createAccount();
+  }
   return (
     <div className={cx('wrapper')}>
       <div className={cx('form-cointainer')}>
-        <form className={cx('form')} action="Login">
+        <form className={cx('form')} onSubmit={handleSubmit} action="">
           <h1>Đăng ký</h1>
           <br></br>
           <label for="fname">Tên đăng nhập:</label>
           <br></br>
-          <input type="text" id="fname" className={cx('input')}></input>
+          <input type="text" id="account" className={cx('input')}></input>
           <br></br>
           <label for="fname">Email:</label>
           <br></br>
-          <input type="text" id="fname" className={cx('input')}></input>
+          <input type="text" id="email" className={cx('input')}></input>
           <br></br>
           <label for="fname">Mật khẩu:</label>
           <br></br>
-          <input type="password" id="fname" className={cx('input')}></input>
+          <input type="password" id="password" className={cx('input')}></input>
           <br></br>
           <label for="fname">Nhập lại mật khẩu:</label>
           <br></br>
-          <input type="password" id="fname" className={cx('input')}></input>
+          <input type="password" id="repass" className={cx('input')}></input>
           <div className={cx('register')}>
             Đã có tài khoản, đăng nhập <a href="Login">tại đây</a>
           </div>
-          <button className={cx('btn')}>Đăng ký</button>
+          <button className={cx('btn')} onClick={signUp}>
+            Đăng ký
+          </button>
         </form>
       </div>
       <div className={cx('text-cointainer')}>

@@ -6,8 +6,13 @@ import { faFloppyDisk, faLink, faUpload } from '@fortawesome/free-solid-svg-icon
 import { faFacebook, faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
 import * as avatarServices from '../../apiServices/avatarServices';
+import * as userServices from '../../apiServices/userServices';
+import Confirm from '../../components/PopUp/Confirm';
+import Successful from '../../components/PopUp/Successful';
+
 const cx = classNames.bind(styles);
-const name = 'kenza toras';
+var account = JSON.parse(sessionStorage.getItem('user'));
+var name = account.userName;
 const email = '12345678 @gmail.com';
 const about = 'Otaku for a long time, fan MU, vozer, Uiter, master ';
 const arr = [
@@ -59,9 +64,25 @@ function formatDate(date = new Date()) {
     reader.readAsDataURL(file);
   }
 }*/
+var user = {
+  userFirstName: '',
+  userName: '',
+  gender: '',
+  birthDay: '',
+  email: '',
+  phone: '',
+  code: '',
+  address: '',
+  quality: '',
+  specialized: '',
+  expirence: '',
+  decription: '',
+};
 
 function Profile() {
   const [file, setFile] = useState();
+  const [isConfirm, setIsConfirm] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
   const handleChange = (event) => {
     console.log(event.target.value);
   };
@@ -69,10 +90,46 @@ function Profile() {
   function upload() {
     avatarServices.upload(file);
   }
+
   function handleChangeImg(e) {
     console.log(e.target.files);
     setFile(URL.createObjectURL(e.target.files[0]));
   }
+  const toggleConfirm = () => {
+    setIsConfirm(!isConfirm);
+  };
+
+  const toggleSuccessful = () => {
+    setIsSuccessful(!isSuccessful);
+  };
+
+  const confirm = () => {
+    const fetchApi = async () => {
+      const result = await userServices.updateUser(1, user);
+      console.log(result);
+    };
+    fetchApi();
+    setIsConfirm(!isConfirm);
+    setIsSuccessful(!isSuccessful);
+  };
+
+  function Update() {
+    setIsConfirm(!isConfirm);
+    user.userFirstName = document.getElementById('userFirstName').value;
+    user.userName = document.getElementById('userName').value;
+    user.gender = document.getElementById('userGender').value;
+    user.birthDay = document.getElementById('birthDay').value;
+    user.email = document.getElementById('email').value;
+    user.phone = document.getElementById('phone').value;
+    user.code = document.getElementById('code').value;
+    user.address = document.getElementById('address').value;
+    user.quality = document.getElementById('quality').value;
+    user.specialized = document.getElementById('specialized').value;
+    user.expirence = document.getElementById('expirence').value;
+    user.decription = document.getElementById('decription').value;
+    console.log(user);
+  }
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}></div>
@@ -83,17 +140,17 @@ function Profile() {
             <ul className={cx('general-cointainer')}>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Họ:</h3>
-                <input className={cx('general-input')} placeholder="Nguyễn Văn A"></input>
+                <input id={cx('userFirstName')} className={cx('general-input')} placeholder="Nguyễn Văn A"></input>
               </li>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Tên:</h3>
-                <input className={cx('general-input')}></input>
+                <input id={cx('userName')} className={cx('general-input')}></input>
               </li>
             </ul>
             <ul className={cx('general-cointainer')}>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Giới tính:</h3>
-                <select className={cx('general-input')}>
+                <select id={cx('userGender')} className={cx('general-input')}>
                   <option value="" disabled selected hidden>
                     Chọn giới tính
                   </option>
@@ -103,27 +160,27 @@ function Profile() {
               </li>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Ngày sinh:</h3>
-                <input value={formatDate()} type="date" className={cx('general-input')}></input>
+                <input id={cx('birthDay')} value={formatDate()} type="date" className={cx('general-input')}></input>
               </li>
             </ul>
             <ul className={cx('general-cointainer')}>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Email:</h3>
-                <input value="" placeholder="Abc@gmai.com" className={cx('general-input')}></input>
+                <input id={cx('email')} value="" placeholder="Abc@gmai.com" className={cx('general-input')}></input>
               </li>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Số điện thoại:</h3>
-                <input placeholder="12345678" className={cx('general-input')}></input>
+                <input id={cx('phone')} placeholder="12345678" className={cx('general-input')}></input>
               </li>
             </ul>
             <ul className={cx('general-cointainer')}>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>CMND:</h3>
-                <input className={cx('general-input')}></input>
+                <input id={cx('code')} className={cx('general-input')}></input>
               </li>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Địa chỉ:</h3>
-                <input className={cx('general-input')}></input>
+                <input id={cx('address')} className={cx('general-input')}></input>
               </li>
             </ul>
           </div>
@@ -132,7 +189,7 @@ function Profile() {
             <ul className={cx('job-cointainer')}>
               <li className={cx('job-item')}>
                 <h3 className={cx('tittle')}>Trình độ:</h3>
-                <select onChange={handleChange} className={cx('job-input')}>
+                <select id={cx('quality')} onChange={handleChange} className={cx('job-input')}>
                   <option value="" disabled selected hidden>
                     --Sắp xếp theo--
                   </option>
@@ -145,18 +202,18 @@ function Profile() {
               </li>
               <li className={cx('job-item')}>
                 <h3 className={cx('tittle')}>Chuyên ngành:</h3>
-                <input className={cx('job-input')}></input>
+                <input id={cx('specialized')} className={cx('job-input')}></input>
               </li>
               <li className={cx('job-item')}>
                 <h3 className={cx('tittle')}>Kinh nghiệm:</h3>
-                <input className={cx('job-input')}></input>
+                <input id={cx('expirence')} className={cx('job-input')}></input>
               </li>
             </ul>
             <div className={cx('introduce')}>
               <h3 className={cx('tittle')}>Giới thiệu:</h3>
-              <textarea className={cx('introduce-input')} cols="40" rows="5"></textarea>
+              <textarea id={cx('decription')} className={cx('introduce-input')} cols="40" rows="5"></textarea>
             </div>
-            <button className={cx('save-btn')}>
+            <button className={cx('save-btn')} onClick={Update}>
               <FontAwesomeIcon icon={faFloppyDisk} />
               &nbsp;&nbsp;Save
             </button>
@@ -192,6 +249,8 @@ function Profile() {
           </div>
         </div>
       </div>
+      {isConfirm && <Confirm handleClose={toggleConfirm} handleConfirm={confirm} />}
+      {isSuccessful && <Successful handleClose={toggleSuccessful} />}
     </div>
   );
 }

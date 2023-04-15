@@ -2,7 +2,8 @@ import classNames from 'classnames/bind';
 import styles from './Project.module.scss';
 import * as projectServices from '../../apiServices/projectItemServices';
 import Paginate from '../../components/Paginate';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Button from '../../components/Button';
 
 const cx = classNames.bind(styles);
 
@@ -12,12 +13,14 @@ function Project() {
     setActive(event.target.id);
   };
   const [project, setproject] = useState([]);
-  const fetchApi = async () => {
-    const result = await projectServices.projectItem();
-    console.log(result);
-    setproject(result);
-  };
-  fetchApi();
+  useEffect(() => {
+    const fetchApi = async () => {
+      const result = await projectServices.projectAllItem();
+      console.log(result);
+      setproject(result);
+    };
+    fetchApi();
+  }, []);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
@@ -27,19 +30,25 @@ function Project() {
               <div id={cx('i1')} className={cx('img')}></div>
               <h3>Tạo dự án của riêng bạn</h3>
               <p>Khởi tạo dự án và tìm kiếm đồng đội ngay bây giờ</p>
-              <button className={cx('btn')}>Tạo</button>
+              <Button id="btn" regular to="/CreateProject">
+                Xem
+              </Button>
             </li>
             <li className={cx('header-item')}>
               <div id={cx('i2')} className={cx('img')}></div>
-              <h3>Tìm kiếm dự án</h3>
+              <h3>Tìm kiếm dự án phù hợp</h3>
               <p>Khởi tạo dự án và tìm kiếm đồng đội ngay bây giờ</p>
-              <button className={cx('btn')}>Xem</button>
+              <Button id="btn" regular to="/Home">
+                Xem
+              </Button>
             </li>
             <li className={cx('header-item')}>
               <div id={cx('i3')} className={cx('img')}></div>
               <h3>Tạo dự án của riêng bạn</h3>
               <p>Khởi tạo dự án và tìm kiếm đồng đội ngay bây giờ</p>
-              <button className={cx('btn')}>Xem</button>
+              <Button id="btn" regular to="/CreateProject">
+                Xem
+              </Button>
             </li>
           </ul>
         </div>
