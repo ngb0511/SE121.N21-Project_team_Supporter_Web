@@ -80,7 +80,7 @@ const EditProject = (props) => {
             <li>
               <div>
                 <h3>Tên dự án:</h3>
-                <input id={cx('projectName')} placeholder={props.projectName}></input>
+                <input id={cx('projectName')} defaultValue={props.projectName}></input>
               </div>
               <div>
                 <h3>Trưởng nhóm:</h3>

@@ -121,7 +121,7 @@ function ProjectDetails() {
                       <button></button>
                     </td>
                     <td>
-                      <button onClick={(event) => Update(index)} key={index}></button>
+                      <button onClick={(event) => Update(event, index)} key={index}></button>
                     </td>
                   </tr>
                 );

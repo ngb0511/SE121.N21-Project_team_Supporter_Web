@@ -44,9 +44,9 @@ function Project() {
             </li>
             <li className={cx('header-item')}>
               <div id={cx('i3')} className={cx('img')}></div>
-              <h3>Tạo dự án của riêng bạn</h3>
-              <p>Khởi tạo dự án và tìm kiếm đồng đội ngay bây giờ</p>
-              <Button id="btn" regular to="/CreateProject">
+              <h3>Thống kế </h3>
+              <p>Tổng hợp thông tin thành tích của bản thân</p>
+              <Button id="btn" regular to="/Statistic">
                 Xem
               </Button>
             </li>

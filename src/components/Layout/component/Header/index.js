@@ -21,6 +21,9 @@ const arr = [
 ];
 
 function Header() {
+  function logout() {
+    sessionStorage.removeItem('user');
+  }
   var user = JSON.parse(sessionStorage.getItem('user'));
   console.log(user);
   const isLogIn = true;
@@ -29,7 +32,7 @@ function Header() {
       <div className={cx('inner')}>
         <div className={cx('logo')}>
           <h2 className={cx('logo-tittle')}>
-            <a className={cx('logo-tittle')} href="http://localhost:3001">
+            <a className={cx('logo-tittle')} href="/Home">
               {' '}
               <FontAwesomeIcon icon={faHandPeace} />
               CITOS
@@ -76,7 +79,7 @@ function Header() {
                 <a href="Profile">
                   <FontAwesomeIcon icon={faUser} /> Thông tin tài khoản
                 </a>
-                <a href="Login">
+                <a href="Login" onClick={logout}>
                   <FontAwesomeIcon icon={faRightFromBracket} />
                   Đăng xuất
                 </a>

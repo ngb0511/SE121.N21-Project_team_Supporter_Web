@@ -11,8 +11,7 @@ import Confirm from '../../components/PopUp/Confirm';
 import Successful from '../../components/PopUp/Successful';
 
 const cx = classNames.bind(styles);
-var account = JSON.parse(sessionStorage.getItem('user'));
-var name = account.userName;
+
 const email = '12345678 @gmail.com';
 const about = 'Otaku for a long time, fan MU, vozer, Uiter, master ';
 const arr = [
@@ -83,6 +82,8 @@ function Profile() {
   const [file, setFile] = useState();
   const [isConfirm, setIsConfirm] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
+  var account = JSON.parse(sessionStorage.getItem('user'));
+  var name = account.userName;
   const handleChange = (event) => {
     console.log(event.target.value);
   };
@@ -160,7 +161,12 @@ function Profile() {
               </li>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Ngày sinh:</h3>
-                <input id={cx('birthDay')} value={formatDate()} type="date" className={cx('general-input')}></input>
+                <input
+                  id={cx('birthDay')}
+                  defaultValue={formatDate()}
+                  type="date"
+                  className={cx('general-input')}
+                ></input>
               </li>
             </ul>
             <ul className={cx('general-cointainer')}>
