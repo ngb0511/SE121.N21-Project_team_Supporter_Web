@@ -27,6 +27,15 @@ function Home() {
     };
     fetchApi();
   }, []);
+
+  function Search() {
+    console.log(document.getElementById('searchInput').value);
+    const fetchApi = async () => {
+      const result = await projectServices.sortProject(document.getElementById('searchInput').value);
+      setproject(result);
+    };
+    fetchApi();
+  }
   //const childProject = project.slice(0, 6);
   return (
     <div className={cx('wrapper')}>
@@ -35,10 +44,10 @@ function Home() {
           <h1>Một ngày tốt lành, {name}</h1>
           <p>Hãy tìm công việc phù hợp với bạn</p>
           <div className={cx('search')}>
-            <button className={cx('search-btn')}>
+            <button className={cx('search-btn')} onClick={Search}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
-            <input className={cx('search-input')} placeholder="Search"></input>
+            <input className={cx('search-input')} placeholder="Search" id={cx('searchInput')}></input>
           </div>
         </div>
         <div className={cx('img-cointainer')}>

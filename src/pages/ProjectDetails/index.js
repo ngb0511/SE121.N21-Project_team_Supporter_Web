@@ -10,6 +10,7 @@ import { faPlus, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import EditProject from '../../components/PopUp/EditProject';
 import AddTask from '../../components/PopUp/AddTask';
 import EditTask from '../../components/PopUp/EditTask';
+import AddMember from '../../components/PopUp/AddMember';
 
 const data = [
   { name: 'Node js', detail: ' back-end JavaScript runtime environment' },
@@ -34,7 +35,9 @@ function ProjectDetails() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isAddMember, setIsAddMember] = useState(false);
   const [isTask, setIsTask] = useState();
+
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };
@@ -45,6 +48,10 @@ function ProjectDetails() {
 
   const toggleEdit = () => {
     setIsEdit(!isEdit);
+  };
+
+  const toggleAddMember = () => {
+    setIsAddMember(!isAddMember);
   };
 
   useEffect(() => {
@@ -131,7 +138,7 @@ function ProjectDetails() {
           <li className={cx('context-member')}>
             <div>
               <h3>Thành viên</h3>
-              <Button id="btn" mini>
+              <Button id="btn" mini onClick={toggleAddMember}>
                 <FontAwesomeIcon icon={faPlus} />
               </Button>
             </div>
@@ -159,6 +166,7 @@ function ProjectDetails() {
       {isOpen && <EditProject handleClose={togglePopup} projectName={project.title} projectId={id} />}
       {isAdd && <AddTask handleClose={toggleAdd} projectName={project.title} projectId={id} />}
       {isEdit && <EditTask handleClose={toggleEdit} taskId={isTask} />}
+      {isAddMember && <AddMember handleClose={toggleAddMember} />}
     </div>
   );
 }

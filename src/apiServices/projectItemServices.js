@@ -30,3 +30,9 @@ export const deleteProject = async (id) => {
   const response = await request.delete(`/posts/${id}`);
   return response.data;
 };
+
+//Lọc dự án
+export const sortProject = async (name) => {
+  const response = await request.get(`/posts/${name}`);
+  return response.data;
+};
