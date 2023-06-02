@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFloppyDisk, faLink, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
+import Select from 'react-select';
 import * as avatarServices from '../../apiServices/avatarServices';
 import * as userServices from '../../apiServices/userServices';
 import Confirm from '../../components/PopUp/Confirm';
@@ -16,10 +17,10 @@ const email = '12345678 @gmail.com';
 const about = 'Otaku for a long time, fan MU, vozer, Uiter, master ';
 const arr = [
   { value: '', text: '--Chọn trình độ--' },
-  { value: '', text: 'Cao đẳng' },
-  { value: '', text: 'Đại học' },
-  { value: '', text: 'Tiến sĩ' },
-  { value: '', text: 'Thạc sĩ' },
+  { value: 'Cao đẳng', text: 'Cao đẳng' },
+  { value: 'Đại học', text: 'Đại học' },
+  { value: 'Tiến sĩ', text: 'Tiến sĩ' },
+  { value: 'Thạc sĩ', text: 'Thạc sĩ' },
 ];
 
 /*function getLevel() {
@@ -41,6 +42,7 @@ function padTo2Digits(num) {
 }
 
 function formatDate(date = new Date()) {
+  console.log([date.getFullYear(), padTo2Digits(date.getMonth() + 1), padTo2Digits(date.getDate())].join('-'));
   return [date.getFullYear(), padTo2Digits(date.getMonth() + 1), padTo2Digits(date.getDate())].join('-');
 }
 
@@ -82,6 +84,26 @@ function Profile() {
   const [file, setFile] = useState();
   const [isConfirm, setIsConfirm] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState();
+  // Function triggered on selection
+  function handleSelect(data) {
+    setSelectedOptions(data);
+    console.log(data.id);
+  }
+  /*
+  Khởi tạo biến user để lưu user
+  const [users, setUsers] = useState();
+
+  lấy user từ api
+  useEffect(() => {
+    const fetchApi = async () => {
+      const result = await userServices.getUserById(1);
+      setUsers(result);
+    };
+    fetchApi();
+  }, []);
+  */
+
   var account = JSON.parse(sessionStorage.getItem('user'));
   var name = account.userName;
   const handleChange = (event) => {
@@ -195,7 +217,7 @@ function Profile() {
             <ul className={cx('job-cointainer')}>
               <li className={cx('job-item')}>
                 <h3 className={cx('tittle')}>Trình độ:</h3>
-                <select id={cx('quality')} onChange={handleChange} className={cx('job-input')}>
+                <select id={cx('quality')} onChange={handleChange} className={cx('job-input')} defaultValue="Cao đẳng">
                   <option value="" disabled selected hidden>
                     --Sắp xếp theo--
                   </option>
@@ -206,9 +228,21 @@ function Profile() {
                   ))}
                 </select>
               </li>
-              <li className={cx('job-item')}>
+              <li className={cx('job-item')} id={cx('test')}>
                 <h3 className={cx('tittle')}>Chuyên ngành:</h3>
-                <input id={cx('specialized')} className={cx('job-input')}></input>
+                <Select
+                  placeholder="Chuyên ngành"
+                  id={cx('specialized')}
+                  className={cx('job-input')}
+                  options={arr}
+                  getOptionLabel={(option) => option.text}
+                  getOptionValue={(option) => option.value}
+                  value={selectedOptions}
+                  onChange={handleSelect}
+                  isSearchable={true}
+                  maxMenuHeight={100}
+                  isMulti={true}
+                />
               </li>
               <li className={cx('job-item')}>
                 <h3 className={cx('tittle')}>Kinh nghiệm:</h3>
