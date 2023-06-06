@@ -4,8 +4,7 @@ import styles from './Profile.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFloppyDisk, faLink, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { useState } from 'react';
-import Select from 'react-select';
+import { useState, useEffect } from 'react';
 import * as avatarServices from '../../apiServices/avatarServices';
 import * as userServices from '../../apiServices/userServices';
 import Confirm from '../../components/PopUp/Confirm';
@@ -37,14 +36,13 @@ const arr = [
     select.add(el);
   }
 }*/
-function padTo2Digits(num) {
+
+/*function padTo2Digits(num) {
   return num.toString().padStart(2, '0');
 }
-
 function formatDate(date = new Date()) {
-  console.log([date.getFullYear(), padTo2Digits(date.getMonth() + 1), padTo2Digits(date.getDate())].join('-'));
   return [date.getFullYear(), padTo2Digits(date.getMonth() + 1), padTo2Digits(date.getDate())].join('-');
-}
+}*/
 
 /*function previewFile() {
   const preview = document.getElementById('upload-img');
@@ -66,58 +64,48 @@ function formatDate(date = new Date()) {
   }
 }*/
 var user = {
-  userFirstName: '',
-  userName: '',
+  userID: '',
+  surname: '',
+  forename: '',
   gender: '',
-  birthDay: '',
+  dateOfBirth: '',
   email: '',
-  phone: '',
-  code: '',
+  phoneNumber: '',
+  idNumber: '',
   address: '',
-  quality: '',
-  specialized: '',
-  expirence: '',
-  decription: '',
+  job: '',
+  degree: '',
+  experience: '',
+  description: '',
+  avatar: '',
 };
 
 function Profile() {
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
+  const [image, setImage] = useState(null);
   const [isConfirm, setIsConfirm] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState();
-  // Function triggered on selection
-  function handleSelect(data) {
-    setSelectedOptions(data);
-    console.log(data.id);
-  }
-  /*
-  Khởi tạo biến user để lưu user
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
+  var account = JSON.parse(sessionStorage.getItem('user'));
+  var name = account.userName;
+  /*const handleChange = (event) => {
+    console.log(event.target.value);
+  };*/
 
-  lấy user từ api
+  //Khởi tạo biến user để lưu user
+
+  //lấy user từ api
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await userServices.getUserById(1);
+      var account = JSON.parse(sessionStorage.getItem('account'));
+      console.log(account);
+      const result = await userServices.getUserByID(account.userID);
+      console.log(result);
       setUsers(result);
     };
     fetchApi();
   }, []);
-  */
 
-  var account = JSON.parse(sessionStorage.getItem('user'));
-  var name = account.userName;
-  const handleChange = (event) => {
-    console.log(event.target.value);
-  };
-
-  function upload() {
-    avatarServices.upload(file);
-  }
-
-  function handleChangeImg(e) {
-    console.log(e.target.files);
-    setFile(URL.createObjectURL(e.target.files[0]));
-  }
   const toggleConfirm = () => {
     setIsConfirm(!isConfirm);
   };
@@ -128,6 +116,7 @@ function Profile() {
 
   const confirm = () => {
     const fetchApi = async () => {
+      user.id = 1;
       const result = await userServices.updateUser(1, user);
       console.log(result);
     };
@@ -138,21 +127,34 @@ function Profile() {
 
   function Update() {
     setIsConfirm(!isConfirm);
-    user.userFirstName = document.getElementById('userFirstName').value;
-    user.userName = document.getElementById('userName').value;
-    user.gender = document.getElementById('userGender').value;
-    user.birthDay = document.getElementById('birthDay').value;
+    user.surname = document.getElementById('surname').value;
+    user.forename = document.getElementById('forename').value;
+    user.gender = document.getElementById('gender').value;
+    user.dateOfBirth = document.getElementById('dateOfBirth').value;
     user.email = document.getElementById('email').value;
-    user.phone = document.getElementById('phone').value;
-    user.code = document.getElementById('code').value;
+    user.phoneNumber = document.getElementById('phoneNumber').value;
+    user.idNumber = document.getElementById('idNumber').value;
     user.address = document.getElementById('address').value;
-    user.quality = document.getElementById('quality').value;
-    user.specialized = document.getElementById('specialized').value;
-    user.expirence = document.getElementById('expirence').value;
-    user.decription = document.getElementById('decription').value;
+    user.job = document.getElementById('userJob').value;
+    user.degree = document.getElementById('degree').value;
+    user.experience = document.getElementById('experience').value;
+    user.description = document.getElementById('description').value;
     console.log(user);
   }
 
+  function upload(e) {
+    //e.preventDefault()
+    console.log(file);
+    avatarServices.upload(1, file);
+  }
+
+  function handleChangeImg(e) {
+    console.log(e.target.files[0]);
+    setFile(e.target.files[0]);
+    setImage(URL.createObjectURL(e.target.files[0]));
+
+    // console.log(file);
+  }
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}></div>
@@ -163,52 +165,88 @@ function Profile() {
             <ul className={cx('general-cointainer')}>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Họ:</h3>
-                <input id={cx('userFirstName')} className={cx('general-input')} placeholder="Nguyễn Văn A"></input>
+                {users.length > 0 ? (
+                  <input id={cx('surname')} className={cx('general-input')} defaultValue={users[0].surname}></input>
+                ) : (
+                  <div></div>
+                )}
               </li>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Tên:</h3>
-                <input id={cx('userName')} className={cx('general-input')}></input>
+                {users.length > 0 ? (
+                  <input id={cx('forename')} className={cx('general-input')} defaultValue={users[0].forename}></input>
+                ) : (
+                  <div></div>
+                )}
               </li>
             </ul>
             <ul className={cx('general-cointainer')}>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Giới tính:</h3>
-                <select id={cx('userGender')} className={cx('general-input')}>
-                  <option value="" disabled selected hidden>
-                    Chọn giới tính
-                  </option>
-                  <option value="male">Nam</option>
-                  <option value="female">Nữ</option>
-                </select>
+                {users.length > 0 ? (
+                  <select id={cx('gender')} className={cx('general-input')} defaultValue={users[0].gender}>
+                    <option value="" disabled selected hidden>
+                      Chọn giới tính
+                    </option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                  </select>
+                ) : (
+                  <div></div>
+                )}
               </li>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Ngày sinh:</h3>
-                <input
-                  id={cx('birthDay')}
-                  defaultValue={formatDate()}
-                  type="date"
-                  className={cx('general-input')}
-                ></input>
+                {users.length > 0 ? (
+                  <input
+                    id={cx('dateOfBirth')}
+                    className={cx('general-input')}
+                    type="date"
+                    defaultValue={users[0].dateOfBirth}
+                  ></input>
+                ) : (
+                  <div></div>
+                )}
               </li>
             </ul>
             <ul className={cx('general-cointainer')}>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Email:</h3>
-                <input id={cx('email')} value="" placeholder="Abc@gmai.com" className={cx('general-input')}></input>
+                {users.length > 0 ? (
+                  <input id={cx('email')} className={cx('general-input')} defaultValue={users[0].email}></input>
+                ) : (
+                  <div></div>
+                )}
               </li>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Số điện thoại:</h3>
-                <input id={cx('phone')} placeholder="12345678" className={cx('general-input')}></input>
+                {users.length > 0 ? (
+                  <input
+                    id={cx('phoneNumber')}
+                    className={cx('general-input')}
+                    defaultValue={users[0].phoneNumber}
+                  ></input>
+                ) : (
+                  <div></div>
+                )}
               </li>
             </ul>
             <ul className={cx('general-cointainer')}>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>CMND:</h3>
-                <input id={cx('code')} className={cx('general-input')}></input>
+                {users.length > 0 ? (
+                  <input id={cx('idNumber')} className={cx('general-input')} defaultValue={users[0].idNumber}></input>
+                ) : (
+                  <div></div>
+                )}
               </li>
               <li className={cx('general-item')}>
                 <h3 className={cx('tittle')}>Địa chỉ:</h3>
-                <input id={cx('address')} className={cx('general-input')}></input>
+                {users.length > 0 ? (
+                  <input id={cx('address')} className={cx('general-input')} defaultValue={users[0].address}></input>
+                ) : (
+                  <div></div>
+                )}
               </li>
             </ul>
           </div>
@@ -217,41 +255,51 @@ function Profile() {
             <ul className={cx('job-cointainer')}>
               <li className={cx('job-item')}>
                 <h3 className={cx('tittle')}>Trình độ:</h3>
-                <select id={cx('quality')} onChange={handleChange} className={cx('job-input')} defaultValue="Cao đẳng">
-                  <option value="" disabled selected hidden>
-                    --Sắp xếp theo--
-                  </option>
-                  {arr.map((option, index) => (
-                    <option key={index} value={option.value}>
-                      {option.text}
+                {users.length > 0 ? (
+                  <select id={cx('degree')} className={cx('job-input')} defaultValue={users[0].degree}>
+                    <option value="" disabled selected hidden>
+                      Chọn trình độ
                     </option>
-                  ))}
-                </select>
+                    {arr.map((option, index) => (
+                      <option key={index} value={option.value}>
+                        {option.text}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <div></div>
+                )}
               </li>
-              <li className={cx('job-item')} id={cx('test')}>
+              <li className={cx('job-item')}>
                 <h3 className={cx('tittle')}>Chuyên ngành:</h3>
-                <Select
-                  placeholder="Chuyên ngành"
-                  id={cx('specialized')}
-                  className={cx('job-input')}
-                  options={arr}
-                  getOptionLabel={(option) => option.text}
-                  getOptionValue={(option) => option.value}
-                  value={selectedOptions}
-                  onChange={handleSelect}
-                  isSearchable={true}
-                  maxMenuHeight={100}
-                  isMulti={true}
-                />
+                {users.length > 0 ? (
+                  <input id={cx('userJob')} className={cx('general-input')} defaultValue={users[0].job}></input>
+                ) : (
+                  <div></div>
+                )}
               </li>
               <li className={cx('job-item')}>
                 <h3 className={cx('tittle')}>Kinh nghiệm:</h3>
-                <input id={cx('expirence')} className={cx('job-input')}></input>
+                {users.length > 0 ? (
+                  <input id={cx('experience')} className={cx('job-input')} defaultValue={users[0].experience}></input>
+                ) : (
+                  <div></div>
+                )}
               </li>
             </ul>
             <div className={cx('introduce')}>
               <h3 className={cx('tittle')}>Giới thiệu:</h3>
-              <textarea id={cx('decription')} className={cx('introduce-input')} cols="40" rows="5"></textarea>
+              {users.length > 0 ? (
+                <textarea
+                  id={cx('description')}
+                  className={cx('introduce-input')}
+                  cols="40"
+                  rows="5"
+                  defaultValue={users[0].description}
+                ></textarea>
+              ) : (
+                <div></div>
+              )}
             </div>
             <button className={cx('save-btn')} onClick={Update}>
               <FontAwesomeIcon icon={faFloppyDisk} />
@@ -276,12 +324,13 @@ function Profile() {
             </div>
           </div>
           <div className={cx('upload')}>
-            <img id="upload-img" className={cx('upload-img')} src={file} alt="error"></img>
+            <img id="upload-img" className={cx('upload-img')} src={image} alt="error"></img>
             <h2>Thay đổi ảnh đại diện</h2>
             <div className={cx('link-cointainer')}>
               <FontAwesomeIcon icon={faLink} />
               <input className={cx('upload-input')} type="file" onChange={handleChangeImg} />
             </div>
+
             <button className={cx('upload-btn')} onClick={upload}>
               <FontAwesomeIcon icon={faUpload} />
               &nbsp;&nbsp;Upload
@@ -289,6 +338,7 @@ function Profile() {
           </div>
         </div>
       </div>
+
       {isConfirm && <Confirm handleClose={toggleConfirm} handleConfirm={confirm} />}
       {isSuccessful && <Successful handleClose={toggleSuccessful} />}
     </div>

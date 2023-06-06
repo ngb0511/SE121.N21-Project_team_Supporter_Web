@@ -33,13 +33,22 @@
   margin: auto;
 }
 
-.input {
+.input-text {
   height: 8%;
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 15px;
   font-size: 2rem;
+}
+
+.input {
+  height: 8%;
+  width: 60%;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  font-size: 1.4rem;
 }
 
 .register {
@@ -56,6 +65,18 @@
   margin-bottom: 5px;
   width: 50%;
   height: 8%;
+  background-color: #4164e3;
+  font-size: 1.6rem;
+  font-weight: 600;
+  align-items: center;
+  border-radius: 15px;
+  color: #ffffff;
+}
+
+.btn-confirm {
+  margin-left: 20px;
+  width: 30%;
+  height: 6%;
   background-color: #4164e3;
   font-size: 1.6rem;
   font-weight: 600;

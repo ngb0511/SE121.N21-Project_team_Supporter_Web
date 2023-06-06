@@ -4,30 +4,50 @@ import styles from './CreateProject.module.scss';
 import * as projectItemServices from '../../apiServices/projectItemServices';
 const cx = classNames.bind(styles);
 
-var project = { projectName: '', projectLeader: '', startDate: '', endDate: '', max: '', linkGit: '', decription: '' };
+var project = {
+  projectID: '0',
+  projectName: '',
+  projectOwner: '',
+  description: '',
+  startTime: '',
+  endTime: '',
+  maxParticipantAmount: '',
+  gitHubLink: '',
+};
 function Create() {
   project.projectName = document.getElementById('projectName').value;
-  project.projectLeader = document.getElementById('projectLeader').value;
-  project.startDate = document.getElementById('startDate').value;
-  project.endDate = document.getElementById('endDate').value;
-  project.max = document.getElementById('maxiumMember').value;
-  project.linkGit = document.getElementById('linkGit').value;
-  project.decription = document.getElementById('description').value;
+  project.projectOwner = document.getElementById('projectOwner').value;
+  project.description = document.getElementById('description').value;
+  project.startTime = document.getElementById('startTime').value;
+  project.endTime = document.getElementById('endTime').value;
+  project.maxParticipantAmount = document.getElementById('maxParticipantAmount').value;
+  project.gitHubLink = document.getElementById('gitHubLink').value;
   console.log(project);
   const fetchApi = async () => {
     const result = await projectItemServices.createProject(project);
     console.log(result);
+    project.projectID = result;
+    addMember(project);
   };
   fetchApi();
 }
+
+function addMember() {
+  const fetchApi = async () => {
+    const result = await projectItemServices.addParticipateWhenCreateProject(project);
+    console.log(result);
+  };
+  fetchApi();
+}
+
 function Clear() {
   document.getElementById('projectName').value = '';
-  document.getElementById('projectLeader').value = '';
-  document.getElementById('startDate').value = '';
-  document.getElementById('endDate').value = '';
-  document.getElementById('maxiumMember').value = '';
-  document.getElementById('linkGit').value = '';
+  document.getElementById('projectOwner').value = '';
   document.getElementById('description').value = '';
+  document.getElementById('startTime').value = '';
+  document.getElementById('endTime').value = '';
+  document.getElementById('maxParticipantAmount').value = '';
+  document.getElementById('gitHubLink').value = '';
 }
 function CreateProject() {
   return (
@@ -44,27 +64,27 @@ function CreateProject() {
             </div>
             <div>
               <h3>Trưởng nhóm:</h3>
-              <input id={cx('projectLeader')}></input>
+              <input id={cx('projectOwner')}></input>
             </div>
           </li>
           <li>
             <div>
               <h3>Thời gian bắt đầu:</h3>
-              <input type="date" id={cx('startDate')}></input>
+              <input type="date" id={cx('startTime')}></input>
             </div>
             <div>
               <h3>Thời gian kết thúc:</h3>
-              <input type="date" id={cx('endDate')}></input>
+              <input type="date" id={cx('endTime')}></input>
             </div>
           </li>
           <li>
             <div>
               <h3>Số thành viên tối đa:</h3>
-              <input type="number" id={cx('maxiumMember')}></input>
+              <input type="number" id={cx('maxParticipantAmount')}></input>
             </div>
             <div>
               <h3>Link github:</h3>
-              <input id={cx('linkGit')}></input>
+              <input id={cx('gitHubLink')}></input>
             </div>
           </li>
           <li>

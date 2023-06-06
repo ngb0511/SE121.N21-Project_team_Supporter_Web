@@ -4,63 +4,25 @@ import styles from './AddMember.module.scss';
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPersonCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import * as userServices from '../../../apiServices/userServices';
-import Confirm from '../Confirm';
-import Successful from '../Successful';
-import Error from '../Error';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 const AddMember = (props) => {
   const [selectedOptions, setSelectedOptions] = useState();
-  const [userList, setUserList] = useState([]);
-  const [user, setUser] = useState();
-  useEffect(() => {
-    const fetchApi = async () => {
-      const result = await userServices.getUser();
-      setUserList(result);
-    };
-    fetchApi();
-  }, []);
+
+  // Array of all options
+  const optionList = [
+    { value: 'red', label: 'Red' },
+    { value: 'green', label: 'Green' },
+    { value: 'yellow', label: 'Yellow' },
+    { value: 'blue', label: 'Blue' },
+    { value: 'white', label: 'White' },
+  ];
 
   // Function triggered on selection
   function handleSelect(data) {
     setSelectedOptions(data);
-    console.log(data.id);
-    setUser(data);
   }
-
-  function Add() {
-    if (selectedOptions != null) {
-      setIsConfirm(!isConfirm);
-    } else setIsError(!isError);
-  }
-
-  const [isConfirm, setIsConfirm] = useState(false);
-  const [isSuccessful, setIsSuccessful] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const toggleConfirm = () => {
-    setIsConfirm(!isConfirm);
-  };
-
-  const toggleSuccessful = () => {
-    setIsSuccessful(!isSuccessful);
-  };
-
-  const toggleError = () => {
-    setIsError(!isError);
-  };
-
-  const confirm = () => {
-    const fetchApi = async () => {
-      const result = await userServices.updateUser(user.id, user);
-      console.log(result);
-    };
-    fetchApi();
-    setIsConfirm(!isConfirm);
-    setIsSuccessful(!isSuccessful);
-  };
-
   return (
     <div className={cx('popup-box')}>
       <div className={cx('box')}>
@@ -75,9 +37,7 @@ const AddMember = (props) => {
           <div className={cx('dropdown-container')}>
             <Select
               placeholder="Chọn người dùng"
-              options={userList}
-              getOptionLabel={(option) => option.name}
-              getOptionValue={(option) => option.name}
+              options={optionList}
               value={selectedOptions}
               onChange={handleSelect}
               isSearchable={true}
@@ -85,7 +45,7 @@ const AddMember = (props) => {
             />
           </div>
           <div>
-            <button id={cx('confirm')} onClick={Add}>
+            <button id={cx('confirm')} onClick={props.handleConfirm}>
               Đồng ý
             </button>
             <button id={cx('cancel')} onClick={props.handleClose}>
@@ -94,9 +54,6 @@ const AddMember = (props) => {
           </div>
         </div>
       </div>
-      {isConfirm && <Confirm handleClose={toggleConfirm} handleConfirm={confirm} />}
-      {isSuccessful && <Successful handleClose={toggleSuccessful} />}
-      {isError && <Error handleClose={toggleError} />}
     </div>
   );
 };

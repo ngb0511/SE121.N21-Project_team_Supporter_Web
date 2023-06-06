@@ -4,20 +4,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
-function ProjectItem({ date, projectName, detail, index }) {
+function ProjectItem({ projectName, projectDetail, projectLeader, startDate, currentMember, maxMember }) {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('project-name')}>
         <h1>{projectName}</h1>
-        <h5 className={cx('leader-time')}>Leader {date.toISOString().slice(0, 10)}</h5>
-        <p className={cx('detail')}>{detail}</p>
+        <h5 className={cx('leader-time')}><span>Ngày bắt đầu: </span> {startDate}</h5>
+        <p className={cx('detail')}>{projectDetail}</p>
       </div>
       <div className={cx('project-fee')}>
-        <h2>$15/hour</h2>
-        <h2>90 hours</h2>
+        <h2>{projectLeader} </h2>
         <div className={cx('member')}>
           <h2>
-            {index} /23 &nbsp;
+            {currentMember} / {maxMember}&nbsp;
             <FontAwesomeIcon icon={faUsers} />
           </h2>
         </div>

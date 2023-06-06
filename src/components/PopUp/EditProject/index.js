@@ -11,34 +11,33 @@ import Error from '../Error';
 
 function Clear() {
   document.getElementById('projectName').value = '';
-  document.getElementById('projectLeader').value = '';
-  document.getElementById('startDate').value = '';
-  document.getElementById('endDate').value = '';
-  document.getElementById('maxiumMember').value = '';
-  document.getElementById('linkGit').value = '';
   document.getElementById('description').value = '';
+  document.getElementById('startTime').value = '';
+  document.getElementById('endTime').value = '';
+  document.getElementById('maxParticipantAmount').value = '';
+  document.getElementById('gitHubLink').value = '';
 }
 const cx = classNames.bind(styles);
 const EditProject = (props) => {
   var project = {
     projectName: '',
-    projectLeader: '',
-    startDate: '',
-    endDate: '',
-    max: '',
-    linkGit: '',
-    decription: '',
+    projectOwner: '',
+    description: '',
+    startTime: '',
+    endTime: '',
+    maxParticipantAmount: '',
+    gitHubLink: '',
   };
   function Create() {
     if (document.getElementById('projectName').value !== '') {
       setIsConfirm(!isConfirm);
       project.projectName = document.getElementById('projectName').value;
-      project.projectLeader = document.getElementById('projectLeader').value;
-      project.startDate = document.getElementById('startDate').value;
-      project.endDate = document.getElementById('endDate').value;
-      project.max = document.getElementById('maxiumMember').value;
-      project.linkGit = document.getElementById('linkGit').value;
-      project.decription = document.getElementById('description').value;
+      project.projectOwner = props.project.projectOwner;
+      project.description = document.getElementById('description').value;
+      project.startTime = document.getElementById('startTime').value;
+      project.endTime = document.getElementById('endTime').value;
+      project.maxParticipantAmount = document.getElementById('maxParticipantAmount').value;
+      project.gitHubLink = document.getElementById('gitHubLink').value;
       console.log(project);
     } else {
       setIsError(!isError);
@@ -60,6 +59,7 @@ const EditProject = (props) => {
   };
 
   const confirm = () => {
+    Create();
     const fetchApi = async () => {
       const result = await projectItemServices.updateProject(props.projectId, project);
       console.log(result);
@@ -67,6 +67,8 @@ const EditProject = (props) => {
     fetchApi();
     setIsConfirm(!isConfirm);
     setIsSuccessful(!isSuccessful);
+    props.reload();
+    props.handleClose();
   };
   return (
     <div className={cx('popup-box')}>
@@ -80,37 +82,42 @@ const EditProject = (props) => {
             <li>
               <div>
                 <h3>Tên dự án:</h3>
-                <input id={cx('projectName')} defaultValue={props.projectName}></input>
+                <input id={cx('projectName')} defaultValue={props.project.projectName}></input>
               </div>
               <div>
                 <h3>Trưởng nhóm:</h3>
-                <input id={cx('projectLeader')} placeholder={props.projectId}></input>
+                <input id={cx('projectOwner')} defaultValue={props.project.user}></input>
               </div>
             </li>
             <li>
               <div>
                 <h3>Thời gian bắt đầu:</h3>
-                <input type="date" id={cx('startDate')}></input>
+                <input type="date" id={cx('startTime')} defaultValue={props.project.startTime}></input>
               </div>
               <div>
                 <h3>Thời gian kết thúc:</h3>
-                <input type="date" id={cx('endDate')}></input>
+                <input type="date" id={cx('endTime')} defaultValue={props.project.endTime}></input>
               </div>
             </li>
             <li>
               <div>
                 <h3>Số thành viên tối đa:</h3>
-                <input type="number" id={cx('maxiumMember')}></input>
+                <input
+                  type="number"
+                  maxLength={2}
+                  id={cx('maxParticipantAmount')}
+                  defaultValue={props.project.maxParticipantAmount}
+                ></input>
               </div>
               <div>
                 <h3>Link github:</h3>
-                <input id={cx('linkGit')}></input>
+                <input id={cx('gitHubLink')} defaultValue={props.project.gitHubLink}></input>
               </div>
             </li>
             <li>
               <div id={cx('github')}>
                 <h3>Mô tả:</h3>
-                <input id={cx('description')}></input>
+                <input id={cx('description')} defaultValue={props.project.description}></input>
               </div>
             </li>
             <li id={cx('cointainer-btn')}>

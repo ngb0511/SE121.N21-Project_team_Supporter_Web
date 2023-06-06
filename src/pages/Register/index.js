@@ -1,8 +1,8 @@
 //Register page
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
-import * as userServices from '../../apiServices/userServices';
 import * as accountServices from '../../apiServices/accountServices';
+import * as userServices from '../../apiServices/userServices';
 
 const cx = classNames.bind(styles);
 function handleSubmit(e) {
@@ -10,41 +10,130 @@ function handleSubmit(e) {
   console.log('You clicked submit.');
 }
 function Register() {
-  //const [user, setUser] = useState([]);
-
+  //const [user, setUser] = useState();
   //Account mẫu
-  const account = { account: 'bar', password: 'foo', userId: '' };
-  const user = { body: 'bar', tittle: 'foo' };
+  var accountEx = {
+    accountID: '0',
+    email: '',
+    password: '',
+    permission: '',
+    userID: '',
+    verificationCode: '',
+    isVerified: '',
+  };
+  var userEx = {
+    userID: '0',
+    surname: '',
+    forename: '',
+    gender: '',
+    dateOfBirth: '',
+    email: '',
+    phoneNumber: '',
+    idNumber: '',
+    address: '',
+    job: '',
+    degree: '',
+    experience: '',
+    description: '',
+  };
+  //const user = { body: 'bar', tittle: 'foo' };
 
   //Hàm tạo user
-  function createUser() {
+  function createAccount() {
     const fetchApi = async () => {
-      const userResult = await userServices.createUser(user);
-      console.log(userResult.id);
-      account.userId = userResult.id;
+      const accountResult = await accountServices.createAccount(accountEx);
+      //setUser(userResult);
+      console.log(accountResult);
+      accountEx.accountID = accountResult;
+      const userResult = await accountServices.updateVerificationCode(accountResult, accountEx);
+      console.log(userResult);
     };
     fetchApi();
   }
 
   //Hàm tạo account
-  function createAccount() {
+  /*  function createAccount() {
     const fetchApi = async () => {
-      const accountResult = await accountServices.createAccount(account);
+      console.log(user);
+      const accountResult = await accountServices.createAccount(accountEx);
       console.log(accountResult);
     };
     fetchApi();
-  }
+  } */
 
   //event đăng kí
   function signUp() {
     if (document.getElementById('password').value !== document.getElementById('repass').value) {
       return;
     }
-    user.userid = document.getElementById('account').value;
-    user.userid = document.getElementById('email').value;
-    user.userid = document.getElementById('password').value;
-    createUser();
-    createAccount();
+    const fetchApi = async () => {
+      const userResult = await accountServices.checkExistedAccount(document.getElementById('email').value);
+      //setUser(userResult);
+      console.log(userResult[0].checkExist);
+
+      if (userResult[0].checkExist === 0) {
+        accountEx.email = document.getElementById('email').value;
+        accountEx.password = document.getElementById('password').value;
+        createAccount();
+      } else {
+        console.log('Tài khoản đã tồn tại');
+      }
+    };
+    fetchApi();
+  }
+
+  function createUser() {
+    accountEx.email = document.getElementById('email').value;
+    userEx.email = document.getElementById('email').value;
+    var code = document.getElementById('code').value;
+    // console.log(accountEx);
+    // console.log('email:' + accountEx.email);
+    const fetchApi = async () => {
+      // console.log(document.getElementById('code').value);
+      console.log(accountEx);
+
+      const userResult = await accountServices.checkVerificationCode(code, accountEx);
+
+      console.log(userResult[0].checkVerificationCode);
+
+      if (userResult[0].checkVerificationCode === 1) {
+        const fetchApi = async () => {
+          const userResult = await userServices.createUser(userEx);
+          //setUser(userResult);
+          console.log(userResult);
+          accountEx.userID = userResult;
+          const accountResult = await accountServices.updateVerifiedAccount(userResult, accountEx);
+          console.log(accountResult);
+        };
+        fetchApi();
+      }
+    };
+    fetchApi();
+
+    /**var test = '';
+    const fetchApi = async () => {
+      console.log(accountEx.accountID);
+      const code = await accountServices.getVerificationCode(accountEx.accountID);
+      console.log(code[0].verificationCode);
+      if (typeof code[0].verificationCode) {
+        test = code[0].verificationCode;
+        console.log(test);
+      }
+    };
+    fetchApi();
+    console.log(document.getElementById('confirm').value);
+    if (test !== document.getElementById('confirm').value) console.log('false');
+    else {
+      const fetchApi = async () => {
+        const userResult = await accountServices.createUser(userEx);
+        //setUser(userResult);
+        console.log(userResult);
+        accountEx.userID = userResult;
+        const accountResult = await accountServices.updateAccountOwner(userResult, accountEx);
+        console.log(accountResult);
+      };
+      fetchApi();
+    } */
   }
   return (
     <div className={cx('wrapper')}>
@@ -52,25 +141,28 @@ function Register() {
         <form className={cx('form')} onSubmit={handleSubmit} action="">
           <h1>Đăng ký</h1>
           <br></br>
-          <label for="fname">Tên đăng nhập:</label>
-          <br></br>
-          <input type="text" id="account" className={cx('input')}></input>
-          <br></br>
           <label for="fname">Email:</label>
           <br></br>
-          <input type="text" id="email" className={cx('input')}></input>
+          <input type="text" id="email" className={cx('input-text')}></input>
           <br></br>
           <label for="fname">Mật khẩu:</label>
           <br></br>
-          <input type="password" id="password" className={cx('input')}></input>
+          <input type="password" id="password" className={cx('input-text')}></input>
           <br></br>
           <label for="fname">Nhập lại mật khẩu:</label>
           <br></br>
-          <input type="password" id="repass" className={cx('input')}></input>
+          <input type="password" id="repass" className={cx('input-text')}></input>
+          <br></br>
+          <label for="fname">Mã xác nhận:</label>
+          <br></br>
+          <input type="text" id="code" className={cx('input')}></input>
+          <button className={cx('btn-confirm')} onClick={signUp}>
+            Xác nhận
+          </button>
           <div className={cx('register')}>
             Đã có tài khoản, đăng nhập <a href="Login">tại đây</a>
           </div>
-          <button className={cx('btn')} onClick={signUp}>
+          <button className={cx('btn')} onClick={createUser}>
             Đăng ký
           </button>
         </form>

@@ -24,9 +24,9 @@ function Account() {
           <h2>Danh sách tài khoản</h2>
           <table>
             <tr>
-              <th>STT</th>
-              <th>Tên</th>
-              <th>Tên tài khoản</th>
+              <th>Mã tài khoản</th>
+              <th>Chủ tài khoản</th>
+              <th>Quyền hạn</th>
               <th>Email</th>
               <th>Thao tác</th>
             </tr>
@@ -34,9 +34,9 @@ function Account() {
               user.length > 0 &&
               user.map((userObj, index) => (
                 <tr key={userObj.id}>
-                  <td>{userObj.id}</td>
-                  <td>{userObj.name}</td>
-                  <td>{userObj.username}</td>
+                  <td>{userObj.accountID}</td>
+                  <td>{userObj.user}</td>
+                  <td>{userObj.permission}</td>
                   <td>{userObj.email}</td>
                   <td>
                     <button>

@@ -3,6 +3,7 @@ import styles from './ProjectDetails.module.scss';
 import classNames from 'classnames/bind';
 import * as projectServices from '../../apiServices/projectItemServices';
 import * as accountServices from '../../apiServices/accountServices';
+import * as taskServices from '../../apiServices/taskServices';
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +13,7 @@ import AddTask from '../../components/PopUp/AddTask';
 import EditTask from '../../components/PopUp/EditTask';
 import AddMember from '../../components/PopUp/AddMember';
 
-const data = [
+/*const data = [
   { name: 'Node js', detail: ' back-end JavaScript runtime environment' },
   { name: 'React js', detail: ' free and open-source front-end JavaScript library' },
   { name: 'Springboot', detail: 'application framework and inversion of control container for the Java platform' },
@@ -22,7 +23,7 @@ const data = [
   { name: 'Springboot', detail: 'application framework and inversion of control container for the Java platform' },
   { name: 'Springboot', detail: 'application framework and inversion of control container for the Java platform' },
   { name: 'Springboot', detail: 'application framework and inversion of control container for the Java platform' },
-];
+];*/
 const cx = classNames.bind(styles);
 /*        <h2>
           Project Details Page {id} - {JSON.stringify(project)}
@@ -30,23 +31,50 @@ const cx = classNames.bind(styles);
 
 function ProjectDetails() {
   const { id } = useParams();
-  const [project, setProject] = useState({});
+  const [project, setProject] = useState([]);
   const [user, setUser] = useState([]);
+  const [task, setTask] = useState([]);
+  const [regis, setRegis] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isAddMember, setIsAddMember] = useState(false);
   const [isTask, setIsTask] = useState();
+  const [pId, setpId] = useState();
 
   const togglePopup = () => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      console.log(newId);
+      const result = await projectServices.projectItem(newId);
+      setpId(newId);
+      setProject(result);
+    };
+    fetchApi();
     setIsOpen(!isOpen);
   };
 
   const toggleAdd = () => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      console.log(newId);
+      const result = await taskServices.getTask(newId);
+      console.log(result);
+      setTask(result);
+    };
+    fetchApi();
     setIsAdd(!isAdd);
   };
 
   const toggleEdit = () => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      console.log(newId);
+      const result = await taskServices.getTask(newId);
+      console.log(result);
+      setTask(result);
+    };
+    fetchApi();
     setIsEdit(!isEdit);
   };
 
@@ -62,28 +90,133 @@ function ProjectDetails() {
     };
     fetchApi();
   }, []);
+
   useEffect(() => {
     const fetchApi = async () => {
       var newId = Number(id);
+      console.log(newId);
       const result = await projectServices.projectItem(newId);
+      setpId(newId);
       setProject(result);
+    };
+
+    fetchApi();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      console.log(newId);
+      const result = await projectServices.getAllRegis(newId);
+      setpId(newId);
+      setRegis(result);
     };
     fetchApi();
   }, [id]);
 
-  function Update(index) {
+  useEffect(() => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      console.log(newId);
+      const result = await taskServices.getTask(newId);
+      console.log(result);
+      setTask(result);
+    };
+    fetchApi();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      console.log(newId);
+      const result = await projectServices.getAllParticipant(newId);
+      console.log(result);
+      setUser(result);
+    };
+    fetchApi();
+  }, [id]);
+
+  function Update(event, index) {
+    console.log(event);
     setIsTask(index);
-    setIsEdit(!isEdit);
+    toggleEdit();
   }
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    if (document.getElementById('sortStatus').value === 'Chưa hoàn thành') {
+      const fetchApi = async () => {
+        var newId = Number(id);
+        console.log(newId);
+        const result = await taskServices.getUndoneTasks(newId);
+        console.log(result);
+        setTask(result);
+      };
+      fetchApi();
+    } else if (document.getElementById('sortStatus').value === 'Đã hoàn thành') {
+      const fetchApi = async () => {
+        var newId = Number(id);
+        console.log(newId);
+        const result = await taskServices.getDoneTasks(newId);
+        console.log(result);
+        setTask(result);
+      };
+      fetchApi();
+    } else if (document.getElementById('sortStatus').value === 'Hoãn') {
+      const fetchApi = async () => {
+        var newId = Number(id);
+        console.log(newId);
+        const result = await taskServices.getDelayedTasks(newId);
+        console.log(result);
+        setTask(result);
+      };
+      fetchApi();
+    } else {
+      const fetchApi = async () => {
+        var newId = Number(id);
+        console.log(newId);
+        const result = await taskServices.getTask(newId);
+        console.log(result);
+        setTask(result);
+      };
+      fetchApi();
+    }
+  };
+
+  function Reload() {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      console.log(newId);
+      const result = await taskServices.getTask(newId);
+      console.log(result);
+      setTask(result);
+    };
+    fetchApi();
+  }
+
+  function ReloadProject() {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      console.log(newId);
+      const result = await projectServices.projectItem(newId);
+      setpId(newId);
+      setProject(result);
+    };
+    fetchApi();
+  }
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>
-        <h2>
-          Dự án {project.title}
-          <button onClick={togglePopup}>
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </button>
-        </h2>
+        {project.length > 0 ? (
+          <h2>
+            Dự án {project[0].projectName}
+            <button onClick={togglePopup}>
+              <FontAwesomeIcon icon={faPenToSquare} />
+            </button>
+          </h2>
+        ) : (
+          <div></div>
+        )}
       </div>
       <div className={cx('context')}>
         <ul>
@@ -93,12 +226,14 @@ function ProjectDetails() {
               <Button id="btn" mini onClick={toggleAdd}>
                 Thêm
               </Button>
-              <select>
+              <select id={cx('sortStatus')} onChange={handleChange}>
                 <option value="" disabled selected hidden>
                   Phân loại
                 </option>
-                <option value="male">Chưa hoàn thành</option>
-                <option value="female">Hoàn thành</option>
+                <option value="Tất cả">Tất cả</option>
+                <option value="Chưa hoàn thành">Chưa hoàn thành</option>
+                <option value="Đã hoàn thành">Hoàn thành</option>
+                <option value="Hoãn">Hoãn</option>
               </select>
             </div>
             <table>
@@ -106,29 +241,28 @@ function ProjectDetails() {
                 <th id={cx('stt')}>STT</th>
                 <th id={cx('name')}>Công việc</th>
                 <th id={cx('date')}>Ngày bắt đầu</th>
-                <th id={cx('member')}>Phân công</th>
-                <th id={cx('status')}>Trạng thái</th>
-                <th id={cx('progress')}>Tiến độ</th>
+                <th id={cx('member')}>Ngày kết thúc</th>
+                <th id={cx('status')}>Phân công</th>
+                <th id={cx('progress')}>Trạng thái</th>
                 <th id={cx('update')}>Cập nhật</th>
               </tr>
-              {data.map((val, index) => {
+              {task.map((val, index) => {
                 return (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{val.detail}</td>
-                    <td>{val.name}</td>
-
+                    <td>{val.task}</td>
+                    <td>{val.startTime}</td>
                     <td>
-                      <button></button>
+                      <td id={cx('test-date')}>{val.endTime}</td>
                     </td>
                     <td>
-                      <button></button>
+                      <td>{val.user}</td>
                     </td>
                     <td>
-                      <button></button>
+                      <td id={cx('test')}>{val.taskStatus}</td>
                     </td>
                     <td>
-                      <button onClick={(event) => Update(event, index)} key={index}></button>
+                      <button onClick={(event) => Update(event, val)} key={val}></button>
                     </td>
                   </tr>
                 );
@@ -147,15 +281,15 @@ function ProjectDetails() {
               <tr>
                 <th id={cx('stt')}>STT</th>
                 <th id={cx('name')}>Họ tên</th>
-                <th id={cx('date')}>Vai trò</th>
+                <th id={cx('date')}>Lương</th>
               </tr>
               {(user.length > 0 &&
                 user.map((val, key) => {
                   return (
                     <tr key={key}>
                       <td>{key + 1}</td>
-                      <td>{val.username}</td>
-                      <td>{val.name}</td>
+                      <td id={cx('userName')}>{val.user}</td>
+                      <td>{val.salary}</td>
                     </tr>
                   );
                 })) || <span>No data available</span>}
@@ -163,9 +297,17 @@ function ProjectDetails() {
           </li>
         </ul>
       </div>
-      {isOpen && <EditProject handleClose={togglePopup} projectName={project.title} projectId={id} />}
-      {isAdd && <AddTask handleClose={toggleAdd} projectName={project.title} projectId={id} />}
-      {isEdit && <EditTask handleClose={toggleEdit} taskId={isTask} />}
+      {isOpen && (
+        <EditProject
+          handleClose={togglePopup}
+          projectName={project[0].projectName}
+          project={project[0]}
+          projectId={id}
+          reload={ReloadProject}
+        />
+      )}
+      {isAdd && <AddTask handleClose={toggleAdd} projectName={task.task} id={pId} reload={Reload} />}
+      {isEdit && <EditTask handleClose={toggleEdit} progress={isTask} id={pId} reload={Reload} />}
       {isAddMember && <AddMember handleClose={toggleAddMember} />}
     </div>
   );
