@@ -3,7 +3,7 @@ import request from '../utils/request';
 export function upload(id, avatarLink) {
   const formData = new FormData();
   formData.append('image', avatarLink);
-  request.post(`/avatar/addAvatar/${id}`, formData).then((res) => {
+  request.put(`/avatar/addAvatar/${id}`, formData).then((res) => {
     console.log(res);
   });
   // request.post(`/avatar/addAvatar`, formData).then((res) => {
@@ -29,3 +29,9 @@ export function upload(id, avatarLink) {
 //   console.log(account);
 //   return response.data;
 // };
+
+export const getAvatarSortedByUserID = async (userID) => {
+  const response = await request.get(`/avatar/getAvatarSortedByUserID/${userID}`);
+
+  return response.data;
+};

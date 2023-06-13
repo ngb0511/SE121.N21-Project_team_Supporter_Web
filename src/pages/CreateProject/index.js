@@ -2,8 +2,9 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './CreateProject.module.scss';
 import * as projectItemServices from '../../apiServices/projectItemServices';
+import { useEffect } from 'react';
 const cx = classNames.bind(styles);
-
+var userEx = JSON.parse(sessionStorage.getItem('userEx'));
 var project = {
   projectID: '0',
   projectName: '',
@@ -16,17 +17,19 @@ var project = {
 };
 function Create() {
   project.projectName = document.getElementById('projectName').value;
-  project.projectOwner = document.getElementById('projectOwner').value;
+  project.projectOwner = userEx.userID;
   project.description = document.getElementById('description').value;
   project.startTime = document.getElementById('startTime').value;
   project.endTime = document.getElementById('endTime').value;
   project.maxParticipantAmount = document.getElementById('maxParticipantAmount').value;
   project.gitHubLink = document.getElementById('gitHubLink').value;
   console.log(project);
+  project.projectID = 0;
   const fetchApi = async () => {
     const result = await projectItemServices.createProject(project);
     console.log(result);
     project.projectID = result;
+    console.log(project.projectID);
     addMember(project);
   };
   fetchApi();
@@ -50,8 +53,21 @@ function Clear() {
   document.getElementById('gitHubLink').value = '';
 }
 function CreateProject() {
+  useEffect(() => {
+    //document.getElementById('projectOwner').value = userEx.fullName;
+  }, []);
   return (
     <div className={cx('wrapper')}>
+      <div className={cx('banner')}>
+        <h1>CITRUS</h1>
+        <p>
+          Join Freelancer Plus to start each month fresh with 80 Connects. You'll get a lot of other perks too! Join
+          before June 30th and unlock 6 new features for the next 3 months.
+        </p>
+        <button>
+          <a href="Home">Learn More</a>
+        </button>
+      </div>
       <div className={cx('header')}>
         <h2>Khởi tạo dự án </h2>
       </div>

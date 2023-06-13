@@ -8,9 +8,10 @@ const cx = classNames.bind(styles);
 function Sidebar() {
   return (
     <aside className={cx('wrapper')}>
+      <h1>Menu </h1>
       <ul className={cx('sidebar-cointainer')}>
         <li className={cx('sidebar-item')}>
-          <Button to="/Home">
+          <Button to="/Admin">
             <div>
               <FontAwesomeIcon icon={faHome} />
               &nbsp; &nbsp;Trang chủ
@@ -18,29 +19,14 @@ function Sidebar() {
           </Button>
         </li>
         <li className={cx('sidebar-item')}>
-          <Button to="/Profile">
-            <div>
-              <FontAwesomeIcon icon={faCircleUser} />
-              &nbsp; &nbsp;Cá nhân
-            </div>
-          </Button>
-        </li>
-        <li className={cx('sidebar-item')}>
-          <Button to="/Project">
+          <Button to="/Admin/ProjectAdmin">
             <div>
               <FontAwesomeIcon icon={faListCheck} />
               &nbsp; &nbsp;Dự án
             </div>
           </Button>
         </li>
-        <li className={cx('sidebar-item')}>
-          <Button to="/Statistic">
-            <div>
-              <FontAwesomeIcon icon={faChartLine} />
-              &nbsp; &nbsp;Thống kê
-            </div>
-          </Button>
-        </li>
+
         <li className={cx('sidebar-item')}>
           <Button to="/Tag">
             <div>
@@ -54,14 +40,6 @@ function Sidebar() {
             <div>
               <FontAwesomeIcon icon={faUser} />
               &nbsp; &nbsp;Tài khoản
-            </div>
-          </Button>
-        </li>
-        <li className={cx('sidebar-item')}>
-          <Button to="/Detail">
-            <div>
-              <FontAwesomeIcon icon={faUser} />
-              &nbsp; &nbsp;Test
             </div>
           </Button>
         </li>

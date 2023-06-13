@@ -74,41 +74,59 @@ function Tag() {
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
         <div className={cx('header')}>
-          <h3 className={cx('header-tittle')}>Thêm thẻ</h3>
+          <h3 className={cx('header-tittle')}>Add Major Tag</h3>
           <div className={cx('header-input')}>
             <div className={cx('header-input-name')}>
-              <h3>Tên thẻ:</h3>
+              <h3>Name:</h3>
               <input id={cx('tagName')}></input>
             </div>
             <div className={cx('header-input-detail')}>
-              <h3>Mô tả:</h3>
+              <h3>Description:</h3>
               <textarea id={cx('description')} cols="40" rows="5"></textarea>
             </div>
-            <button onClick={Create}>Thêm</button>
+            <button onClick={Create}>Add</button>
           </div>
         </div>
         <div className={cx('cointainer')}>
-          <h2>Danh sách thẻ</h2>
-          <table>
-            <tr>
-              <th>Tên</th>
-              <th>Mô tả</th>
-              <th>Thao tác</th>
-            </tr>
-            {majorList.map((val, key) => {
-              return (
-                <tr key={key}>
-                  <td>{val.majorName}</td>
-                  <td>{val.description}</td>
+          <h2>Major List</h2>
+          <div className="wrapper-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Tool</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Như Tâm</td>
+                  <td>18/09/2002</td>
                   <td>
-                    <button>
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
+                    <button className={cx('delete')}>Delete</button>
                   </td>
                 </tr>
-              );
-            })}
-          </table>
+                <tr>
+                  <td>2</td>
+                  <td>Như Tâm</td>
+                  <td>18/09/2002</td>
+                  <td>
+                    <button className={cx('delete')}>Delete</button>
+                  </td>
+                </tr>{' '}
+                <tr>
+                  <td>3</td>
+                  <td>Như Tâm</td>
+                  <td>18/09/2002</td>
+                  <td>
+                    <button className={cx('delete')}>Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       {isConfirm && <Confirm handleClose={toggleConfirm} handleConfirm={confirm} />}

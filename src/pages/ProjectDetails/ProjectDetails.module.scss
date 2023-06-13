@@ -1,12 +1,283 @@
 .wrapper {
   min-height: 100%;
-  width: 100%;
+  width: 1100px;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  //border: 3px solid #efefefef;
+  h2 {
+    padding: 30px;
+    padding-bottom: 10px;
+  }
 }
 
-.header {
+.project-detail {
+  //height: 1000px;
+  width: 100%;
+  border: 3px solid #efefefef;
+  border-radius: 25px;
+  display: flex;
+}
+
+.project-detail-information {
+  width: 750px;
+  height: 100%;
+  border-right: 3px solid #efefefef;
+  h3 {
+    padding: 20px;
+    //margin-top: 10px;
+    font-size: 2rem;
+  }
+  p {
+    padding-left: 20px;
+    padding-bottom: 20px;
+    button {
+      font-weight: 600;
+      height: 40px;
+      width: 100px;
+      padding: 10px;
+      border-radius: 15px;
+      background-color: #1cc206;
+      color: #ffffff;
+    }
+  }
+  div {
+    height: 150px;
+    border-top: 1px solid #efefefef;
+    padding: 10px;
+    padding-right: 20px;
+    textarea {
+      height: 100px;
+      width: 100%;
+      border: none;
+      font-size: 1.4rem;
+    }
+    span {
+      margin-top: 20px;
+      margin-right: 10px;
+      padding: 10px;
+      color: #efefefef;
+      background-color: rgb(103, 107, 107);
+      border-radius: 25px;
+    }
+    div {
+      border: none;
+      padding-left: 0px;
+      margin-top: 20px;
+    }
+  }
+}
+.project-detail-button {
+  width: 340px;
+  height: 100%;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    height: 270px;
+    margin-bottom: 10px;
+    border-bottom: 1px #efefefef solid;
+    button {
+      margin: auto;
+      width: 205px;
+      height: 40px;
+      border-radius: 25px;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+    p {
+      margin: auto;
+    }
+    h4 {
+      padding: 20px;
+      padding-bottom: 10px;
+      font-size: 1.6rem;
+    }
+    span {
+      padding: 20px;
+      padding-top: 10px;
+      font-size: 1.6rem;
+    }
+    input {
+      width: 90%;
+      height: 40px;
+      font-size: 1.6rem;
+      margin-left: 20px;
+      padding: 5px;
+      border-radius: 25px;
+    }
+  }
+}
+
+.save-button {
+  background-color: #108a00;
+  color: #ffffff;
+  border: none;
+}
+
+.delete-button {
+  color: #108a00;
+  background-color: #ffffff;
+  border: #108a00 2px solid;
+}
+
+.task-detail {
+  //height: 1000px;
+  margin-top: 10px;
+  padding-bottom: 20px;
+  width: 100%;
+  border: 3px solid #efefefef;
+  border-radius: 25px;
+  display: flex;
+}
+
+.container {
+  width: 1000px;
+  margin: auto;
+  width: 100%;
+  padding: 0 15px;
+}
+
+.addTask-btn {
+  right: 0;
+  margin: 20px;
+  height: 40px;
+  width: 150px;
+  color: #ffffff;
+  border-radius: 25px;
+  background-color: #1cc206;
+}
+
+.wrapper-table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: fit-content;
+  text-align: center;
+}
+table tbody tr:nth-child(even) {
+  background-color: #40513b14;
+}
+td,
+th {
+  width: 300px;
+  padding: 15px 10px;
+  font-size: 14px;
+  color: #675d50;
+  button {
+    height: 30px;
+    width: 60px;
+    color: #ffffff;
+    background-color: #108a00;
+    font-size: 1.3rem;
+    border: none;
+    //border: 2px solid #ddd8d8;
+  }
+}
+th {
+  cursor: pointer;
+}
+th,
+tbody {
+  border-bottom: 3px solid #40513b;
+}
+
+@media (max-width: 280px) {
+  .slider-container-content {
+    display: block;
+  }
+  .input-container {
+    margin: 2rem 0;
+  }
+}
+
+.member-detail {
+  //height: 1000px;
+  margin-top: 10px;
+  padding-bottom: 20px;
+  width: 100%;
+  display: flex;
+  h4 {
+    padding: 10px;
+  }
+}
+
+.new-member {
+  width: 720px;
+  padding: 15px;
+  border: 3px solid #efefefef;
+  border-radius: 25px;
+  table {
+    width: 95%;
+    font-size: 18px;
+    border-collapse: collapse;
+  }
+
+  td,
+  th {
+    padding: 16px 24px;
+    text-align: left;
+  }
+
+  thead tr {
+    background-color: #108a00;
+    color: #ffffff;
+  }
+
+  thead th {
+    width: 25%;
+    color: #ffffff;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #f8f9fa;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #e9ecef;
+  }
+}
+
+.view-btn {
+  height: 30px;
+  width: 50px;
+  background-color: #ffffff;
+  color: #1cc206;
+  font-size: 1.3rem;
+  border: 2px solid #1cc206;
+}
+
+.current-member {
+  width: 400px;
+  padding: 15px;
+  border: 3px solid #efefefef;
+  margin-left: 20px;
+  border-radius: 25px;
+  table.eg4 {
+    width: 100%;
+    border-collapse: inherit;
+    border: 1px;
+    border: #ffffff;
+    padding: 2;
+    //margin-top: 100px;
+  }
+  .darkblue {
+    background-color: darkblue;
+  }
+  tr:nth-child(even) {
+    background-color: #adc5ee;
+  }
+  tr:nth-child(odd) {
+    background-color: #ceebf0;
+  }
+}
+
+/*.header {
   margin-top: 15px;
   margin-bottom: 50px;
   height: 100px;
@@ -136,4 +407,4 @@
 
 #test-date {
   padding: 30px;
-}
+}*/

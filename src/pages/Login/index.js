@@ -3,8 +3,9 @@ import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 import Button from '../../components/Button';
 import * as accountServices from '../../apiServices/accountServices';
-import { useState } from 'react';
+import * as userServices from '../../apiServices/userServices';
 import Successful from '../../components/PopUp/Successful';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
@@ -18,16 +19,46 @@ var account = {
   verificationCode: '',
   isVerified: '',
 };
+var userEx = {
+  userID: '',
+  surname: '',
+  forename: '',
+  gender: '',
+  dateOfBirth: '',
+  email: '',
+  phoneNumber: '',
+  idNumber: '',
+  address: '',
+  job: '',
+  degree: '',
+  experience: '',
+  description: '',
+  avatar: '',
+};
 function Login() {
   const [isSuccessful, setIsSuccessful] = useState(false);
   const navigate = useNavigate();
   const toggleSuccessful = () => {
     setIsSuccessful(!isSuccessful);
   };
+  useEffect(() => {
+    sessionStorage.clear();
+    console.log(sessionStorage.getItem('isLogIn'));
+  }, []);
+
   function handleChange(event) {
     //document.getElementById('form').action = 'Home';
 
     event.preventDefault();
+    sessionStorage.setItem('isLogIn', 1);
+
+    if (document.getElementById('username').value === 'admin') {
+      sessionStorage.setItem('admin', 1);
+      navigate('/Admin');
+    } else {
+      sessionStorage.setItem('admin', 0);
+      navigate('/Home');
+    }
 
     /*const username = document.getElementById('username');
     const password = document.getElementById('password');
@@ -52,12 +83,16 @@ function Login() {
         const passResult = await accountServices.checkAccount(account);
         if (passResult === true) {
           const email = await accountServices.getAccountSortedByEmail(user.userName);
+          const test = await userServices.getUserByID(email[0].userID);
+          userEx = test[0];
           console.log(email[0].user);
           user.userName = email[0].user;
           account = email[0];
           console.log(account);
+          sessionStorage.setItem('isLogIn', 1);
           sessionStorage.setItem('user', JSON.stringify(user));
           sessionStorage.setItem('account', JSON.stringify(account));
+          sessionStorage.setItem('userEx', JSON.stringify(userEx));
           navigate('/Home');
         } else {
           setIsSuccessful(!isSuccessful);
@@ -68,7 +103,7 @@ function Login() {
     };
     fetchApi();
   }
-  return (
+  /*return (
     <div className={cx('wrapper')}>
       <div className={cx('text-cointainer')}>
         <div className={cx('text')}>
@@ -102,6 +137,34 @@ function Login() {
         </form>
       </div>
       {isSuccessful && <Successful handleClose={toggleSuccessful} />}
+    </div>
+  );*/
+  return (
+    <div className={cx('wrapper')}>
+      <form>
+        <h2>Login to Work</h2>
+        <br></br>
+        <label>Email:</label>
+        <br></br>
+        <input id="username"></input>
+        <br></br>
+        <label>Password:</label>
+        <br></br>
+        <input id="password"></input>
+        <br></br>
+        <br></br>
+        <button onClick={handleChange}>Login</button>
+      </form>
+      <br></br>
+
+      <div className={cx('signup')}>
+        <p>
+          <hr></hr>Don't have an account? <hr></hr>
+        </p>
+        <button>
+          <a href="Register">Sign Up</a>
+        </button>
+      </div>
     </div>
   );
 }

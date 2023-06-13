@@ -37,6 +37,14 @@ export const checkExistedAccount = async (email) => {
   return response.data;
 };
 
+export const checkCreatedAccount = async (email) => {
+  const response = await request.get(`/account/checkCreatedAccount/${email}`);
+  console.log(response);
+  // if (response.data == '1') return true;
+  // return false;
+  return response.data;
+};
+
 export const checkAccount = async (account) => {
   const response = await request.post('/account/checkAccount', account);
   console.log(account);
@@ -45,6 +53,14 @@ export const checkAccount = async (account) => {
 
 export const getAccountSortedByEmail = async (email) => {
   const response = await request.get(`/account/getAccountSortedByEmail/${email}`);
+  console.log(response);
+  // if (response.data == '1') return true;
+  // return false;
+  return response.data;
+};
+
+export const getAccountAndUserSortedByEmail = async (email) => {
+  const response = await request.get(`/account/getAccountAndUserSortedByEmail/${email}`);
   console.log(response);
   // if (response.data == '1') return true;
   // return false;

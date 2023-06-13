@@ -3,7 +3,6 @@ import styles from './Project.module.scss';
 import * as projectServices from '../../apiServices/projectItemServices';
 import Paginate from '../../components/Paginate';
 import { useState, useEffect } from 'react';
-import Button from '../../components/Button';
 
 const cx = classNames.bind(styles);
 
@@ -15,13 +14,14 @@ function Project() {
   const [project, setproject] = useState([]);
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await projectServices.projectAllItem();
+      var account = JSON.parse(sessionStorage.getItem('account'));
+      const result = await projectServices.getAllJoinedProject(account.userID);
       console.log(result);
       setproject(result);
     };
     fetchApi();
   }, []);
-  return (
+  /*return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
         <div className={cx('header')}>
@@ -68,6 +68,78 @@ function Project() {
           <div className={cx('project')}>
             <Paginate numItems={6} list={project} />
           </div>
+        </div>
+      </div>
+    </div>
+  );*/
+
+  //Test project
+  const projectDropDown = [
+    {
+      projectID: '0',
+      projectName: 'tesy',
+      projectOwner: 'test',
+      description:
+        'terrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
+      startTime: '0/0/2000',
+      endTime: '0/0/2000',
+      maxParticipantAmount: '5',
+      gitHubLink: '1512512522222222222222222222222222',
+    },
+    {
+      projectID: '0',
+      projectName: 'tesy',
+      projectOwner: 'test',
+      description:
+        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
+      startTime: '0/0/2000',
+      endTime: '0/0/2000',
+      maxParticipantAmount: '5',
+      gitHubLink: '1512512522222222222222222222222222',
+    },
+    {
+      projectID: '0',
+      projectName: 'tesy',
+      projectOwner: 'test',
+      description:
+        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
+      startTime: '0/0/2000',
+      endTime: '0/0/2000',
+      maxParticipantAmount: '5',
+      gitHubLink: '1512512522222222222222222222222222',
+    },
+    {
+      projectID: '0',
+      projectName: 'tesy',
+      projectOwner: 'test',
+      description:
+        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
+      startTime: '0/0/2000',
+      endTime: '0/0/2000',
+      maxParticipantAmount: '5',
+      gitHubLink: '1512512522222222222222222222222222',
+    },
+  ];
+  return (
+    <div className={cx('wrapper')}>
+      <div className={cx('project-cointainer')}>
+        <div className={cx('work-list')}>
+          <h2>Your Project Report</h2>
+          <div className={cx('nav')}>
+            <button key={1} className={active === '1' ? cx('active') : cx('nav-btn')} id={'1'} onClick={handleClick}>
+              All
+            </button>
+            <button key={2} className={active === '2' ? cx('active') : cx('nav-btn')} id={'2'} onClick={handleClick}>
+              Completed
+            </button>
+            <button key={3} className={active === '3' ? cx('active') : cx('nav-btn')} id={'3'} onClick={handleClick}>
+              In Progress
+            </button>
+            <button key={4} className={active === '4' ? cx('active') : cx('nav-btn')} id={'4'} onClick={handleClick}>
+              Owner
+            </button>
+          </div>
+          <Paginate numItems={6} list={projectDropDown} />
         </div>
       </div>
     </div>

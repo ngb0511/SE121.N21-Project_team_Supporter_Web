@@ -23,7 +23,6 @@ function Statistic() {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>
-        <h1>Thống kê</h1>
         <ul>
           <li>
             <h3>

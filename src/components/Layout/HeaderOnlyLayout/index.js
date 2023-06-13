@@ -1,4 +1,5 @@
 import Header from '../component/Header';
+import Footer from '../component/Footer';
 import styles from './HeaderOnlyLayout.scss';
 import classNames from 'classnames/bind';
 
@@ -11,6 +12,7 @@ function HeaderOnlyLayout({ children }) {
       <div className={cx('wrapper')}>
         <div className={cx('cointainer')}>{children}</div>
       </div>
+      <Footer />
     </div>
   );
 }

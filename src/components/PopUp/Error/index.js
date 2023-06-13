@@ -19,7 +19,7 @@ const Error = (props) => {
           </div>
           <h1>Lỗi</h1>
           <br></br>
-          <p>Vui lòng nhập đầy đủ thông tin</p>
+          <p>{props.tittle}</p>
           <div>
             <button id={cx('cancel')} onClick={props.handleClose}>
               Thoát

@@ -1,4 +1,111 @@
 .wrapper {
+  height: 850px;
+  width: 700px;
+  //margin-top: 50px;
+  //display: flex;
+  //justify-content: space-between;
+  //flex-direction: row;
+  //background-color: aqua;
+  border-radius: 25px;
+  border: 3px solid #e6ede6;
+  margin: auto;
+  margin-top: 90px;
+  margin-bottom: 30px;
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-top: 25px;
+    h1 {
+      text-align: center;
+    }
+    input {
+      height: 40px;
+      border-radius: 25px;
+      border: 1px solid #a5a8a5;
+    }
+    button {
+      height: 40px;
+      border-radius: 25px;
+      border: none;
+      background-color: #108a00;
+      color: #ffffff;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+  }
+}
+
+.code-cointainer {
+  display: flex;
+  justify-content: space-between;
+  input {
+    height: 40px;
+    width: 250px;
+  }
+  button {
+    height: 40px;
+    width: 250px;
+    border-radius: 25px;
+    border: 1px solid #ffffff;
+    background-color: #108a00;
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+}
+
+.check-cointainer {
+  display: flex;
+  p {
+    margin-top: 10px;
+    padding-left: 15px;
+  }
+  input {
+    accent-color: #108a00;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.login {
+  //background-color: #108a00;
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-top: 20px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  p {
+    //margin-left: 15px;
+    //margin-right: 15px;
+    display: flex;
+    height: 40px;
+    width: 100%;
+    justify-content: space-between;
+    color: #a0abac;
+    hr {
+      margin-top: 9px;
+      width: 180px;
+    }
+  }
+  button {
+    height: 40px;
+    background-color: #ffffff;
+    margin-left: 120px;
+    margin-right: 120px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    border: 2px solid #108a00;
+    border-radius: 24px;
+    a {
+      color: #108a00;
+    }
+  }
+}
+
+/*.wrapper {
   height: 600px;
   width: 90%;
   margin-top: 50px;
@@ -83,4 +190,4 @@
   align-items: center;
   border-radius: 15px;
   color: #ffffff;
-}
+}*/

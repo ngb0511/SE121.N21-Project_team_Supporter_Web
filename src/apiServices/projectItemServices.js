@@ -71,14 +71,37 @@ export const addParticipateWhenCreateProject = async (project) => {
 };
 
 //Them nguoi tham du khi khoi tao
-export const getAllParticipant = async (projectID) => {
-  const response = await request.get(`/project/getAllParticipant/${projectID}`);
+
+export const getAllRegis = async (projectID) => {
+  const response = await request.get(`/registrant/findAll/${projectID}`);
   //console.log(project);get
   return response.data;
 };
 
-export const getAllRegis = async (projectID) => {
-  const response = await request.get(`/registrant/getAllRegistrants/${projectID}`);
+export const addRegistrant = async (regis) => {
+  const response = await request.post('/registrant/addRegistrant', regis);
+  return response.data;
+};
+
+export const getAllProjectMajors = async (projectID) => {
+  const response = await request.get(`/project/getAllProjectMajors/${projectID}`);
+  //console.log(project);get
+  return response.data;
+};
+
+export const addParticipate = async (id, project) => {
+  const response = await request.post(`/participate/addParticipate/${id}`, project);
+  return response.data;
+};
+
+export const getAllParticipant = async (projectID) => {
+  const response = await request.get(`/participate/getAllParticipant/${projectID}`);
+  //console.log(project);get
+  return response.data;
+};
+
+export const getAllJoinedProject = async (userID) => {
+  const response = await request.get(`/participate/getAllJoinedProject/${userID}`);
   //console.log(project);get
   return response.data;
 };

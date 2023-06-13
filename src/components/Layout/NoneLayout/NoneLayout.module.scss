@@ -1,13 +1,13 @@
 .wrapper {
-  height: 100%;
+  height: 700px;
 }
 
 .cointainer {
   width: 100%;
   display: flex;
   justify-content: center;
-  min-height: 1000px;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-image: url('/assets/images/background-anime-4k.jpg');
+  min-height: 700px;
+  //background-size: 100% 100%;
+  //background-repeat: no-repeat;
+  //background-image: url('/assets/images/background-anime-4k.jpg');
 }

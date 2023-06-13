@@ -7,12 +7,12 @@ import * as taskServices from '../../apiServices/taskServices';
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPenToSquare, faStar, faUser, faUpload } from '@fortawesome/free-solid-svg-icons';
 import EditProject from '../../components/PopUp/EditProject';
 import AddTask from '../../components/PopUp/AddTask';
 import EditTask from '../../components/PopUp/EditTask';
 import AddMember from '../../components/PopUp/AddMember';
-
+import { useNavigate } from 'react-router-dom';
 /*const data = [
   { name: 'Node js', detail: ' back-end JavaScript runtime environment' },
   { name: 'React js', detail: ' free and open-source front-end JavaScript library' },
@@ -30,11 +30,11 @@ const cx = classNames.bind(styles);
         </h2> */
 
 function ProjectDetails() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [project, setProject] = useState([]);
   const [user, setUser] = useState([]);
   const [task, setTask] = useState([]);
-  const [regis, setRegis] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -107,17 +107,6 @@ function ProjectDetails() {
     const fetchApi = async () => {
       var newId = Number(id);
       console.log(newId);
-      const result = await projectServices.getAllRegis(newId);
-      setpId(newId);
-      setRegis(result);
-    };
-    fetchApi();
-  }, [id]);
-
-  useEffect(() => {
-    const fetchApi = async () => {
-      var newId = Number(id);
-      console.log(newId);
       const result = await taskServices.getTask(newId);
       console.log(result);
       setTask(result);
@@ -141,6 +130,17 @@ function ProjectDetails() {
     setIsTask(index);
     toggleEdit();
   }
+
+  function View(event, index) {
+    console.log(event);
+    navigate('/ProfileWall/1');
+  }
+
+  function AddMember(event, index) {
+    console.log(event);
+    //navigate('/ProfileWall/2');
+  }
+
   const handleChange = (event) => {
     console.log(event.target.value);
     if (document.getElementById('sortStatus').value === 'Chưa hoàn thành') {
@@ -204,7 +204,7 @@ function ProjectDetails() {
     fetchApi();
   }
 
-  return (
+  /*return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>
         {project.length > 0 ? (
@@ -281,7 +281,7 @@ function ProjectDetails() {
               <tr>
                 <th id={cx('stt')}>STT</th>
                 <th id={cx('name')}>Họ tên</th>
-                <th id={cx('date')}>Lương</th>
+                <th id={cx('date')}>Chuyên ngành</th>
               </tr>
               {(user.length > 0 &&
                 user.map((val, key) => {
@@ -289,7 +289,7 @@ function ProjectDetails() {
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td id={cx('userName')}>{val.user}</td>
-                      <td>{val.salary}</td>
+                      <td>{val.majorName}</td>
                     </tr>
                   );
                 })) || <span>No data available</span>}
@@ -308,7 +308,232 @@ function ProjectDetails() {
       )}
       {isAdd && <AddTask handleClose={toggleAdd} projectName={task.task} id={pId} reload={Reload} />}
       {isEdit && <EditTask handleClose={toggleEdit} progress={isTask} id={pId} reload={Reload} />}
-      {isAddMember && <AddMember handleClose={toggleAddMember} />}
+      {isAddMember && <AddMember handleClose={toggleAddMember} project={project[0]} projectId={id} />}
+    </div>
+  );*/
+  var arr = [{ value: 'Java' }, { value: 'ReactJs' }, { value: 'NodeJs' }];
+  return (
+    <div className={cx('wrapper')}>
+      <h2>Job Details</h2>
+      <div className={cx('project-detail')}>
+        <div className={cx('project-detail-information')}>
+          {project.length > 0 ? <h3>Project Name {project[0].projectName}</h3> : <h3>Project Name</h3>}
+          <p>
+            <a href="/Profile">Leader</a>
+            <br></br>
+            Start Date:
+          </p>
+          <div>
+            <p>
+              <h4>Description</h4>
+              <textarea
+                value="Redesign existing logo to include my phone number below in large writing 0422 335 749 that has
+              electrical and 0422 335 749 in white and in black .Also have designs without my number, but also black
+              and white electrical .All of the above in high resolution, in EPS preferably, with no background"
+              ></textarea>
+            </p>
+          </div>
+          <div>
+            <p>
+              <h4>Major Requirement</h4>
+              <div>
+                {arr.map((option, index) => (
+                  <span key={index} value={option.value}>
+                    {option.value}
+                  </span>
+                ))}
+              </div>
+            </p>
+          </div>
+          <div>
+            <p>
+              <h4>Attachment</h4>
+              <input type="file"></input>
+              <button>
+                Upload <FontAwesomeIcon icon={faUpload} />
+              </button>
+            </p>
+          </div>
+        </div>
+        <div className={cx('project-detail-button')}>
+          <div>
+            <button className={cx('save-button')}>Save</button>
+            <button className={cx('delete-button')}>Delete</button>
+            <p>
+              Max Member: 20 <FontAwesomeIcon icon={faUser} />{' '}
+            </p>
+            <p>
+              Current Member: 12 <FontAwesomeIcon icon={faUser} />
+            </p>
+          </div>
+          <div>
+            <h4>About</h4>
+            <span>5 account like this project</span>
+            <span>
+              5 <FontAwesomeIcon icon={faStar} /> of 1 review
+            </span>
+            <h4>Job link</h4>
+            <input value="https://www.upwork.com/jobs/~016896f2182152e00f"></input>
+          </div>
+        </div>
+      </div>
+      <h2>Task list</h2>
+      <div className={cx('task-detail')}>
+        <div className="container">
+          <button className={cx('addTask-btn')} onClick={toggleAdd}>
+            Add new task
+          </button>
+          <div className="wrapper-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Status</th>
+                  <th>Member</th>
+                  <th>Notice</th>
+                  <th>Update</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>FrontEnd</td>
+                  <td>18/09/2002</td>
+                  <td>10/06/2023</td>
+                  <td>Done</td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <button onClick={(event) => Update(event, 1)}>View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>BackEnd</td>
+                  <td>21/10/2002</td>
+                  <td></td>
+                  <td>In progress</td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <button onClick={(event) => Update(event, 1)}>View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>BackEnd</td>
+                  <td>21/10/2002</td>
+                  <td></td>
+                  <td>In progress</td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <button onClick={(event) => Update(event, 1)}>View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <h2>Member list</h2>
+      <div className={cx('member-detail')}>
+        <div className={cx('new-member')}>
+          <h4>New User</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Tool</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Nhu</td>
+                <td>21</td>
+                <td>
+                  <button className={cx('view-btn')} onClick={(event) => View(event, 1)}>
+                    View
+                  </button>
+                  &nbsp;
+                  <button className={cx('add-btn')} onClick={(event) => AddMember(event, 1)}>
+                    Add
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Alex</td>
+                <td>24</td>
+                <td>
+                  <button className={cx('view-btn')} onClick={(event) => View(event, 1)}>
+                    View
+                  </button>
+                  &nbsp;
+                  <button className={cx('add-btn')} onClick={(event) => AddMember(event, 1)}>
+                    Add
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Nike</td>
+                <td>19</td>
+                <td>
+                  <button className={cx('view-btn')} onClick={(event) => View(event, 1)}>
+                    View
+                  </button>
+                  &nbsp;
+                  <button className={cx('add-btn')} onClick={(event) => AddMember(event, 1)}>
+                    Add
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className={cx('current-member')}>
+          <h4>Current Team Member</h4>
+          <table class="eg4">
+            <tbody>
+              <tr class="darkblue">
+                <th scope="col" class="darkblue">
+                  ID
+                </th>
+                <th scope="col" class="darkblue">
+                  Name
+                </th>
+                <th scope="col" class="darkblue">
+                  Major
+                </th>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+
+              <tr>
+                <td colspan="2">&nbsp;</td>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {isAdd && <AddTask handleClose={toggleAdd} projectName={task.task} id={pId} reload={Reload} />}
+      {isEdit && <EditTask handleClose={toggleEdit} progress={isTask} id={pId} reload={Reload} />}
     </div>
   );
 }

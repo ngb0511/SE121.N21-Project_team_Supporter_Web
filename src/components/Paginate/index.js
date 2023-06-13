@@ -22,7 +22,7 @@ function Items({ currentItems }) {
   );
 }*/
 
-function PaginatedItems({ itemsPerPage, project }) {
+function PaginatedItems({ itemsPerPage, project, num, adminValue }) {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
@@ -41,18 +41,22 @@ function PaginatedItems({ itemsPerPage, project }) {
     console.log(`project requested page number ${event.selected}, which is offset ${newOffset}`);
     setItemOffset(newOffset);
   };
-
+  console.log(num);
+  const check = num + 0;
+  console.log(adminValue);
+  const check2 = adminValue + 0;
+  console.log(check2);
   return (
     <>
-      <List currentItems={currentItems} />
+      <List currentItems={currentItems} test={check} admin={check2} />
       <div className={cx('pagination')}>
         <ReactPaginate
-          nextLabel=">"
+          nextLabel="=>"
           onPageChange={handlePageClick}
           pageRangeDisplayed={3}
           marginPagesDisplayed={2}
           pageCount={pageCount}
-          previousLabel="<"
+          previousLabel="<="
           pageClassName={cx('page-item')}
           pageLinkClassName="page-link"
           previousClassName="page-item"
@@ -73,8 +77,8 @@ function PaginatedItems({ itemsPerPage, project }) {
 
 // Add a <div id="container"> to your HTML to see the component rendered.
 
-function Paginate({ list, numItems }) {
-  return <PaginatedItems itemsPerPage={numItems} project={list} />;
+function Paginate({ list, numItems, check, adminCheck }) {
+  return <PaginatedItems itemsPerPage={numItems} project={list} num={check} adminValue={adminCheck} />;
 }
 
 export default Paginate;

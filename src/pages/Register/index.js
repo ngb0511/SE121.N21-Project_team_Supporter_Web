@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
 import * as accountServices from '../../apiServices/accountServices';
 import * as userServices from '../../apiServices/userServices';
-
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 function handleSubmit(e) {
   e.preventDefault();
@@ -41,12 +41,28 @@ function Register() {
   //Hàm tạo user
   function createAccount() {
     const fetchApi = async () => {
-      const accountResult = await accountServices.createAccount(accountEx);
+      const checkResult = await accountServices.checkCreatedAccount(document.getElementById('email').value);
+      if (checkResult[0].checkExist === 0) {
+        accountEx.email = document.getElementById('email').value;
+        accountEx.password = document.getElementById('password').value;
+        const accountResult = await accountServices.createAccount(accountEx);
+        console.log(accountResult);
+        accountEx.accountID = accountResult;
+        const userResult = await accountServices.updateVerificationCode(accountResult, accountEx);
+        console.log(userResult);
+        alert('Đăng kí email thành công, vui lòng nhập mã');
+        //createAccount();
+      } else {
+        const accountResult = await accountServices.getAccountSortedByEmail(document.getElementById('email').value);
+        console.log(accountResult);
+        accountEx.accountID = accountResult[0].accountID;
+        const userResult = await accountServices.updateVerificationCode(accountEx.accountID, accountEx);
+        console.log(userResult);
+        alert('Vui lòng nhập mã');
+        //console.log('Tài khoản đã tồn tại');
+      }
+
       //setUser(userResult);
-      console.log(accountResult);
-      accountEx.accountID = accountResult;
-      const userResult = await accountServices.updateVerificationCode(accountResult, accountEx);
-      console.log(userResult);
     };
     fetchApi();
   }
@@ -75,8 +91,10 @@ function Register() {
         accountEx.email = document.getElementById('email').value;
         accountEx.password = document.getElementById('password').value;
         createAccount();
+        alert('Đăng kí thành công');
       } else {
         console.log('Tài khoản đã tồn tại');
+        alert('Tài khoản đã tồn tại');
       }
     };
     fetchApi();
@@ -135,7 +153,7 @@ function Register() {
       fetchApi();
     } */
   }
-  return (
+  /*return (
     <div className={cx('wrapper')}>
       <div className={cx('form-cointainer')}>
         <form className={cx('form')} onSubmit={handleSubmit} action="">
@@ -178,6 +196,61 @@ function Register() {
             ユフィの息遣いは、私を火傷するほど熱く、情熱的な欲望を運んでいた。
           </p>
         </div>
+      </div>
+    </div>
+  );*/
+  const navigate = useNavigate();
+  function handleChange(event) {
+    //document.getElementById('form').action = 'Home';
+    event.preventDefault();
+    navigate('/Login');
+  }
+  function Send(event) {
+    event.preventDefault();
+  }
+  return (
+    <div className={cx('wrapper')}>
+      <form>
+        <h1>Sign up to hire talent</h1>
+        <br></br>
+        <label>Email:</label>
+        <br></br>
+        <input id="username"></input>
+        <br></br>
+        <label>Password:</label>
+        <br></br>
+        <input id="password"></input>
+        <br></br>
+        <label>Re-Password:</label>
+        <br></br>
+        <input id="rePassword"></input>
+        <br></br>
+        <label>Code:</label>
+        <br></br>
+        <div className={cx('code-cointainer')}>
+          <input id="rePassword"></input>
+          <button onClick={Send}>Send</button>
+        </div>
+        <br></br>
+        <div className={cx('check-cointainer')}>
+          <input type="checkbox"></input>
+          <p>
+            Yes, I understand and agree to the Upwork Terms of Service , including the User Agreement and Privacy Policy
+          </p>
+        </div>
+        <br></br>
+        <br></br>
+        <button onClick={handleChange}>Create my account</button>
+      </form>
+      <br></br>
+
+      <div className={cx('login')}>
+        <p>
+          <hr></hr>Already have account? <hr></hr>
+        </p>
+        <button>
+          <a href="Login">Log In</a>
+        </button>
       </div>
     </div>
   );

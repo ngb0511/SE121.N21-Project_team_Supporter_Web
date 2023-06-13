@@ -1,0 +1,198 @@
+.popup-box {
+  position: fixed;
+  background: #00000050;
+  width: 100%;
+  height: 200vh;
+  top: 0;
+  left: 0;
+}
+
+.box {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  height: auto;
+  max-height: 70vh;
+  margin-top: calc(100vh - 85vh - 20px);
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  border: 1px solid #999;
+  overflow: auto;
+  display: flex;
+}
+
+.close-icon {
+  content: 'x';
+  cursor: pointer;
+  position: fixed;
+  right: calc(10% - 15px);
+  top: calc(100vh - 85vh - 33px);
+  background: #ededed;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid #999;
+  font-size: 20px;
+}
+
+.content {
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  div {
+    height: 40%;
+    color: blue;
+    padding: 10px;
+    margin-bottom: 50px;
+    button {
+      padding: 20px;
+      font-size: 1.4rem;
+      height: 60px;
+      width: 120px;
+      margin-left: 5px;
+      margin-right: 5px;
+      text-align: center;
+      border-radius: 15px;
+      font-weight: 500;
+    }
+  }
+}
+
+#cancel {
+  background-color: #ffffff;
+  border: 3px blue solid;
+  color: blue;
+}
+
+.wrapper {
+  min-height: 100%;
+  width: 100%;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 60px;
+  width: 100%;
+  border-radius: 15px;
+}
+
+.header-tittle {
+  margin: auto;
+}
+
+.inner {
+  height: 1300px;
+  width: 95%;
+  margin: auto;
+  padding: 20px;
+}
+
+.edit-inner {
+  width: 74%;
+  height: 90%;
+  background-color: #ffffff;
+  border-radius: 15px;
+}
+
+.general {
+  margin: auto;
+  width: 90%;
+  height: 100%;
+}
+
+.tittle {
+  margin-top: 15px;
+  width: 80%;
+}
+.general-cointainer {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.general-item {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.general-input {
+  height: 30%;
+  width: 100%;
+  font-size: 1.6rem;
+  border: none;
+  border-bottom: black 1px solid;
+}
+
+.introduce {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.introduce-input {
+  width: 100%;
+  height: 70%;
+}
+
+.save-btn {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  width: 20%;
+  height: 5%;
+  background-color: #4164e3;
+  font-size: 1.6rem;
+  font-weight: 600;
+  align-items: center;
+  border-radius: 15px;
+  color: #ffffff;
+}
+
+.disabled-btn {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  width: 20%;
+  height: 5%;
+  background-color: #efefefef;
+  font-size: 1.6rem;
+  font-weight: 600;
+  align-items: center;
+  border-radius: 15px;
+  color: #000000;
+}
+
+.main-inner {
+  width: 25%;
+  height: 90%;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.link-cointainer {
+  margin: auto;
+  width: 80%;
+  height: 5%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+#description-coinainer {
+  width: 100%;
+}

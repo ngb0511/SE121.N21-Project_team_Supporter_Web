@@ -17,7 +17,7 @@ function Account() {
     fetchApi();
   }, []);
 
-  return (
+  /*return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
         <div className={cx('cointainer')}>
@@ -45,6 +45,125 @@ function Account() {
                   </td>
                 </tr>
               ))}
+          </table>
+        </div>
+      </div>
+    </div>
+  );*/
+  function handleChange(event) {
+    //document.getElementById('form').action = 'Home';
+    event.preventDefault();
+    //navigate('/Login');
+  }
+  return (
+    <div className={cx('wrapper')}>
+      <div className={cx('account-create')}>
+        <form>
+          <h1>Create Account</h1>
+          <br></br>
+          <label>Email:</label>
+          <br></br>
+          <input id="username"></input>
+          <br></br>
+          <label>Password:</label>
+          <br></br>
+          <input id="password"></input>
+          <br></br>
+          <label>Re-Password:</label>
+          <br></br>
+          <input id="rePassword"></input>
+
+          <br></br>
+          <br></br>
+          <button onClick={handleChange}>Create account</button>
+        </form>
+      </div>
+      <div className={cx('account-list')}>
+        <h2>Account List</h2>
+        <div className="wrapper-table">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Password</th>
+                <th>Tool</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Như Tâm</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>
+                  <button className={cx('delete')}>Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Như Tâm</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>
+                  <button className={cx('delete')}>Delete</button>
+                </td>
+              </tr>{' '}
+              <tr>
+                <td>3</td>
+                <td>Như Tâm</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>
+                  <button className={cx('delete')}>Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Như Tâm</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>
+                  <button className={cx('delete')}>Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Như Tâm</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>
+                  <button className={cx('delete')}>Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Như Tâm</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>
+                  <button className={cx('delete')}>Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Như Tâm</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>18/09/2002</td>
+                <td>
+                  <button className={cx('delete')}>Delete</button>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>

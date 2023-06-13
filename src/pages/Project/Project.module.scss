@@ -1,11 +1,51 @@
 .wrapper {
   min-height: 100%;
-  width: 100%;
+  width: 1100px;
   border-radius: 15px;
   display: flex;
+  margin-top: 100px;
 }
 
-.inner {
+.project-cointainer {
+  width: 100%;
+  border: 3px solid #efefefef;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+.nav {
+  overflow: hidden;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #a5a8a5;
+  display: flex;
+  justify-content: space-around;
+}
+.active {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 2rem;
+  border-bottom: #4164e3 solid 2px;
+  background-color: #ffffff;
+  width: 240px;
+  height: 100px;
+}
+
+.nav-btn {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 2rem;
+  width: 240px;
+  height: 100px;
+}
+
+/*.inner {
   min-height: 1000px;
   width: 90%;
   margin: auto;
@@ -113,4 +153,4 @@
 
 .page {
   text-align: right;
-}
+}*/

@@ -1,7 +1,17 @@
 .wrapper {
   min-height: 100%;
   width: 21%;
-  background-color: #1f2937;
+  margin-left: 2px;
+  //border-right: 3px solid #efefef;
+  border-left: 3px solid #efefef;
+  padding: 10px;
+  h1 {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    font-weight: 500;
+    border-right: 3px solid #efefef;
+  }
 }
 
 .sidebar-cointainer {
@@ -10,13 +20,16 @@
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  margin-top: 20px;
+  border-right: 3px solid #efefef;
+  padding-right: 15px;
+  padding-bottom: 20px;
+  //margin-top: 30px;
 }
 
 .sidebar-item {
   width: 95%;
   height: 50px;
-  border: black 2px solid;
+  //border: black 2px solid;
   border-radius: 15px;
   display: flex;
   margin-bottom: 5px;
@@ -27,9 +40,9 @@
   height: 80%;
   display: flex;
   flex-direction: row;
-  background-color: #1f2937;
+  //background-color: #1f2937;
   font-size: 1.8rem;
-  color: antiquewhite;
+  //color: antiquewhite;
   align-items: center;
   border-radius: 25px;
   justify-content: space-around;
@@ -40,9 +53,9 @@
   height: 80%;
   display: flex;
   flex-direction: row;
-  background-color: #1f2937;
+  //background-color: #1f2937;
   font-size: 1.8rem;
-  color: Blue;
+  //color: Blue;
   align-items: center;
   border-radius: 25px;
   justify-content: space-around;

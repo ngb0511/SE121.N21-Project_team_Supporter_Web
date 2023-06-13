@@ -5,9 +5,11 @@ const cx = classNames.bind(styles);
 
 function Footer() {
   return (
-    <header className={cx('wrapper')}>
-      <div className={cx('inner')}></div>
-    </header>
+    <footer className={cx('wrapper')}>
+      <div className={cx('inner')}>
+        <p>© 2015 - 2023 wIBu® Global Inc. • Privacy Policy</p>
+      </div>
+    </footer>
   );
 }
 

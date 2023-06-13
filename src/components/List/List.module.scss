@@ -9,9 +9,76 @@
 .project-item {
   width: 100%;
   background-color: #ffffff;
-  height: 20%;
-  margin-bottom: 20px;
+  //height: 20%;
+  //margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 }
+
+.project-item:hover {
+  opacity: 0.5;
+  background-color: #d7ddd7;
+}
+
+.like {
+  height: 5px;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 30px;
+  padding-top: 15px;
+  color: red;
+  font-size: 2rem;
+  input {
+    margin-top: 0px;
+    width: 20px;
+    height: 20px;
+  }
+  button {
+    width: 100px;
+    height: 40px;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    background-color: rgb(226, 7, 7);
+  }
+}
+
+/*[id='heart'] {
+  position: absolute;
+  left: -100vw;
+}
+
+[for='heart'] {
+  color: #aab8c2;
+  cursor: pointer;
+  font-size: 2rem;
+  align-self: center;
+  transition: color 0.2s ease-in-out;
+}
+
+[for='heart']:hover {
+  color: grey;
+}
+
+[for='heart']::selection {
+  color: none;
+  background: transparent;
+}
+
+[for='heart']::moz-selection {
+  color: none;
+  background: transparent;
+}
+
+[id='heart']:checked + label {
+  color: #e2264d;
+  will-change: font-size;
+  //animation: heart 1s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+}
+
+@keyframes heart {
+  0%,
+  17.5% {
+    font-size: 0;
+  }
+}*/

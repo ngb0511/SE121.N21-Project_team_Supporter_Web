@@ -1,12 +1,48 @@
 .wrapper {
-  height: 60px;
+  height: 65px;
   width: 100%;
+  background-color: #ffffff;
   display: flex;
-  justify-content: center;
-  border-style: outset #111827 solid 1px;
+  flex-direction: row;
+  position: fixed;
+  border-bottom: 1px solid #a5a8a5;
+  //justify-content: center;
+  //border-style: outset #111827 solid 1px;
 }
 
-.inner {
+.logo-cointainer {
+  margin-left: 24px;
+  width: 150px;
+  height: 100%;
+  //background-color: aqua;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.private-cointainer {
+  display: flex;
+}
+
+.navigate-cointainer {
+  width: 1000px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  //background-color: red;
+}
+
+.user-cointainer {
+  width: 200px;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 24px;
+  //background-color: blue;
+}
+
+/*.inner {
   height: 100%;
   width: 100%;
   background-color: #1f2937;
@@ -88,25 +124,26 @@
 }
 
 .user-cointainer {
-  width: 25%;
+  width: 30%;
   height: 90%;
   display: flex;
+  justify-content: flex-end;
   flex-direction: row;
   position: relative;
 }
 
 .user-img {
   object-fit: cover;
-  width: 25%;
+  width: 15%;
   height: 100%;
   border-radius: 50%;
 }
 
 .user-name-cointainer {
-  width: 50%;
+  width: 40%;
   height: 100%;
   color: #fff3df;
-  align-items: center;
+  align-items: flex-end;
   position: relative;
   display: inline-block;
   margin-right: 0;
@@ -114,7 +151,6 @@
 
 .user-name {
   color: #fff3df;
-  text-align: center;
 }
 
 .sort-btn {
@@ -158,4 +194,4 @@
 }
 .icon-envelope:hover .envelope-content {
   display: block;
-}
+}*/

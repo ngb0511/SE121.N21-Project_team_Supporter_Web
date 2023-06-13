@@ -1,9 +1,12 @@
 .wrapper {
-  width: 90%;
-  height: 50%;
-  background-color: #1f2937;
+  width: 200px;
+  height: 50px;
+  //background-color: #1f2937;
+  padding: 10px;
+  border-radius: 25px;
+  border: 2px solid #e6dfdfef;
   font-size: 1.8rem;
-  color: antiquewhite;
+  color: #000;
   margin: auto;
 }
 
