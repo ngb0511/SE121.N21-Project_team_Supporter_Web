@@ -11,12 +11,16 @@ const User = function(user) {
     this.idNumber = User.idNumber;
     this.address = User.address;
     this.job = User.job;
-    this.description = User.description;
-    this.avatar = User.avatar;		
+    this.degree = User.degree;
+    this.experience = User.experience;
+    this.avatar = User.avatar;
+    this.CV = User.CV;
+    this.description = User.description;	
+    this.majorID = User.majorID;
 }
 
 User.getAllUsers = function getAllUsers(results) {
-    db.query("SELECT * FROM USER", function(err, res) {
+    db.query("SELECT user.userID, user.surname, user.forename, user.gender, DATE_FORMAT(user.dateOfBirth, '%Y-%m-%d') AS dateOfBirth, user.email, user.phoneNumber, user.idNumber, user.address, user.majorID, user.job, user.degree, user.experience, user.avatar, user.description, CONCAT(user.surname, ' ', user.forename) AS fullName FROM citrosweb.user;", function(err, res) {
 
         if(err){
             console.log("error: ", err);
@@ -30,7 +34,7 @@ User.getAllUsers = function getAllUsers(results) {
 };
 
 User.addUser = function addUser(newUser, results) {
-    db.query("INSERT INTO USER SET ?", newUser, function(err, res) {
+    db.query("INSERT INTO USER (email, surname, forename) VALUES (?, ?, ?)", [newUser.email, newUser.surname, newUser.forename], function(err, res) {
 
         if(err){
             console.log("error: ", err);
@@ -45,8 +49,8 @@ User.addUser = function addUser(newUser, results) {
 
 User.updateUser = function updateUser(updatedUser, userID, results) {
     db.query("UPDATE USER SET surname = ?, forename = ?, gender = ?, dateOfBirth = ?, email = ?, " +
-            "phoneNumber = ?, idNumber = ?, address = ?, job = ?, description = ? " +
-            "WHERE userID = ?", [updatedUser.surname, updatedUser.forename, updatedUser.gender, updatedUser.dateOfBirth, updatedUser.email, updatedUser.phoneNumber, updatedUser.idNumber, updatedUser.address, updatedUser.job, updatedUser.description, userID], function(err, res) {
+            "phoneNumber = ?, idNumber = ?, address = ?, degree = ?, experience = ?, description = ?, majorID = ? " +
+            "WHERE userID = ?", [updatedUser.surname, updatedUser.forename, updatedUser.gender, updatedUser.dateOfBirth, updatedUser.email, updatedUser.phoneNumber, updatedUser.idNumber, updatedUser.address, updatedUser.degree, updatedUser.experience, updatedUser.description, updatedUser.majorID, userID], function(err, res) {
 
         if(err){
             console.log("error: ", err);
@@ -73,10 +77,10 @@ User.deleteUser= function deleteUser(userID, results) {
     });
 };
 
-User.getUserSortedByName = function getUserSortedByName(userName, results) {
-    db.query("SELECT * FROM USER where userName like ?", ["%" + userName + "%"], function(err, res) {
+User.getUserSortedByID = function getUserSortedByID(userID, results) {
+    db.query("SELECT user.userID, user.surname, user.forename, user.gender, DATE_FORMAT(user.dateOfBirth, '%Y-%m-%d') AS dateOfBirth, user.email, user.phoneNumber, user.idNumber, user.address, user.job, user.degree, user.experience, user.avatar, user.majorID, user.description, CONCAT(user.surname, ' ', user.forename) AS fullName, majorName FROM citrosweb.user, citrosweb.major where major.majorID = user.majorID and userID = ?", userID, function(err, res) {
         if(err){
-            console.log("error: ", userName);
+            console.log("error: ", userID);
             results(null, err);
         }
         else{
@@ -86,8 +90,21 @@ User.getUserSortedByName = function getUserSortedByName(userName, results) {
     });
 };
 
-User.uploadAvatar = function uploadAvatar(avatarLink, userID, results) {
-    db.query("UPDATE USER SET avatar = ? WHERE userID = ?", [avatarLink, userID], function(err, res) {
+User.getUserByID = function getUserByID(userID, results) {
+    db.query("SELECT user.userID, user.surname, user.forename, user.gender, DATE_FORMAT(user.dateOfBirth, '%Y-%m-%d') AS dateOfBirth, user.email, user.phoneNumber, user.idNumber, user.address, user.job, user.degree, user.experience, user.avatar, user.majorID, user.description, CONCAT(user.surname, ' ', user.forename) AS fullName FROM citrosweb.user where userID = ?", userID, function(err, res) {
+        if(err){
+            console.log("error: ", userID);
+            results(null, err);
+        }
+        else{
+            console.log("user: ", res);
+            results(null, res);
+        }
+    });
+};
+
+User.addAvatar = function addAvatar(avatar, userID, results) {
+    db.query("UPDATE USER SET avatar = ? WHERE userID = ?", [avatar, userID], function(err, res) {
 
         if(err){
             console.log("error: ", err);
@@ -96,6 +113,50 @@ User.uploadAvatar = function uploadAvatar(avatarLink, userID, results) {
         else{
             console.log(res.insertId);
             results(null, res.insertId);
+        }
+    });
+};
+
+User.addCV = function addCV(CV, userID, results) {
+    db.query("UPDATE USER SET CV = ? WHERE userID = ?", [CV, userID], function(err, res) {
+
+        if(err){
+            console.log("error: ", err);
+            results(err, null);
+        }
+        else{
+            console.log(res.insertId);
+            results(null, res.insertId);
+        }
+    });
+};
+
+User.getAvatarSortedByUserID = function getAvatarSortedByUserID(userID, results) {
+    db.query("SELECT avatar FROM USER where userID = ?",  userID, function(err, res) {
+
+        if(err){
+            console.log("error: ", userID);
+            results(null, err);
+        }
+        else{
+            
+            //console.log("Avatar: ", avatarName);
+            results(null, res);
+        }
+    });
+};
+
+User.getCVSortedByUserID = function getCVSortedByUserID(userID, results) {
+    db.query("SELECT CV FROM USER where userID = ?",  userID, function(err, res) {
+
+        if(err){
+            console.log("error: ", userID);
+            results(null, err);
+        }
+        else{
+            
+            //console.log("Avatar: ", avatarName);
+            results(null, res);
         }
     });
 };

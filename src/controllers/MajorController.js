@@ -2,8 +2,8 @@ const db = require('../config/db-config');
 const Major = require('../model/Major');
 
 class MajorController {
-    listAllMajors(req, res) {
-        Major.getAllMajor((err, major) => {
+    getAllMajors(req, res) {
+        Major.getAllMajors((err, major) => {
             if (err) {
                 res.send(err);
             }
@@ -14,13 +14,38 @@ class MajorController {
     addMajor(req, res) {
         var newMajor = new Major();
         Object.assign(newMajor, req.body);
-        console.log(newMajor);
+        //console.log(newMajor);
         Major.addMajor(newMajor, function (err, major) {
             if (err) {
                 res.send(err);
             }
             res.json(major);
         })
+    }
+
+    deleteMajor(req, res) {
+        var majorID = req.params.majorID;
+        Major.deleteMajor(majorID, function (err, major) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(major);
+        })
+    }
+
+    checkExistedMajor(req, res) {       
+        var newMajor = new Major();
+        Object.assign(newMajor, req.body);
+
+        //console.log(filters);
+        Major.checkExistedMajor(newMajor.majorName, function (err, checkExist)  {
+            if (err) {
+                res.send(err);
+            }
+            //console.log(checkExist)
+            res.json(checkExist);
+        })
+        
     }
 }
 

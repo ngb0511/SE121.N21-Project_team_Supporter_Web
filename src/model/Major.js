@@ -34,4 +34,32 @@ Major.addMajor = function addMajor(newMajor, results) {
     });
 };
 
+Major.deleteMajor = function deleteMajor(majorID, results) {
+    db.query("DELETE FROM MAJOR WHERE majorID = ?", majorID, function(err, res) {
+
+        if(err){
+            console.log("error: ", err);
+            results(err, null);
+        }
+        else{
+            console.log(res.insertId);
+            results(null, res.insertId);
+        }
+    });
+};
+
+Major.checkExistedMajor = function checkExistedMajor(major, results) {
+    db.query("SELECT EXISTS(SELECT major.* FROM MAJOR where major.majorName = ?) AS checkExist;" , major, function(err, res) {
+
+        if(err){
+            //console.log("error: ", userID);
+            results(null, err);
+        }
+        else{
+            console.log("result: ", res);
+            results(null, res);
+        }
+    });
+};
+
 module.exports = Major;
