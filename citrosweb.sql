@@ -70,10 +70,10 @@ CREATE TABLE MAJOR (
 ) ENGINE=INNODB;
 
 -- CREATE TABLE CONTACT_INFO (
---     contactInfoID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,			-- Mã thông tin liên hệ
---     userID INT,									-- Mã người dùng
---     platform VARCHAR(10),							-- Nền tảng (face, gmail, twitter, ...)
---     link TEXT									-- Đường dẫn
+--     contactInfoID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--     userID INT,
+--     platform VARCHAR(10),
+--     link TEXT
 -- ) ENGINE=INNODB;
 
 CREATE TABLE REGISTRANT (
@@ -89,10 +89,10 @@ CREATE TABLE STARREDPROJECT (
 ) ENGINE=INNODB;
 
 -- CREATE TABLE REPORT (
---     reportID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,				-- Mã rp
---     userID INT,									-- Mã người dùng
---     projectID INT,								-- Mã dự án
---     reason TEXT									-- Ly do
+--     reportID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--     userID INT,
+--     projectID INT,
+--     reason TEXT
 -- ) ENGINE=INNODB;
 
 CREATE TABLE PROJECTFILE (
