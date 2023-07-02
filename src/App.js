@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 //Main page
-
 function App() {
   const [isLogIn, setIsLogIn] = useState(0);
   useEffect(() => {

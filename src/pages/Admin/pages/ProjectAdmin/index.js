@@ -1,67 +1,100 @@
 import classNames from 'classnames/bind';
 import styles from './ProjectAdmin.module.scss';
 import Paginate from '../../../../components/Paginate';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchBar from '../../../../components/SearchBar';
+import * as projectServices from '../../../../apiServices/projectItemServices';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
 const cx = classNames.bind(styles);
 
 function ProjectAdmin() {
-  //Test project
-  const projectDropDown = [
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-  ];
-
   const [data, setData] = useState();
+  const [project, setproject] = useState([]);
+  useEffect(() => {
+    const fetchApi = async () => {
+      const result = await projectServices.projectAllItem();
+      setproject(result);
+    };
+    fetchApi();
+  }, []);
+
   const childToParent = (project) => {
     setData(project);
   };
 
+  function Search() {
+    console.log(active);
+
+    if (document.getElementById('searchInput').value !== '') {
+      const fetchApi = async () => {
+        if (active === '1') {
+          const result = await projectServices.sortProject(document.getElementById('searchInput').value);
+          setproject(result);
+        } else if (active === '2') {
+          const result = await projectServices.getAllFinishedProjectsSortedByName(
+            document.getElementById('searchInput').value,
+          );
+          console.log(result);
+          setproject(result);
+        } else if (active === '3') {
+          const result = await projectServices.getAllUnfinishedProjectsSortedByName(
+            document.getElementById('searchInput').value,
+          );
+          console.log(result);
+          setproject(result);
+        }
+
+        //setproject(result);
+      };
+      fetchApi();
+    } else {
+      const fetchApi = async () => {
+        // const result = await projectServices.projectAllItem();
+        // setproject(result);
+
+        if (active === '1') {
+          const result = await projectServices.projectAllItem();
+          console.log(active);
+          setproject(result);
+        } else if (active === '2') {
+          const result = await projectServices.getAllFinishedProjects();
+          console.log(result);
+          setproject(result);
+        } else if (active === '3') {
+          const result = await projectServices.getAllUnfinishedProjects();
+          console.log(result);
+          setproject(result);
+        }
+      };
+      fetchApi();
+    }
+  }
+
   const [active, setActive] = useState('1');
   const handleClick = (event) => {
     setActive(event.target.id);
+
+    const fetchApi = async () => {
+      //var userEx = JSON.parse(sessionStorage.getItem('userLogin'));
+      console.log(event.target.id);
+      if (event.target.id === '1') {
+        const result = await projectServices.projectAllItem();
+        console.log(event.target.id);
+        setproject(result);
+      } else if (event.target.id === '2') {
+        const result = await projectServices.getAllFinishedProjects();
+        console.log(result);
+        setproject(result);
+      } else if (event.target.id === '3') {
+        const result = await projectServices.getAllUnfinishedProjects();
+        console.log(result);
+        setproject(result);
+      }
+      //var account = JSON.parse(sessionStorage.getItem('account'));
+    };
+    fetchApi();
   };
 
   return (
@@ -74,8 +107,12 @@ function ProjectAdmin() {
             before June 30th and unlock 6 new features for the next 3 months.
           </p>
         </div>
-        <SearchBar project={childToParent} />
-        {data}
+        <div className={cx('search-wrapper')}>
+          <input id="searchInput"></input>
+          <button onClick={Search}>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
+        </div>
         <div className={cx('work-list')}>
           <h2>Project List</h2>
           <div className={cx('nav')}>
@@ -90,7 +127,7 @@ function ProjectAdmin() {
             </button>
           </div>
           <p>Browse jobs that match your experience to a client's hiring preferences. Ordered by most relevant.</p>
-          <Paginate numItems={6} list={projectDropDown} check={1} adminCheck={1} />
+          <Paginate numItems={6} list={project} check={1} adminCheck={1} />
         </div>
       </div>
     </div>

@@ -78,8 +78,11 @@ function Register() {
   } */
 
   //event đăng kí
-  function signUp() {
-    if (document.getElementById('password').value !== document.getElementById('repass').value) {
+  function signUp(event) {
+    event.preventDefault();
+
+    if (document.getElementById('password').value !== document.getElementById('rePassword').value) {
+      alert('Nhap lai mk');
       return;
     }
     const fetchApi = async () => {
@@ -91,7 +94,7 @@ function Register() {
         accountEx.email = document.getElementById('email').value;
         accountEx.password = document.getElementById('password').value;
         createAccount();
-        alert('Đăng kí thành công');
+        alert('Đăng kí email thành công, vui lòng kiểm tra email và nhập mã xác thực');
       } else {
         console.log('Tài khoản đã tồn tại');
         alert('Tài khoản đã tồn tại');
@@ -100,7 +103,9 @@ function Register() {
     fetchApi();
   }
 
-  function createUser() {
+  function createUser(event) {
+    event.preventDefault();
+
     accountEx.email = document.getElementById('email').value;
     userEx.email = document.getElementById('email').value;
     var code = document.getElementById('code').value;
@@ -124,6 +129,10 @@ function Register() {
           console.log(accountResult);
         };
         fetchApi();
+        alert('Đăng ký tài khoản thành công, vui lòng đăng nhập lại');
+        navigate('/Login');
+      } else {
+        alert('Sai mã xác thực, vui lòng kiểm tra lại');
       }
     };
     fetchApi();
@@ -208,6 +217,16 @@ function Register() {
   function Send(event) {
     event.preventDefault();
   }
+
+  function ShowPass() {
+    if (document.getElementById('showPass').checked) {
+      document.getElementById('password').type = 'text';
+      document.getElementById('rePassword').type = 'text';
+    } else {
+      document.getElementById('password').type = 'password';
+      document.getElementById('rePassword').type = 'password';
+    }
+  }
   return (
     <div className={cx('wrapper')}>
       <form>
@@ -215,21 +234,25 @@ function Register() {
         <br></br>
         <label>Email:</label>
         <br></br>
-        <input id="username"></input>
+        <input id="email"></input>
         <br></br>
         <label>Password:</label>
         <br></br>
-        <input id="password"></input>
+        <input id="password" type="password"></input>
         <br></br>
         <label>Re-Password:</label>
         <br></br>
-        <input id="rePassword"></input>
+        <input id="rePassword" type="password"></input>
         <br></br>
+        <div>
+          <input id="showPass" type="checkbox" onClick={ShowPass}></input> &nbsp; <p>Show password</p>
+        </div>
+
         <label>Code:</label>
         <br></br>
         <div className={cx('code-cointainer')}>
-          <input id="rePassword"></input>
-          <button onClick={Send}>Send</button>
+          <input id="code"></input>
+          <button onClick={signUp}>Send</button>
         </div>
         <br></br>
         <div className={cx('check-cointainer')}>
@@ -240,7 +263,7 @@ function Register() {
         </div>
         <br></br>
         <br></br>
-        <button onClick={handleChange}>Create my account</button>
+        <button onClick={createUser}>Create my account</button>
       </form>
       <br></br>
 
@@ -249,7 +272,7 @@ function Register() {
           <hr></hr>Already have account? <hr></hr>
         </p>
         <button>
-          <a href="Login">Log In</a>
+          <a href="login">Log In</a>
         </button>
       </div>
     </div>

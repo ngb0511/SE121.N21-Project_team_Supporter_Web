@@ -11,6 +11,7 @@ import { faPlus, faPenToSquare, faStar, faUser, faUpload } from '@fortawesome/fr
 import EditProject from '../../components/PopUp/EditProject';
 import AddTask from '../../components/PopUp/AddTask';
 import EditTask from '../../components/PopUp/EditTask';
+import Rate from '../../components/PopUp/Rate';
 import AddMember from '../../components/PopUp/AddMember';
 import { useNavigate } from 'react-router-dom';
 /*const data = [
@@ -38,9 +39,45 @@ function ProjectDetails() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isRate, setIsRate] = useState(false);
   const [isAddMember, setIsAddMember] = useState(false);
   const [isTask, setIsTask] = useState();
   const [pId, setpId] = useState();
+  const [uId, setuId] = useState();
+  const [major, setMajor] = useState([]);
+  const [regis, setRegis] = useState([]);
+  const [liked, setLiked] = useState();
+  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
+  const [link, setLink] = useState([]);
+  const [participateUser, setParticipate] = useState([]);
+  const [leader, setLeader] = useState(false);
+  //const [CV, setCV] = useState();
+
+  var participate = {
+    projectID: '',
+    userID: '',
+    rate: '',
+  };
+
+  var projectEx = {
+    projectID: '',
+    projectName: '',
+    projectOwner: '',
+    description: '',
+    startTime: '',
+    endTime: '',
+    maxParticipantAmount: '',
+    gitHubLink: '',
+    majorID: '',
+    projectStatus: '',
+  };
+
+  const arr = [
+    { value: 'Đang tiến hành', text: 'Đang tiến hành' },
+    { value: 'Đã hoàn thành', text: 'Đã hoàn thành' },
+    { value: 'Hủy', text: 'Hủy' },
+  ];
 
   const togglePopup = () => {
     const fetchApi = async () => {
@@ -54,6 +91,32 @@ function ProjectDetails() {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      const regis_result = await projectServices.getAllRegis(newId);
+      //const major_result = await projectItemServices.getAllProjectMajors(props.projectId);
+      setRegis(regis_result);
+      console.log(regis_result);
+      //setMajor(major_result);
+      //console.log(major_result);
+    };
+    fetchApi();
+  }, []);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      const liked_result = await projectServices.getNumberOfLikedProjects(newId);
+      //const major_result = await projectItemServices.getAllProjectMajors(props.projectId);
+      setLiked(liked_result[0].liked);
+      console.log(liked);
+      //setMajor(major_result);
+      //console.log(major_result);
+    };
+    fetchApi();
+  }, []);
+
   const toggleAdd = () => {
     const fetchApi = async () => {
       var newId = Number(id);
@@ -64,6 +127,11 @@ function ProjectDetails() {
     };
     fetchApi();
     setIsAdd(!isAdd);
+  };
+
+  const toggleRate = (event, index) => {
+    setuId(index);
+    setIsRate(!isRate);
   };
 
   const toggleEdit = () => {
@@ -93,10 +161,17 @@ function ProjectDetails() {
 
   useEffect(() => {
     const fetchApi = async () => {
+      var user = JSON.parse(sessionStorage.getItem('userLogin'));
       var newId = Number(id);
-      console.log(newId);
+      //console.log(newId);
       const result = await projectServices.projectItem(newId);
+
+      if (user.userID == result[0].projectOwner) {
+        setLeader(true);
+        //console.log(result);
+      }
       setpId(newId);
+      console.log(result);
       setProject(result);
     };
 
@@ -120,24 +195,182 @@ function ProjectDetails() {
       console.log(newId);
       const result = await projectServices.getAllParticipant(newId);
       console.log(result);
-      setUser(result);
+      setParticipate(result);
+    };
+    fetchApi();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      console.log(newId);
+      const major_result = await projectServices.getAllProjectMajors(newId);
+      console.log(major_result);
+      setMajor(major_result);
+    };
+    fetchApi();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      console.log(newId);
+      //setMajor(major_result);
+      var fileArr = [];
+      const fileResult = await projectServices.getAllFiles(newId);
+      setFiles(fileResult);
+
+      for (var i = 0; i < fileResult.length; i++) {
+        console.log(fileResult[i]);
+        var path = fileResult[i].file.toString().split('\\');
+        var file = 'http://localhost:3002/files/' + path[4];
+        console.log(file);
+        fileArr[i] = file;
+      }
+
+      console.log(fileArr);
+      setLink(fileArr);
+      // var path = cv[0].CV.toString().split('\\');
+      // var file = 'http://localhost:3002/files/' + path[4];
+      // console.log(file);
+      //setLink(file);
+      //setTest(avatarName);
+      //document.getElementsByClassName('user-img').style.backgroundImage = "url('${avatarName}')";
+      //console.log(e.target.files[0]);
+      //setFile(avatarName);
+      //setImage(URL.createObjectURL(avatarName));
     };
     fetchApi();
   }, [id]);
 
   function Update(event, index) {
     console.log(event);
+    console.log(index);
     setIsTask(index);
     toggleEdit();
   }
 
   function View(event, index) {
     console.log(event);
-    navigate('/ProfileWall/1');
+    navigate('/ProfileWall/' + index);
+  }
+
+  function Save(event) {
+    var newId = Number(id);
+    console.log(newId);
+
+    //console.log(document.getElementById('description').value);
+    projectEx.description = document.getElementById('description').value;
+    projectEx.projectStatus = document.getElementById('projectStatus').value;
+    projectEx.gitHubLink = document.getElementById('gitHubLink').value;
+
+    console.log(projectEx);
+
+    const fetchApi = async () => {
+      const result = await projectServices.updateProject(newId, projectEx);
+      console.log(result);
+      alert('Cập nhật dự án thành công');
+
+      //setMajor(major_result);
+    };
+    fetchApi();
+    //projectEx
+    window.location.reload();
+  }
+
+  function handleChangeFile(e) {
+    console.log(e.target.files[0]);
+    //setFiles(e.target.files);
+    setFile(e.target.files[0]);
+    //console.log(file);
+
+    // console.log(file);
+  }
+
+  function UploadFile(e) {
+    //e.preventDefault()
+    var newId = Number(id);
+    console.log(file);
+    var checkExist = false;
+    var updateID = '0';
+
+    for (var i = 0; i < files.length; i++) {
+      var path = files[i].file.toString().split('\\');
+
+      if (file.name === path[4]) {
+        checkExist = true;
+        updateID = files[i].fileID;
+      }
+    }
+
+    if (checkExist === true) {
+      const result = projectServices.updateProjectFile(updateID, file);
+      console.log(result);
+      alert('Update file cho dự án thành công');
+    } else {
+      const result = projectServices.uploadFile(newId, file);
+      console.log(result);
+      alert('Upload file cho dự án thành công');
+    }
+    window.location.reload();
+
+    // var projectFile = {
+    //   fileID: '3',
+    //   projectID: '1',
+    //   file: '..\\citrosBackend\\src\\files\\Bai8_Kohonen.pdf',
+    // };
+
+    // const result = projectServices.deleteProjectFile(3, projectFile);
   }
 
   function AddMember(event, index) {
     console.log(event);
+
+    const fetchApi = async () => {
+      // var newId = Number(id);
+      //   console.log(newId);
+      const userResult = await accountServices.getAccountSortedByUserID(index);
+      participate.projectID = Number(id);
+      participate.userID = index;
+      regis.projectName = project[0].projectName;
+      const result = await projectServices.addParticipate(index, participate);
+      console.log(result);
+
+      //alert('Thêm thành viên thành công 1');
+    };
+    fetchApi();
+    const fetchApi3 = async () => {
+      // var newId = Number(id);
+      //   console.log(newId);
+      const userResult = await accountServices.getAccountSortedByUserID(index);
+      participate.projectID = Number(id);
+      participate.userID = index;
+      regis.projectName = project[0].projectName;
+      console.log(regis[0]);
+      console.log(index);
+      const regisResult = await projectServices.deleteRegistrant(index, regis[0]);
+      //const major_result = await projectItemServices.getAllProjectMajors(props.projectId);
+      console.log(regisResult);
+    };
+    fetchApi3();
+    const fetchApi2 = async () => {
+      // var newId = Number(id);
+      //   console.log(newId);
+      const userResult = await accountServices.getAccountSortedByUserID(index);
+      participate.projectID = Number(id);
+      participate.userID = index;
+      regis.projectName = project[0].projectName;
+
+      const sendEmail = await projectServices.sendAcceptedEmail(userResult[0].email, regis);
+      console.log(sendEmail);
+      //alert('Thêm thành viên thành công 3');
+    };
+    fetchApi2();
+
+    alert('Thêm thành viên thành công');
+    window.location.reload();
+    //Hàm này để add member vô dự án
+    //index là userID
     //navigate('/ProfileWall/2');
   }
 
@@ -311,35 +544,35 @@ function ProjectDetails() {
       {isAddMember && <AddMember handleClose={toggleAddMember} project={project[0]} projectId={id} />}
     </div>
   );*/
-  var arr = [{ value: 'Java' }, { value: 'ReactJs' }, { value: 'NodeJs' }];
+  //var arr = [{ value: 'Java' }, { value: 'ReactJs' }, { value: 'NodeJs' }];
   return (
     <div className={cx('wrapper')}>
-      <h2>Job Details</h2>
+      <h2>Project Details</h2>
       <div className={cx('project-detail')}>
         <div className={cx('project-detail-information')}>
-          {project.length > 0 ? <h3>Project Name {project[0].projectName}</h3> : <h3>Project Name</h3>}
+          {project.length > 0 ? <h3>{project[0].projectName}</h3> : <h3>Project Name</h3>}
           <p>
-            <a href="/Profile">Leader</a>
+            {project.length > 0 ? <a href="/Profile">Leader: {project[0].user}</a> : <a>Leader</a>}
             <br></br>
-            Start Date:
+            {project.length > 0 ? <a>Start Date: {project[0].startTime}</a> : <a>Start Date</a>}
           </p>
           <div>
             <p>
               <h4>Description</h4>
-              <textarea
-                value="Redesign existing logo to include my phone number below in large writing 0422 335 749 that has
-              electrical and 0422 335 749 in white and in black .Also have designs without my number, but also black
-              and white electrical .All of the above in high resolution, in EPS preferably, with no background"
-              ></textarea>
+              {project.length > 0 ? (
+                <textarea id={cx('description')} defaultValue={project[0].description}></textarea>
+              ) : (
+                <textarea></textarea>
+              )}
             </p>
           </div>
           <div>
             <p>
               <h4>Major Requirement</h4>
               <div>
-                {arr.map((option, index) => (
-                  <span key={index} value={option.value}>
-                    {option.value}
+                {major.map((option, index) => (
+                  <span key={index} value={option.majorName}>
+                    {option.majorName}
                   </span>
                 ))}
               </div>
@@ -348,41 +581,101 @@ function ProjectDetails() {
           <div>
             <p>
               <h4>Attachment</h4>
-              <input type="file"></input>
-              <button>
+              <input type="file" onChange={handleChangeFile}></input>
+
+              <button id={cx('UploadBtn')} onClick={UploadFile}>
                 Upload <FontAwesomeIcon icon={faUpload} />
               </button>
+
+              <div className={cx('linkCointainer')}>
+                {link.map((option, index) => (
+                  <a className="link" href={option} target="_blank" rel="noopener noreferrer">
+                    {option.toString().slice(28)}
+                  </a>
+                ))}
+              </div>
             </p>
           </div>
         </div>
         <div className={cx('project-detail-button')}>
           <div>
-            <button className={cx('save-button')}>Save</button>
-            <button className={cx('delete-button')}>Delete</button>
-            <p>
-              Max Member: 20 <FontAwesomeIcon icon={faUser} />{' '}
-            </p>
-            <p>
-              Current Member: 12 <FontAwesomeIcon icon={faUser} />
-            </p>
+            {leader ? (
+              <button className={cx('save-button')} onClick={Save}>
+                Save
+              </button>
+            ) : (
+              <></>
+            )}
+
+            <select id={cx('projectStatus')} className={cx('projectStatus')}>
+              {project.length > 0 ? (
+                <option defaultValue={project[0].projectStatus} disabled selected>
+                  {project[0].projectStatus}
+                </option>
+              ) : (
+                <option disabled selected>
+                  Chọn trạng thái
+                </option>
+              )}
+              <option value="Đã hoàn thành">Đã hoàn thành</option>
+              <option value="Chưa hoàn thành">Chưa hoàn thành</option>
+              <option value="Huỷ">Hủy</option>
+            </select>
+            {project.length > 0 ? (
+              <p>
+                Max Member: {project[0].maxParticipantAmount} <FontAwesomeIcon icon={faUser} />
+              </p>
+            ) : (
+              <p>Max Member</p>
+            )}
+            {project.length > 0 ? (
+              <p>
+                Current Member: {project[0].NumberOfUsers} <FontAwesomeIcon icon={faUser} />
+              </p>
+            ) : (
+              <p>Current Member</p>
+            )}
           </div>
           <div>
             <h4>About</h4>
-            <span>5 account like this project</span>
-            <span>
-              5 <FontAwesomeIcon icon={faStar} /> of 1 review
-            </span>
+            <span>{liked} account like this project</span>
+
             <h4>Job link</h4>
-            <input value="https://www.upwork.com/jobs/~016896f2182152e00f"></input>
+            {leader ? (
+              <div>
+                {project.length > 0 ? (
+                  <div>
+                    <input id={cx('gitHubLink')} defaultValue={project[0].gitHubLink}></input>
+                  </div>
+                ) : (
+                  <input></input>
+                )}
+              </div>
+            ) : (
+              <div>
+                {project.length > 0 ? (
+                  <div>
+                    <input defaultValue={project[0].gitHubLink} disabled></input>
+                  </div>
+                ) : (
+                  <input disabled></input>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
       <h2>Task list</h2>
       <div className={cx('task-detail')}>
         <div className="container">
-          <button className={cx('addTask-btn')} onClick={toggleAdd}>
-            Add new task
-          </button>
+          {leader ? (
+            <button className={cx('addTask-btn')} onClick={toggleAdd}>
+              Add new task
+            </button>
+          ) : (
+            <></>
+          )}
+
           <div className="wrapper-table">
             <table>
               <thead>
@@ -392,48 +685,32 @@ function ProjectDetails() {
                   <th>Start Time</th>
                   <th>End Time</th>
                   <th>Status</th>
-                  <th>Member</th>
                   <th>Notice</th>
-                  <th>Update</th>
+                  <th>Member</th>
+                  <th>Edit</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>FrontEnd</td>
-                  <td>18/09/2002</td>
-                  <td>10/06/2023</td>
-                  <td>Done</td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <button onClick={(event) => Update(event, 1)}>View</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>BackEnd</td>
-                  <td>21/10/2002</td>
-                  <td></td>
-                  <td>In progress</td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <button onClick={(event) => Update(event, 1)}>View</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>BackEnd</td>
-                  <td>21/10/2002</td>
-                  <td></td>
-                  <td>In progress</td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <button onClick={(event) => Update(event, 1)}>View</button>
-                  </td>
-                </tr>
+                {task.map((option, index) => (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{option.task}</td>
+                    <td>{option.startTime}</td>
+                    <td>{option.endTime}</td>
+                    <td>{option.taskStatus}</td>
+                    <td>{option.notice}</td>
+                    <td>{option.user}</td>
+                    <td>
+                      {leader ? (
+                        <button onClick={(event) => Update(event, option.progressID)}>Edit</button>
+                      ) : (
+                        <button onClick={(event) => Update(event, option.progressID)} disabled selected hidden>
+                          Edit
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -442,7 +719,7 @@ function ProjectDetails() {
       <h2>Member list</h2>
       <div className={cx('member-detail')}>
         <div className={cx('new-member')}>
-          <h4>New User</h4>
+          <h4>Applying Users</h4>
           <table>
             <thead>
               <tr>
@@ -453,48 +730,36 @@ function ProjectDetails() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Nhu</td>
-                <td>21</td>
-                <td>
-                  <button className={cx('view-btn')} onClick={(event) => View(event, 1)}>
-                    View
-                  </button>
-                  &nbsp;
-                  <button className={cx('add-btn')} onClick={(event) => AddMember(event, 1)}>
-                    Add
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Alex</td>
-                <td>24</td>
-                <td>
-                  <button className={cx('view-btn')} onClick={(event) => View(event, 1)}>
-                    View
-                  </button>
-                  &nbsp;
-                  <button className={cx('add-btn')} onClick={(event) => AddMember(event, 1)}>
-                    Add
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Nike</td>
-                <td>19</td>
-                <td>
-                  <button className={cx('view-btn')} onClick={(event) => View(event, 1)}>
-                    View
-                  </button>
-                  &nbsp;
-                  <button className={cx('add-btn')} onClick={(event) => AddMember(event, 1)}>
-                    Add
-                  </button>
-                </td>
-              </tr>
+              {regis.map((option, index) => (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{option.user}</td>
+                  <td>{option.age}</td>
+                  <td>
+                    {leader ? (
+                      <div>
+                        <button className={cx('view-btn')} onClick={(event) => View(event, option.userID)}>
+                          View
+                        </button>
+                        &nbsp;
+                        <button className={cx('add-btn')} onClick={(event) => AddMember(event, option.userID)}>
+                          Add
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <button className={cx('view-btn')} onClick={(event) => View(event, option.userID)}>
+                          View
+                        </button>
+                        &nbsp;
+                        <button className={cx('add-btn')} onClick={(event) => AddMember(event, option.userID)}>
+                          Add
+                        </button>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -510,30 +775,31 @@ function ProjectDetails() {
                   Name
                 </th>
                 <th scope="col" class="darkblue">
-                  Major
+                  Rate
                 </th>
               </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-
-              <tr>
-                <td colspan="2">&nbsp;</td>
-                <td colspan="2">&nbsp;</td>
-              </tr>
+              {participateUser.map((option, index) => (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{option.user}</td>
+                  <td>
+                    {leader ? (
+                      <button onClick={(event) => toggleRate(event, option.userID)}>Rate</button>
+                    ) : (
+                      <button onClick={(event) => toggleRate(event, option.userID)} disabled selected hidden>
+                        Edit
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
       {isAdd && <AddTask handleClose={toggleAdd} projectName={task.task} id={pId} reload={Reload} />}
       {isEdit && <EditTask handleClose={toggleEdit} progress={isTask} id={pId} reload={Reload} />}
+      {isRate && <Rate handleClose={toggleRate} id={uId} pId={pId} />}
     </div>
   );
 }

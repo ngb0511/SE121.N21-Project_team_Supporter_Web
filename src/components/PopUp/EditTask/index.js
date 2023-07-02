@@ -6,6 +6,7 @@ import styles from './EditTask.module.scss';
 import * as projectItemServices from '../../../apiServices/projectItemServices';
 import * as taskServices from '../../../apiServices/taskServices';
 import { useEffect, useState } from 'react';
+
 import Confirm from '../Confirm';
 import Successful from '../Successful';
 import Error from '../Error';
@@ -54,6 +55,7 @@ const EditTask = (props) => {
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [isError, setIsError] = useState(false);
   const [userList, setUser] = useState([]);
+  const [progress, setProgress] = useState([]);
   const toggleConfirm = () => {
     setIsConfirm(!isConfirm);
   };
@@ -78,10 +80,25 @@ const EditTask = (props) => {
     fetchApi();
   }, [props.id]);
 
+  useEffect(() => {
+    const fetchApi = async () => {
+      console.log(props.progress);
+      var newId = Number(props.progress);
+      console.log(newId);
+      const result = await taskServices.getTaskSortByID(newId);
+      console.log(result);
+      setProgress(result);
+      //const major_result = await projectServices.getAllProjectMajors(newId);
+      /*console.log(major_result);
+      setMajor(major_result);*/
+    };
+    fetchApi();
+  }, []);
+
   const confirm = () => {
     Create();
     const fetchApi = async () => {
-      const result = await taskServices.updateTask(props.progress.progressID, project);
+      const result = await taskServices.updateTask(progress[0].progressID, project);
       console.log(result);
     };
     fetchApi();
@@ -102,14 +119,25 @@ const EditTask = (props) => {
             <li>
               <div>
                 <h3>Tên công việc:</h3>
-                <input id={cx('task')} defaultValue={props.progress.task}></input>
+                {progress.length > 0 ? (
+                  <input id={cx('task')} defaultValue={progress[0].task}></input>
+                ) : (
+                  <input id={cx('task')}></input>
+                )}
               </div>
               <div>
                 <h3>Phân công:</h3>
                 <select id={cx('userID')} className={cx('general-input')}>
-                  <option value={props.progress.userID} disabled selected hidden>
-                    {props.progress.user}
-                  </option>
+                  {progress.length > 0 ? (
+                    <option value={progress[0].userID} disabled selected hidden>
+                      {progress[0].user}
+                    </option>
+                  ) : (
+                    <option disabled selected hidden>
+                      Chọn user
+                    </option>
+                  )}
+
                   {userList.map((option, index) => (
                     <option key={index} value={option.userID}>
                       {option.user}
@@ -121,24 +149,42 @@ const EditTask = (props) => {
             <li>
               <div>
                 <h3>Ngày bắt đầu:</h3>
-                <input type="date" id={cx('startTime')} defaultValue={props.progress.startTime}></input>
+                {progress.length > 0 ? (
+                  <input type="date" id={cx('startTime')} defaultValue={progress[0].startTime}></input>
+                ) : (
+                  <input type="date" id={cx('startTime')}></input>
+                )}
               </div>
               <div>
                 <h3>Ngày kết thúc:</h3>
-                <input type="date" id={cx('endTime')} defaultValue={props.progress.endTime}></input>
+                {progress.length > 0 ? (
+                  <input type="date" id={cx('endTime')} defaultValue={progress[0].endTime}></input>
+                ) : (
+                  <input type="date" id={cx('endTime')}></input>
+                )}
               </div>
             </li>
             <li>
               <div>
                 <h3>Mô tả:</h3>
-                <input type="text" id={cx('notice')} placeholder={props.progress.notice}></input>
+                {progress.length > 0 ? (
+                  <input type="text" id={cx('notice')} placeholder={progress[0].notice}></input>
+                ) : (
+                  <input type="text" id={cx('notice')}></input>
+                )}
               </div>
               <div>
                 <h3>Trạng thái:</h3>
                 <select id={cx('taskStatus')}>
-                  <option value={props.progress.taskStatus} disabled selected hidden>
-                    {props.progress.taskStatus}
-                  </option>
+                  {progress.length > 0 ? (
+                    <option value={progress[0].taskStatus} disabled selected hidden>
+                      {progress[0].taskStatus}
+                    </option>
+                  ) : (
+                    <option disabled selected hidden>
+                      Chọn trạng thái
+                    </option>
+                  )}
                   <option value="Đã hoàn thành">Đã hoàn thành</option>
                   <option value="Chưa hoàn thành">Chưa hoàn thành</option>
                   <option value="Hoãn">Hoãn</option>

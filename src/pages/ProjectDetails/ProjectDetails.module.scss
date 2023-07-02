@@ -14,7 +14,7 @@
 }
 
 .project-detail {
-  //height: 1000px;
+  min-height: 700px;
   width: 100%;
   border: 3px solid #efefefef;
   border-radius: 25px;
@@ -39,7 +39,7 @@
       width: 100px;
       padding: 10px;
       border-radius: 15px;
-      background-color: #1cc206;
+      background-color: #108a00;
       color: #ffffff;
     }
   }
@@ -108,6 +108,13 @@
       padding: 5px;
       border-radius: 25px;
     }
+    select {
+      width: 90%;
+      height: 40px;
+      border-radius: 25px;
+      margin-top: 20px;
+      margin-left: 20px;
+    }
   }
 }
 
@@ -147,7 +154,7 @@
   width: 150px;
   color: #ffffff;
   border-radius: 25px;
-  background-color: #1cc206;
+  background-color: #108a00;
 }
 
 .wrapper-table {
@@ -174,9 +181,7 @@ th {
     width: 60px;
     color: #ffffff;
     background-color: #108a00;
-    font-size: 1.3rem;
-    border: none;
-    //border: 2px solid #ddd8d8;
+    font-size: 1.8rem;
   }
 }
 th {
@@ -244,12 +249,9 @@ tbody {
 }
 
 .view-btn {
-  height: 30px;
   width: 50px;
   background-color: #ffffff;
-  color: #1cc206;
-  font-size: 1.3rem;
-  border: 2px solid #1cc206;
+  color: #108a00;
 }
 
 .current-member {
@@ -408,3 +410,9 @@ tbody {
 #test-date {
   padding: 30px;
 }*/
+
+.linkCointainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}

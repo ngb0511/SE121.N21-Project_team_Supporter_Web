@@ -31,8 +31,7 @@ const AddTask = (props) => {
     notice: '',
   };
   function Create() {
-    setIsConfirm(!isConfirm);
-    /*if (document.getElementById('task').value !== '') {
+    if (document.getElementById('task').value !== '') {
       setIsConfirm(!isConfirm);
       project.task = document.getElementById('task').value;
       project.userID = document.getElementById('userID').value;
@@ -43,7 +42,7 @@ const AddTask = (props) => {
       console.log(project);
     } else {
       setIsError(!isError);
-    }*/
+    }
   }
   const [isConfirm, setIsConfirm] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
@@ -76,18 +75,17 @@ const AddTask = (props) => {
   const confirm = () => {
     Create();
 
-    /*const fetchApi = async () => {
+    const fetchApi = async () => {
       console.log(props.id);
       var newId = Number(props.id);
       console.log(newId);
       const result = await taskServices.createTask(newId, project);
       console.log(result);
     };
-    fetchApi();*/
-    //setIsConfirm(!isConfirm);
+    fetchApi();
+    setIsConfirm(!isConfirm);
     setIsSuccessful(!isSuccessful);
     props.reload();
-    //setTimeout(400);
     props.handleClose();
   };
   return (
@@ -153,8 +151,8 @@ const AddTask = (props) => {
         </div>
       </div>
       {isConfirm && <Confirm handleClose={toggleConfirm} handleConfirm={confirm} />}
-      {isSuccessful && <Successful handleClose={toggleSuccessful} tittle="Thao tác đã được thực hiện thành công" />}
-      {isError && <Error handleClose={toggleError} tittle="Vui lòng nhập đầy đủ thông tin" />}
+      {isSuccessful && <Successful handleClose={toggleSuccessful} />}
+      {isError && <Error handleClose={toggleError} />}
     </div>
   );
 };

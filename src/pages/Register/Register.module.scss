@@ -1,5 +1,5 @@
 .wrapper {
-  height: 850px;
+  height: 950px;
   width: 700px;
   //margin-top: 50px;
   //display: flex;
@@ -33,6 +33,17 @@
       color: #ffffff;
       font-size: 1.6rem;
       font-weight: 700;
+    }
+    div {
+      display: flex;
+      input [type='checkbox'] {
+        margin-top: 5px;
+        width: 15px;
+        height: 15px;
+      }
+      p {
+        margin-top: 10px;
+      }
     }
   }
 }

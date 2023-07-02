@@ -8,7 +8,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //import Button from '../../components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft, faTemperatureEmpty } from '@fortawesome/free-solid-svg-icons';
+import Heart from 'react-animated-heart';
 //import EditProject from '../../components/PopUp/EditProject';
 //import AddTask from '../../components/PopUp/AddTask';
 //import EditTask from '../../components/PopUp/EditTask';
@@ -34,6 +35,7 @@ function ProjectView() {
   const { id } = useParams();
   const [project, setProject] = useState([]);
   const [major, setMajor] = useState([]);
+  const [completed, setCompleted] = useState(false);
   const navigate = useNavigate();
 
   function Back() {
@@ -45,20 +47,21 @@ function ProjectView() {
       var newId = Number(id);
       console.log(newId);
       const major_result = await projectServices.getAllProjectMajors(newId);
+      setMajor(major_result);
+      console.log(major);
+      // var majorString = '';
 
-      var majorString = '';
-
-      for (let i = 0; i < major_result.length; i++) {
-        //console.log(major_result[i]);
-        majorString = majorString + major_result[i].majorName + '  ';
-      }
-      console.log(majorString);
-      //setRegis(regis_result);
-      setMajor(majorString);
+      // for (let i = 0; i < major_result.length; i++) {
+      //   //console.log(major_result[i]);
+      //   majorString = majorString + major_result[i].majorName + '  ';
+      // }
+      // console.log(majorString);
+      // //setRegis(regis_result);
+      // setMajor(majorString);
     };
     fetchApi();
   }, []);
-  var userEx = JSON.parse(sessionStorage.getItem('userEx'));
+  var userEx = JSON.parse(sessionStorage.getItem('userLogin'));
   var projectEx = {
     projectName: '',
     projectOwner: '',
@@ -73,16 +76,40 @@ function ProjectView() {
     registrantID: '0',
     userID: '',
     projectID: '',
-    majorID: '',
+    projectName: '',
+  };
+
+  var participate = {
+    userID: '',
+    projectID: '',
+    rate: '',
   };
 
   useEffect(() => {
     const fetchApi = async () => {
       var newId = Number(id);
       console.log(newId);
+      participate.userID = userEx.userID;
+      participate.projectID = newId;
+
       const result = await projectServices.projectItem(newId);
-      console.log(userEx.userID);
+      console.log(result);
+      if (result[0].projectStatus === 'Đã hoàn thành') {
+        setCompleted(true);
+      }
+
       setProject(result);
+
+      //console.log(result[0].projectStatus);
+      //console.log(project[0]);
+      console.log(userEx.userID);
+      const checkResult = await projectServices.checkExistedStarred(userEx.userID, result[0]);
+      console.log(checkResult[0].checkExist);
+      if (checkResult[0].checkExist === 1) {
+        setClick(true);
+      } else {
+        setClick(false);
+      }
     };
 
     fetchApi();
@@ -90,22 +117,144 @@ function ProjectView() {
   function addRegis() {
     const fetchApi = async () => {
       regis.userID = userEx.userID;
-      regis.majorID = 1;
-      regis.projectID = project[0].projectID;
-      const result = await projectServices.addRegistrant(regis);
-      console.log(result);
+
+      //regis.majorID = 1;
+      // console.log(document.getElementById('majorSelect').value);
+      // regis.majorID = document.getElementById('majorSelect').value;
+      if (project[0].projectOwner === regis.userID) {
+        alert('Chủ dự án không thể đăng ký tham gia dự án của bản thân');
+      } else {
+        regis.projectID = project[0].projectID;
+        regis.projectName = project[0].projectName;
+
+        console.log(regis);
+        const checkResult = await projectServices.checkExistedRegistrant(regis);
+
+        console.log(checkResult[0].checkExist);
+        if (checkResult[0].checkExist === 1) {
+          alert('Bạn đã đăng ký hoặc đang tham gia dự án này rồi');
+        } else {
+          const result = await projectServices.addRegistrant(regis);
+          console.log(result);
+          alert('Đăng ký tham gia dự án thành công');
+        }
+      }
     };
     fetchApi();
   }
-  var arr = [{ value: 'Java' }, { value: 'ReactJs' }, { value: 'NodeJs' }];
+
+  function addSaved() {
+    const fetchApi = async () => {
+      //regis.userID = userEx.userID;
+      console.log(project[0]);
+      console.log(userEx.userID);
+      const checkResult = await projectServices.checkExistedStarred(userEx.userID, project[0]);
+      //console.log(checkResult[0].checkExist);
+      if (checkResult[0].checkExist === 0) {
+        const result = await projectServices.addStarredProject(userEx.userID, project[0]);
+        console.log(result);
+        alert('Đã thích dự án');
+      } else {
+        const result = await projectServices.deleteStarredProject(userEx.userID, project[0]);
+        console.log(result);
+        alert('Đã bỏ thích dự án');
+      }
+
+      //regis.majorID = 1;
+      // console.log(document.getElementById('majorSelect').value);
+      // regis.majorID = document.getElementById('majorSelect').value;
+      // if (project[0].projectOwner === regis.userID) {
+      //   alert('May la chu du an ma dang ky qq gi nua');
+      // } else {
+      //   regis.projectID = project[0].projectID;
+      //   console.log(regis);
+      //   const result = await projectServices.addRegistrant(regis);
+      //   console.log(result);
+      //   alert('dang ky thanh cong');
+      // }
+    };
+    fetchApi();
+  }
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      //regis.userID = userEx.userID;
+      console.log(project[0]);
+      console.log(userEx.userID);
+      const checkResult = await projectServices.checkExistedStarred(userEx.userID, project[0]);
+      console.log(checkResult[0].checkExist);
+      if (checkResult[0].checkExist === 1) {
+        setClick(true);
+      } else {
+        setClick(false);
+      }
+
+      //regis.majorID = 1;
+      // console.log(document.getElementById('majorSelect').value);
+      // regis.majorID = document.getElementById('majorSelect').value;
+      // if (project[0].projectOwner === regis.userID) {
+      //   alert('May la chu du an ma dang ky qq gi nua');
+      // } else {
+      //   regis.projectID = project[0].projectID;
+      //   console.log(regis);
+      //   const result = await projectServices.addRegistrant(regis);
+      //   console.log(result);
+      //   alert('dang ky thanh cong');
+      // }
+    };
+    fetchApi();
+  }, []);
+
+  function Like() {
+    const fetchApi = async () => {
+      //regis.userID = userEx.userID;
+      console.log(project[0]);
+      console.log(userEx.userID);
+      const checkResult = await projectServices.checkExistedStarred(userEx.userID, project[0]);
+      //console.log(checkResult[0].checkExist);
+      if (checkResult[0].checkExist === 0) {
+        const result = await projectServices.addStarredProject(userEx.userID, project[0]);
+        console.log(result);
+        setClick(true);
+        //alert('Đã thích dự án');
+      } else {
+        const result = await projectServices.deleteStarredProject(userEx.userID, project[0]);
+        console.log(result);
+        setClick(false);
+        //alert('Đã bỏ thích dự án');
+      }
+
+      //regis.majorID = 1;
+      // console.log(document.getElementById('majorSelect').value);
+      // regis.majorID = document.getElementById('majorSelect').value;
+      // if (project[0].projectOwner === regis.userID) {
+      //   alert('May la chu du an ma dang ky qq gi nua');
+      // } else {
+      //   regis.projectID = project[0].projectID;
+      //   console.log(regis);
+      //   const result = await projectServices.addRegistrant(regis);
+      //   console.log(result);
+      //   alert('dang ky thanh cong');
+      // }
+    };
+    fetchApi();
+  }
+
+  var admin = sessionStorage.getItem('admin');
+  const [isClick, setClick] = useState(true);
+  //var arr = [{ value: 'Java' }, { value: 'ReactJs' }, { value: 'NodeJs' }];
   return (
     <div className={cx('wrapper')}>
       <button className={cx('backBtn')} onClick={Back}>
         <FontAwesomeIcon icon={faArrowAltCircleLeft} /> &nbsp; Back
       </button>
+
       <div className={cx('inner')}>
         <div className={cx('general')}>
-          <h2 className={cx('tittle')}>Chi tiết dự án</h2>
+          <div className={cx('tittle-ccointainer')}>
+            <h2 className={cx('tittle')}>Chi tiết dự án</h2>
+            <Heart isClick={isClick} onClick={Like} />
+          </div>
           <ul className={cx('general-cointainer')}>
             <li className={cx('general-item')}>
               <h4 className={cx('tittle')}>Tên dự án:</h4>
@@ -210,29 +359,23 @@ function ProjectView() {
           </ul>
           <ul className={cx('general-cointainer')}>
             <li className={cx('general-item')} id={cx('description-coinainer')}>
-              <h4 className={cx('tittle')}>Chuyên ngành:</h4>
-              {project.length > 0 ? (
-                <input disabled id={cx('major')} className={cx('general-input')} defaultValue={major}></input>
-              ) : (
-                <input disabled id={cx('major')} className={cx('general-input')}></input>
-              )}
+              <h4 className={cx('tittle')}>
+                Chuyên ngành: &nbsp;
+                {major.map((option, index) => (
+                  <span key={index} value={option.majorName}>
+                    {option.majorName}
+                  </span>
+                ))}
+              </h4>
             </li>
           </ul>
-          <br></br>
-          {arr.map((option, index) => (
-            <span key={index} value={option.value}>
-              {option.value}
-            </span>
-          ))}
-          <br></br>
-          <br></br>
-          {project.length > 0 && project[0].NumberOfUsers < project[0].maxParticipantAmount ? (
+          {project.length > 0 && project[0].NumberOfUsers < project[0].maxParticipantAmount && completed === false ? (
             <button className={cx('save-btn')} onClick={addRegis}>
               &nbsp;&nbsp;Ứng tuyển
             </button>
           ) : (
             <button disabled className={cx('disabled-btn')}>
-              &nbsp;&nbsp;Đã đủ thành viên
+              &nbsp;Không thể đăng ký
             </button>
           )}
         </div>

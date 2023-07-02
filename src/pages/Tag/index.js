@@ -45,12 +45,20 @@ function Tag() {
   const confirm = () => {
     Create();
     const fetchApi = async () => {
-      const result = await tagServices.createMajor(tag);
-      console.log(result);
+      const checkExist = await tagServices.checkExistedMajor(tag);
+      console.log(checkExist[0].checkExist);
+      if (checkExist[0].checkExist === 0) {
+        const result = await tagServices.createMajor(tag);
+        console.log(result);
+        setIsConfirm(!isConfirm);
+        setIsSuccessful(!isSuccessful);
+        //alert('Thêm thành công');
+        window.location.reload();
+      } else {
+        alert('Chuyên ngành này đã tồn tại');
+      }
     };
     fetchApi();
-    setIsConfirm(!isConfirm);
-    setIsSuccessful(!isSuccessful);
   };
 
   const toggleConfirm = () => {
@@ -70,11 +78,23 @@ function Tag() {
     setIsError(!isError);
   };
 
+  function Delete(event, index) {
+    console.log(index);
+    const fetchApi = async () => {
+      const result = await tagServices.deleteMajor(index);
+      //setMajorList(result);
+      console.log(result);
+      alert('Xóa thành công');
+      window.location.reload();
+    };
+    fetchApi();
+  }
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
         <div className={cx('header')}>
-          <h3 className={cx('header-tittle')}>Add Major Tag</h3>
+          <h3 className={cx('header-tittle')}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Major Tag</h3>
           <div className={cx('header-input')}>
             <div className={cx('header-input-name')}>
               <h3>Name:</h3>
@@ -100,30 +120,18 @@ function Tag() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Như Tâm</td>
-                  <td>18/09/2002</td>
-                  <td>
-                    <button className={cx('delete')}>Delete</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Như Tâm</td>
-                  <td>18/09/2002</td>
-                  <td>
-                    <button className={cx('delete')}>Delete</button>
-                  </td>
-                </tr>{' '}
-                <tr>
-                  <td>3</td>
-                  <td>Như Tâm</td>
-                  <td>18/09/2002</td>
-                  <td>
-                    <button className={cx('delete')}>Delete</button>
-                  </td>
-                </tr>
+                {majorList.map((option, index) => (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{option.majorName}</td>
+                    <td>{option.description}</td>
+                    <td>
+                      <button className={cx('delete')} onClick={(event) => Delete(event, option.majorID)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

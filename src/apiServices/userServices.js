@@ -20,3 +20,32 @@ export const getUserByID = async (id) => {
   const response = await request.get(`/user/getUserSortedByID/${id}`);
   return response.data;
 };
+
+export const getUserDetailByID = async (id) => {
+  const response = await request.get(`/user/getUserByID/${id}`);
+  return response.data;
+};
+
+export function uploadCV(id, CV) {
+  const formData = new FormData();
+  formData.append('CV', CV);
+  request.put(`/user/addCV/${id}`, formData).then((res) => {
+    console.log(res);
+  });
+}
+
+export const getCVSortedByUserID = async (userID) => {
+  const response = await request.get(`/user/getCVSortedByUserID/${userID}`);
+
+  return response.data;
+};
+
+export const deleteUser = async (id) => {
+  const response = await request.delete(`/user/deleteUser/${id}`);
+  return response.data;
+};
+
+export const getUserNumber = async () => {
+  const response = await request.get('/account/getUserNumber');
+  return response.data;
+};

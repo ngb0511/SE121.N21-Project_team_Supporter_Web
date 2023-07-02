@@ -19,7 +19,7 @@ const Successful = (props) => {
           </div>
           <h1>Thành công</h1>
           <br></br>
-          <p>{props.tittle}</p>
+          <p>Thao tác đã được thực hiện thành công</p>
           <div>
             <button id={cx('cancel')} onClick={props.handleClose}>
               Thoát

@@ -3,7 +3,8 @@ import styles from './ProfileWall.module.scss';
 import classNames from 'classnames/bind';
 import * as projectServices from '../../apiServices/projectItemServices';
 import * as accountServices from '../../apiServices/accountServices';
-import * as taskServices from '../../apiServices/taskServices';
+import * as avatarServices from '../../apiServices/avatarServices';
+import * as userServices from '../../apiServices/userServices';
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,64 +33,151 @@ const cx = classNames.bind(styles);
         </h2> */
 
 function ProfileWall() {
+  //var userEx = JSON.parse(sessionStorage.getItem('userLogin'));
+
+  const arr = [
+    { value: '', text: '--Chọn trình độ--' },
+    { value: 'Cao đẳng', text: 'Cao đẳng' },
+    { value: 'Đại học', text: 'Đại học' },
+    { value: 'Tiến sĩ', text: 'Tiến sĩ' },
+    { value: 'Thạc sĩ', text: 'Thạc sĩ' },
+  ];
+
   const { id } = useParams();
   const [users, setUsers] = useState([]);
+  const [project, setproject] = useState([]);
+  const [joinedNum, setJoinedNum] = useState();
+  const [ownedNum, setOwnedNum] = useState();
   const [test, setTest] = useState(
     'https://t3.ftcdn.net/jpg/03/16/55/44/360_F_316554461_QQ1RVxQgIBIYRa3tq4Sm3Ss1mA7xXUoo.jpg',
   );
+  const [link, setLink] = useState('http://localhost:3002/files/Bai1_2_TienXuLyDuLieu_Final-converted.pdf');
   const [active, setActive] = useState('1');
+  // const handleClick = (event) => {
+  //   setActive(event.target.id);
+  // };
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      var newId = Number(id);
+      const result = await projectServices.getAllJoinedProject(newId);
+      setproject(result);
+      const joinedResult = await projectServices.getNumberOfProjectsJoinedForUser(newId);
+      //getNumberOfProjectsOwned
+      //console.log(joinedResult[0].total);
+      setJoinedNum(joinedResult[0].total);
+      const ownedResult = await projectServices.getNumberOfProjectsOwned(newId);
+      console.log(ownedResult[0].total);
+      setOwnedNum(ownedResult[0].total);
+    };
+    fetchApi();
+  }, []);
+
+  useEffect(() => {
+    // const fetchApi = async () => {
+    //   var account = JSON.parse(sessionStorage.getItem('account'));
+    //   console.log(account);
+    //   var newId = Number(id);
+    //   const result = await userServices.getUserByID(newId);
+    //   console.log(result);
+    //   setUsers(result);
+    // };
+    // fetchApi();
+
+    const fetchApi = async () => {
+      var account = JSON.parse(sessionStorage.getItem('account'));
+      console.log(account);
+      var newId = Number(id);
+      const result = await userServices.getUserDetailByID(newId);
+      if (result[0].majorID === null) {
+        setUsers(result);
+      } else {
+        const userResult = await userServices.getUserByID(newId);
+        setUsers(userResult);
+      }
+      //console.log(result);
+    };
+    fetchApi();
+  }, []);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      //var account = JSON.parse(sessionStorage.getItem('account'));
+      var newId = Number(id);
+      const avatar = await avatarServices.getAvatarSortedByUserID(newId);
+      var path = avatar[0].avatar.toString().split('\\');
+      var avatarName = 'http://localhost:3002/images/' + path[4];
+      console.log(avatarName);
+      setTest(avatarName);
+      //document.getElementsByClassName('user-img').style.backgroundImage = "url('${avatarName}')";
+      //console.log(e.target.files[0]);
+      //setFile(avatarName);
+      //setImage(URL.createObjectURL(avatarName));
+    };
+    fetchApi();
+  }, []);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      //var account = JSON.parse(sessionStorage.getItem('account'));
+      var newId = Number(id);
+      const cv = await userServices.getCVSortedByUserID(newId);
+      console.log(cv);
+      var path = cv[0].CV.toString().split('\\');
+
+      var cvLink = 'http://localhost:3002/files/' + path[4];
+      console.log(cvLink);
+      setLink(cvLink);
+      //setTest(avatarName);
+      //document.getElementsByClassName('user-img').style.backgroundImage = "url('${avatarName}')";
+      //console.log(e.target.files[0]);
+      //setFile(avatarName);
+      //setImage(URL.createObjectURL(avatarName));
+    };
+    fetchApi();
+  }, []);
+
   const handleClick = (event) => {
     setActive(event.target.id);
-  };
-  //Test project
-  const projectDropDown = [
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'terrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-  ];
 
-  var arr = [{ value: 'Java' }, { value: 'ReactJs' }, { value: 'NodeJs' }];
+    const fetchApi = async () => {
+      var newId = Number(id);
+      //var userEx = JSON.parse(sessionStorage.getItem('userLogin'));
+      console.log(event.target.id);
+      if (event.target.id === '1') {
+        const result = await projectServices.getAllJoinedProject(newId);
+        console.log(event.target.id);
+        setproject(result);
+      } else if (event.target.id === '2') {
+        const result = await projectServices.getFinishedProject(newId);
+        console.log(result);
+        setproject(result);
+      } else if (event.target.id === '3') {
+        const result = await projectServices.getUnfinishedProject(newId);
+        console.log(result);
+        setproject(result);
+      } else if (event.target.id === '4') {
+        const result = await projectServices.getOwnedProject(newId);
+        console.log(result);
+        setproject(result);
+      }
+      //var account = JSON.parse(sessionStorage.getItem('account'));
+    };
+    fetchApi();
+  };
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      // var account = JSON.parse(sessionStorage.getItem('account'));
+      // console.log(account);
+      // const result = await userServices.getUserByID(newId);
+      // console.log(result);
+      // setUsers(result);
+    };
+    fetchApi();
+  }, []);
+
+  //var arr = [{ value: 'Java' }, { value: 'ReactJs' }, { value: 'NodeJs' }];
   const navigate = useNavigate();
 
   function Back() {
@@ -111,26 +199,26 @@ function ProfileWall() {
                   <h4 className={cx('tittle')}>Họ:</h4>
                   {users.length > 0 ? (
                     <input
-                      disabled
                       id={cx('surname')}
                       className={cx('general-input')}
                       defaultValue={users[0].surname}
+                      disabled="1"
                     ></input>
                   ) : (
-                    <input disabled id={cx('surname')} className={cx('general-input')}></input>
+                    <input id={cx('surname')} className={cx('general-input')} disabled="1"></input>
                   )}
                 </li>
                 <li className={cx('general-item')}>
                   <h4 className={cx('tittle')}>Tên:</h4>
                   {users.length > 0 ? (
                     <input
-                      disabled
                       id={cx('forename')}
                       className={cx('general-input')}
                       defaultValue={users[0].forename}
+                      disabled="1"
                     ></input>
                   ) : (
-                    <input disabled id={cx('forename')} className={cx('general-input')}></input>
+                    <input id={cx('forename')} className={cx('general-input')} disabled="1"></input>
                   )}
                 </li>
               </ul>
@@ -138,35 +226,28 @@ function ProfileWall() {
                 <li className={cx('general-item')}>
                   <h4 className={cx('tittle')}>Giới tính:</h4>
                   {users.length > 0 ? (
-                    <select disabled id={cx('gender')} className={cx('general-input')} defaultValue={users[0].gender}>
-                      <option value="" disabled selected hidden>
-                        Chọn giới tính
-                      </option>
-                      <option value="Nam">Nam</option>
-                      <option value="Nữ">Nữ</option>
-                    </select>
+                    <input
+                      id={cx('gender')}
+                      className={cx('general-input')}
+                      defaultValue={users[0].gender}
+                      disabled="1"
+                    ></input>
                   ) : (
-                    <select disabled id={cx('gender')} className={cx('general-input')}>
-                      <option value="" disabled selected hidden>
-                        Chọn giới tính
-                      </option>
-                      <option value="Nam">Nam</option>
-                      <option value="Nữ">Nữ</option>
-                    </select>
+                    <input id={cx('gender')} className={cx('general-input')} disabled="1"></input>
                   )}
                 </li>
                 <li className={cx('general-item')}>
                   <h4 className={cx('tittle')}>Ngày sinh:</h4>
                   {users.length > 0 ? (
                     <input
-                      disabled
                       id={cx('dateOfBirth')}
                       className={cx('general-input')}
                       type="date"
                       defaultValue={users[0].dateOfBirth}
+                      disabled="1"
                     ></input>
                   ) : (
-                    <input disabled id={cx('dateOfBirth')} className={cx('general-input')} type="date"></input>
+                    <input id={cx('dateOfBirth')} className={cx('general-input')} type="date" disabled="1"></input>
                   )}
                 </li>
               </ul>
@@ -175,26 +256,26 @@ function ProfileWall() {
                   <h4 className={cx('tittle')}>Email:</h4>
                   {users.length > 0 ? (
                     <input
-                      disabled
                       id={cx('email')}
                       className={cx('general-input')}
                       defaultValue={users[0].email}
+                      disabled="1"
                     ></input>
                   ) : (
-                    <input disabled id={cx('email')} className={cx('general-input')}></input>
+                    <input id={cx('email')} className={cx('general-input')} disabled="1"></input>
                   )}
                 </li>
                 <li className={cx('general-item')}>
                   <h4 className={cx('tittle')}>Số điện thoại:</h4>
                   {users.length > 0 ? (
                     <input
-                      disabled
                       id={cx('phoneNumber')}
                       className={cx('general-input')}
                       defaultValue={users[0].phoneNumber}
+                      disabled="1"
                     ></input>
                   ) : (
-                    <input disabled id={cx('phoneNumber')} className={cx('general-input')}></input>
+                    <input id={cx('phoneNumber')} className={cx('general-input')} disabled="1"></input>
                   )}
                 </li>
               </ul>
@@ -203,26 +284,26 @@ function ProfileWall() {
                   <h4 className={cx('tittle')}>CMND:</h4>
                   {users.length > 0 ? (
                     <input
-                      disabled
                       id={cx('idNumber')}
                       className={cx('general-input')}
                       defaultValue={users[0].idNumber}
+                      disabled="1"
                     ></input>
                   ) : (
-                    <input disabled id={cx('idNumber')} className={cx('general-input')}></input>
+                    <input id={cx('idNumber')} className={cx('general-input')} disabled="1"></input>
                   )}
                 </li>
                 <li className={cx('general-item')}>
                   <h4 className={cx('tittle')}>Địa chỉ:</h4>
                   {users.length > 0 ? (
                     <input
-                      disabled
                       id={cx('address')}
                       className={cx('general-input')}
                       defaultValue={users[0].address}
+                      disabled="1"
                     ></input>
                   ) : (
-                    <input disabled id={cx('address')} className={cx('general-input')}></input>
+                    <input id={cx('address')} className={cx('general-input')} disabled="1"></input>
                   )}
                 </li>
               </ul>
@@ -231,9 +312,9 @@ function ProfileWall() {
               <h2 className={cx('tittle')}>Chuyên môn</h2>
               <ul className={cx('job-cointainer')}>
                 <li className={cx('job-item')}>
-                  <h4 className={cx('tittle')}>Trình độ:</h4>
+                  <h3 className={cx('tittle')}>Trình độ:</h3>
                   {users.length > 0 ? (
-                    <select disabled id={cx('degree')} className={cx('job-input')} defaultValue={users[0].degree}>
+                    <select id={cx('degree')} className={cx('job-input')} defaultValue={users[0].degree} disabled="1">
                       <option value="" disabled selected hidden>
                         Chọn trình độ
                       </option>
@@ -244,42 +325,33 @@ function ProfileWall() {
                       ))}
                     </select>
                   ) : (
-                    <select disabled id={cx('degree')} className={cx('job-input')}>
-                      <option value="" disabled selected hidden>
-                        Chọn trình độ
-                      </option>
-                      {arr.map((option, index) => (
-                        <option key={index} value={option.value}>
-                          {option.text}
-                        </option>
-                      ))}
-                    </select>
+                    <div></div>
                   )}
                 </li>
                 <li className={cx('job-item')}>
-                  <h4 className={cx('tittle')}>Nghề nghiệp:</h4>
+                  <h4 className={cx('tittle')}>Chuyên ngành:</h4>
                   {users.length > 0 ? (
                     <input
-                      disabled
                       id={cx('userJob')}
                       className={cx('general-input')}
-                      defaultValue={users[0].job}
+                      defaultValue={users[0].majorName}
+                      disabled="1"
                     ></input>
                   ) : (
-                    <input disabled id={cx('userJob')} className={cx('general-input')}></input>
+                    <input id={cx('userJob')} className={cx('general-input')} disabled="1"></input>
                   )}
                 </li>
                 <li className={cx('job-item')}>
                   <h4 className={cx('tittle')}>Số năm kinh nghiệm:</h4>
                   {users.length > 0 ? (
                     <input
-                      disabled
                       id={cx('experience')}
                       className={cx('job-input')}
                       defaultValue={users[0].experience}
+                      disabled="1"
                     ></input>
                   ) : (
-                    <input disabled id={cx('experience')} className={cx('job-input')}></input>
+                    <input id={cx('experience')} className={cx('job-input')} disabled="1"></input>
                   )}
                 </li>
               </ul>
@@ -287,20 +359,20 @@ function ProfileWall() {
                 <h4 className={cx('tittle')}>Giới thiệu:</h4>
                 {users.length > 0 ? (
                   <textarea
-                    disabled
                     id={cx('description')}
                     className={cx('introduce-input')}
                     cols="40"
                     rows="5"
                     defaultValue={users[0].description}
+                    disabled="1"
                   ></textarea>
                 ) : (
                   <textarea
-                    disabled
                     id={cx('description')}
                     className={cx('introduce-input')}
                     cols="40"
                     rows="5"
+                    disabled="1"
                   ></textarea>
                 )}
               </div>
@@ -310,24 +382,18 @@ function ProfileWall() {
             <div className={cx('profile')}>
               <img className={cx('user-img')} src={test} alt="error"></img>
               <br></br>
-              <a href="/Home">CV:</a>
+              <a href={link} target="_blank" rel="noopener noreferrer">
+                CV.pdf
+              </a>
             </div>
             <div className={cx('stastics')}>
               <h4>
-                Account Created from <p>3 years</p>
+                Total projects joined: <p>{joinedNum} projects </p>
               </h4>
               <h4>
-                Total projects joined <p>4 projects</p>
+                Total projects owned: <p>{ownedNum} projects</p>
               </h4>
-              <h4>
-                Total projects owner <p>0 projects</p>
-              </h4>
-              <h4>
-                Rating
-                <p>
-                  4 <FontAwesomeIcon icon={faStar} />
-                </p>
-              </h4>
+
               <div className={cx('contact')}>
                 <div>
                   <FontAwesomeIcon icon={faFacebook} />
@@ -354,10 +420,10 @@ function ProfileWall() {
                 In Progress
               </button>
               <button key={4} className={active === '4' ? cx('active') : cx('nav-btn')} id={'4'} onClick={handleClick}>
-                Owner
+                Owned
               </button>
             </div>
-            <Paginate numItems={6} list={projectDropDown} check={1} />
+            <Paginate numItems={6} list={project} check={1} />
           </div>
         </div>
       </div>

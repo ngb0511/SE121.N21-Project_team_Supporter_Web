@@ -10,14 +10,40 @@ function Project() {
   const [active, setActive] = useState('1');
   const handleClick = (event) => {
     setActive(event.target.id);
+
+    const fetchApi = async () => {
+      var userEx = JSON.parse(sessionStorage.getItem('userLogin'));
+      console.log(event.target.id);
+      if (event.target.id === '1') {
+        const result = await projectServices.getAllJoinedProject(userEx.userID);
+        console.log(event.target.id);
+        setproject(result);
+      } else if (event.target.id === '2') {
+        const result = await projectServices.getFinishedProject(userEx.userID);
+        console.log(result);
+        setproject(result);
+      } else if (event.target.id === '3') {
+        const result = await projectServices.getUnfinishedProject(userEx.userID);
+        console.log(result);
+        setproject(result);
+      } else if (event.target.id === '4') {
+        const result = await projectServices.getOwnedProject(userEx.userID);
+        console.log(result);
+        setproject(result);
+      }
+      //var account = JSON.parse(sessionStorage.getItem('account'));
+    };
+    fetchApi();
   };
   const [project, setproject] = useState([]);
   useEffect(() => {
     const fetchApi = async () => {
-      var account = JSON.parse(sessionStorage.getItem('account'));
-      const result = await projectServices.getAllJoinedProject(account.userID);
+      var userEx = JSON.parse(sessionStorage.getItem('userLogin'));
+      //console.log(active);
+      const result = await projectServices.getAllJoinedProject(userEx.userID);
       console.log(result);
       setproject(result);
+      //var account = JSON.parse(sessionStorage.getItem('account'));
     };
     fetchApi();
   }, []);
@@ -74,52 +100,52 @@ function Project() {
   );*/
 
   //Test project
-  const projectDropDown = [
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'terrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-    {
-      projectID: '0',
-      projectName: 'tesy',
-      projectOwner: 'test',
-      description:
-        'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
-      startTime: '0/0/2000',
-      endTime: '0/0/2000',
-      maxParticipantAmount: '5',
-      gitHubLink: '1512512522222222222222222222222222',
-    },
-  ];
+  // const projectDropDown = [
+  //   {
+  //     projectID: '0',
+  //     projectName: 'tesy',
+  //     projectOwner: 'test',
+  //     description:
+  //       'terrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
+  //     startTime: '0/0/2000',
+  //     endTime: '0/0/2000',
+  //     maxParticipantAmount: '5',
+  //     gitHubLink: '1512512522222222222222222222222222',
+  //   },
+  //   {
+  //     projectID: '0',
+  //     projectName: 'tesy',
+  //     projectOwner: 'test',
+  //     description:
+  //       'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
+  //     startTime: '0/0/2000',
+  //     endTime: '0/0/2000',
+  //     maxParticipantAmount: '5',
+  //     gitHubLink: '1512512522222222222222222222222222',
+  //   },
+  //   {
+  //     projectID: '0',
+  //     projectName: 'tesy',
+  //     projectOwner: 'test',
+  //     description:
+  //       'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
+  //     startTime: '0/0/2000',
+  //     endTime: '0/0/2000',
+  //     maxParticipantAmount: '5',
+  //     gitHubLink: '1512512522222222222222222222222222',
+  //   },
+  //   {
+  //     projectID: '0',
+  //     projectName: 'tesy',
+  //     projectOwner: 'test',
+  //     description:
+  //       'te  qwrqwrrrrrr rrrrrrrrr  rrrrrrrrrrrrrrrrrrrrrrr r r r r r r rr r r r r r rr r r r r r r rr r rr r r r rr r r r r r rr r r r r r  rr   r r r r r r rrrrrrrrrrrrrrrrrrrrrrrrrrrrrasfasfasfasfasfa  a asd ad as das d as d as d as d as d asdasrrrrrrrrrrst',
+  //     startTime: '0/0/2000',
+  //     endTime: '0/0/2000',
+  //     maxParticipantAmount: '5',
+  //     gitHubLink: '1512512522222222222222222222222222',
+  //   },
+  // ];
   return (
     <div className={cx('wrapper')}>
       <div className={cx('project-cointainer')}>
@@ -136,10 +162,10 @@ function Project() {
               In Progress
             </button>
             <button key={4} className={active === '4' ? cx('active') : cx('nav-btn')} id={'4'} onClick={handleClick}>
-              Owner
+              Owned
             </button>
           </div>
-          <Paginate numItems={6} list={projectDropDown} />
+          <Paginate numItems={6} list={project} />
         </div>
       </div>
     </div>

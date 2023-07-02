@@ -16,7 +16,7 @@ function Header() {
     //sessionStorage.setItem('isLogIn', 0);
   }
   const [src, setSrc] = useState();
-  var user = JSON.parse(sessionStorage.getItem('user'));
+  /*var user = JSON.parse(sessionStorage.getItem('user'));
   var userEx = JSON.parse(sessionStorage.getItem('userEx'));
   console.log(user);
   console.log(userEx);
@@ -29,7 +29,7 @@ function Header() {
       //setUser(result);
     };
     fetchApi();
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     const fetchApi = async () => {

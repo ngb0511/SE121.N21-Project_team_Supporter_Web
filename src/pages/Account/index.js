@@ -8,9 +8,18 @@ const cx = classNames.bind(styles);
 
 function Account() {
   const [user, setUser] = useState([]);
+  var accountEx = {
+    accountID: '0',
+    email: '',
+    password: '',
+    permission: '',
+    userID: '',
+    verificationCode: '',
+    isVerified: '',
+  };
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await accountServices.account();
+      const result = await accountServices.getAllAdminAccounts();
       console.log(result);
       setUser(result);
     };
@@ -50,11 +59,48 @@ function Account() {
       </div>
     </div>
   );*/
+
   function handleChange(event) {
     //document.getElementById('form').action = 'Home';
     event.preventDefault();
     //navigate('/Login');
+
+    if (document.getElementById('password').value !== document.getElementById('rePassword').value) {
+      alert('Nhap lai mk');
+      return;
+    }
+    const fetchApi = async () => {
+      const userResult = await accountServices.checkExistedAccount(document.getElementById('email').value);
+      //setUser(userResult);
+      console.log(userResult[0].checkExist);
+
+      if (userResult[0].checkExist === 0) {
+        accountEx.email = document.getElementById('email').value;
+        accountEx.password = document.getElementById('password').value;
+        const accountResult = await accountServices.createAdminAccount(accountEx);
+        console.log(accountResult);
+        alert('Đăng kí thành công');
+        window.location.reload();
+      } else {
+        //console.log('Tài khoản đã tồn tại');
+        alert('Tài khoản đã tồn tại');
+      }
+    };
+    fetchApi();
   }
+
+  function Delete(event, index) {
+    console.log(index);
+    const fetchApi = async () => {
+      const result = await accountServices.deleteAccount(index);
+      //setMajorList(result);
+      console.log(result);
+      alert('Xóa thành công');
+      window.location.reload();
+    };
+    fetchApi();
+  }
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('account-create')}>
@@ -63,7 +109,7 @@ function Account() {
           <br></br>
           <label>Email:</label>
           <br></br>
-          <input id="username"></input>
+          <input id="email"></input>
           <br></br>
           <label>Password:</label>
           <br></br>
@@ -85,84 +131,24 @@ function Account() {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Name</th>
                 <th>Email</th>
-                <th>Phone</th>
-                <th>Password</th>
-                <th>Tool</th>
+                <th>Permission</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Như Tâm</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>
-                  <button className={cx('delete')}>Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Như Tâm</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>
-                  <button className={cx('delete')}>Delete</button>
-                </td>
-              </tr>{' '}
-              <tr>
-                <td>3</td>
-                <td>Như Tâm</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>
-                  <button className={cx('delete')}>Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Như Tâm</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>
-                  <button className={cx('delete')}>Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Như Tâm</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>
-                  <button className={cx('delete')}>Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>Như Tâm</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>
-                  <button className={cx('delete')}>Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td>Như Tâm</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>18/09/2002</td>
-                <td>
-                  <button className={cx('delete')}>Delete</button>
-                </td>
-              </tr>
+              {user.map((option, index) => (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{option.email}</td>
+                  <td>{option.permission}</td>
+                  <td>
+                    <button className={cx('delete')} onClick={(event) => Delete(event, option.accountID)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

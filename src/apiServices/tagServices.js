@@ -10,3 +10,14 @@ export const createMajor = async (major) => {
   console.log(major);
   return response.data;
 };
+
+export const deleteMajor = async (id) => {
+  const response = await request.delete(`/major/deleteMajor/${id}`);
+  return response.data;
+};
+
+export const checkExistedMajor = async (major) => {
+  const response = await request.post('/major/checkExistedMajor', major);
+  console.log(major);
+  return response.data;
+};

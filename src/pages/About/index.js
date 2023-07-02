@@ -58,7 +58,7 @@ function About() {
       </div>
       <div className={cx('banner4')}>
         <div className={cx('text-cointainer')}>
-          <h1>Become a part of Upwork</h1>
+          <h1>Become a part of Citros</h1>
           <div>
             <button>Join now</button> <a href="/Home">Contact Us </a>
           </div>
