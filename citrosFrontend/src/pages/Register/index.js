@@ -247,7 +247,7 @@ function Register() {
         <div>
           <input id="showPass" type="checkbox" onClick={ShowPass}></input> &nbsp; <p>Show password</p>
         </div>
-
+        <br></br>
         <label>Code:</label>
         <br></br>
         <div className={cx('code-cointainer')}>
@@ -255,18 +255,11 @@ function Register() {
           <button onClick={signUp}>Send</button>
         </div>
         <br></br>
-        <div className={cx('check-cointainer')}>
-          <input type="checkbox"></input>
-          <p>
-            Yes, I understand and agree to the Upwork Terms of Service , including the User Agreement and Privacy Policy
-          </p>
-        </div>
         <br></br>
         <br></br>
         <button onClick={createUser}>Create my account</button>
       </form>
       <br></br>
-
       <div className={cx('login')}>
         <p>
           <hr></hr>Already have account? <hr></hr>

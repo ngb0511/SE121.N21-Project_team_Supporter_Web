@@ -97,6 +97,10 @@ const EditTask = (props) => {
 
   const confirm = () => {
     Create();
+    if (Date.parse(document.getElementById('startTime').value) > Date.parse(document.getElementById('endTime').value)) {
+      alert('Ngày kết thúc dự kiến không thể trước ngày tạo dự án');
+      return;
+    }
     const fetchApi = async () => {
       const result = await taskServices.updateTask(progress[0].progressID, project);
       console.log(result);

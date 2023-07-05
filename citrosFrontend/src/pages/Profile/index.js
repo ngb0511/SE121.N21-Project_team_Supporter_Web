@@ -99,7 +99,7 @@ function Profile() {
   const [test, setTest] = useState(
     'https://t3.ftcdn.net/jpg/03/16/55/44/360_F_316554461_QQ1RVxQgIBIYRa3tq4Sm3Ss1mA7xXUoo.jpg',
   );
-  const [link, setLink] = useState('http://localhost:3002/files/Bai1_2_TienXuLyDuLieu_Final-converted.pdf');
+  const [link, setLink] = useState('http://localhost:3002/files/Quy_che_Dao_tao_theo_tin_chi_UIT_p1.pdf');
   var userEx = JSON.parse(sessionStorage.getItem('userLogin'));
   //var account = JSON.parse(sessionStorage.getItem('user'));
   var name; //= account.userName;
@@ -374,10 +374,11 @@ function Profile() {
                   <input
                     id={cx('phoneNumber')}
                     className={cx('general-input')}
+                    type="number"
                     defaultValue={users[0].phoneNumber}
                   ></input>
                 ) : (
-                  <input id={cx('phoneNumber')} className={cx('general-input')}></input>
+                  <input id={cx('phoneNumber')} className={cx('general-input')} type="number"></input>
                 )}
               </li>
             </ul>
@@ -385,9 +386,14 @@ function Profile() {
               <li className={cx('general-item')}>
                 <h4 className={cx('tittle')}>CMND:</h4>
                 {users.length > 0 ? (
-                  <input id={cx('idNumber')} className={cx('general-input')} defaultValue={users[0].idNumber}></input>
+                  <input
+                    id={cx('idNumber')}
+                    className={cx('general-input')}
+                    type="number"
+                    defaultValue={users[0].idNumber}
+                  ></input>
                 ) : (
-                  <input id={cx('idNumber')} className={cx('general-input')}></input>
+                  <input id={cx('idNumber')} className={cx('general-input')} type="number"></input>
                 )}
               </li>
               <li className={cx('general-item')}>
@@ -440,9 +446,14 @@ function Profile() {
               <li className={cx('job-item')}>
                 <h4 className={cx('tittle')}>Số năm kinh nghiệm:</h4>
                 {users.length > 0 ? (
-                  <input id={cx('experience')} className={cx('job-input')} defaultValue={users[0].experience}></input>
+                  <input
+                    id={cx('experience')}
+                    className={cx('job-input')}
+                    type="number"
+                    defaultValue={users[0].experience}
+                  ></input>
                 ) : (
-                  <input id={cx('experience')} className={cx('job-input')}></input>
+                  <input id={cx('experience')} className={cx('job-input')} type="number"></input>
                 )}
               </li>
             </ul>

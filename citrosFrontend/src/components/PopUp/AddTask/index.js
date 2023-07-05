@@ -74,7 +74,10 @@ const AddTask = (props) => {
 
   const confirm = () => {
     Create();
-
+    if (Date.parse(document.getElementById('startTime').value) > Date.parse(document.getElementById('endTime').value)) {
+      alert('Ngày kết thúc dự kiến không thể trước ngày tạo dự án');
+      return;
+    }
     const fetchApi = async () => {
       console.log(props.id);
       var newId = Number(props.id);

@@ -246,7 +246,7 @@ function Admin() {
           <button onClick={projectView}>View</button>
           <h1>{userNum}</h1>
           <h3>User Created</h3>
-          <p>Data count to day {new Date().toLocaleDateString()}</p>
+          <p>Data count to day {dateFormat(new Date().toLocaleDateString(), 'yyyy-mm-dd')}</p>
         </div>
       </div>
       <div className={cx('account-conintainer')}>

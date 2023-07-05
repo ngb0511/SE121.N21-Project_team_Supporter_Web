@@ -65,7 +65,7 @@ function Login() {
 
       //setUser(userResult);
       if (userResult[0].checkExist === 0) {
-        setText('Tai khoan co ton tai deo dau');
+        setText('Tài khoản không tồn tại');
         setIsError(!isError);
         //alert('Tai khoan co ton tai deo dau');
       } else {
@@ -75,7 +75,7 @@ function Login() {
         const passResult = await accountServices.checkAccount(account);
         console.log(passResult);
         if (passResult === false) {
-          alert('Mat khau co dung deo dau');
+          alert('Mật khẩu không chính xác');
         } else {
           sessionStorage.setItem('isLogIn', 1);
           const accountLogin = await accountServices.getAccountSortedByEmail(document.getElementById('username').value);
@@ -88,6 +88,7 @@ function Login() {
             //console.log(userEx);
             sessionStorage.setItem('admin', 1);
             sessionStorage.setItem('userLogin', JSON.stringify(userEx));
+            alert('Đăng nhập thành công');
             navigate('/Admin');
           } else {
             const userLogin = await userServices.getUserDetailByID(accountLogin[0].userID);
@@ -97,6 +98,7 @@ function Login() {
             console.log(userEx);
             sessionStorage.setItem('userLogin', JSON.stringify(userEx));
             //var newOject = JSON.parse(sessionStorage.getItem('userLogin'));
+            alert('Đăng nhập thành công');
             //console.log(newOject);
             navigate('/Home');
           }

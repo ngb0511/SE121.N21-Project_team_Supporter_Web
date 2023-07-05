@@ -6,10 +6,6 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 const Error = (props) => {
-  var text = '';
-  if (props.text == null) {
-    text = 'Vui lòng nhập đầy đủ thông tin';
-  } else text = props.text;
   return (
     <div className={cx('popup-box')}>
       <div className={cx('box')}>
@@ -23,7 +19,7 @@ const Error = (props) => {
           </div>
           <h1>Lỗi</h1>
           <br></br>
-          <p>{text}</p>
+          <p>Vui lòng nhập đầy đủ thông tin</p>
           <div>
             <button id={cx('cancel')} onClick={props.handleClose}>
               Thoát

@@ -7,7 +7,7 @@ function Footer() {
   return (
     <footer className={cx('wrapper')}>
       <div className={cx('inner')}>
-        <p>© 2015 - 2023 Citrus® Global Inc. • Privacy Policy</p>
+        <p>© 2015 - 2023 wIBu® Global Inc. • Privacy Policy</p>
       </div>
     </footer>
   );
