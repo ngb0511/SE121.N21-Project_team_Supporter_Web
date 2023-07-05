@@ -1,0 +1,72 @@
+.popup-box {
+  position: fixed;
+  background: #00000050;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.box {
+  position: relative;
+  width: 50%;
+  margin: 0 auto;
+  height: auto;
+  max-height: 70vh;
+  margin-top: calc(120vh - 85vh - 20px);
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  border: 1px solid #999;
+  overflow: auto;
+  display: flex;
+}
+
+.close-icon {
+  content: 'x';
+  cursor: pointer;
+  position: fixed;
+  right: calc(25% - 30px);
+  top: calc(120vh - 85vh - 33px);
+  background: #ededed;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid #999;
+  font-size: 20px;
+}
+
+.content {
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
+  div {
+    height: 40%;
+    font-size: 5rem;
+    color: blue;
+    padding: 10px;
+    button {
+      padding: 20px;
+      font-size: 1.4rem;
+      height: 60px;
+      width: 120px;
+      margin-left: 5px;
+      margin-right: 5px;
+      text-align: center;
+      border-radius: 15px;
+      font-weight: 500;
+    }
+  }
+}
+
+#cancel {
+  background-color: #ffffff;
+  border: 3px blue solid;
+  color: blue;
+}

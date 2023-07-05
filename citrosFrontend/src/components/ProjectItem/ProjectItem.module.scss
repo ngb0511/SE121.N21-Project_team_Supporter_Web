@@ -1,0 +1,72 @@
+.wrapper {
+  padding: 15px;
+  padding-top: 1px;
+  border-bottom: 1px solid #a5a8a5;
+  width: 100%;
+
+  h2 {
+    //margin-left: 6px;
+    padding: 0px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+    color: #108a00;
+  }
+  div {
+    span {
+      margin-left: 11px;
+
+      //padding: 2px;
+      background-color: transparent;
+      color: #696b69;
+    }
+    padding-left: 10px;
+    padding-top: 20px;
+    margin-top: 6px;
+    font-size: 1.3rem;
+    color: #696b69;
+  }
+  p {
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 1.8rem;
+    height: 120px;
+  }
+  span {
+    //width: 100px;
+    //margin-left: 20px;
+    margin-bottom: 50px;
+    padding: 10px;
+    margin-left: 10px;
+    color: #efefefef;
+    background-color: rgb(103, 107, 107);
+    border-radius: 25px;
+  }
+}
+
+/*.project-name {
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 70%;
+  border-bottom: #373b44 dotted 1px;
+  h5{
+    margin-bottom: 5px;
+  }
+}
+
+.detail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-bottom: 25px;
+}
+.project-fee {
+  margin-left: 5px;
+  margin-top: 5px;
+  height: 30%;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+}*/

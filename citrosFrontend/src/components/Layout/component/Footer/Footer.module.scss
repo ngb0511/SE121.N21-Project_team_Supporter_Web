@@ -1,0 +1,20 @@
+.wrapper {
+  height: 120px;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.inner {
+  height: 95%;
+  width: auto;
+  margin-left: 24px;
+  margin-right: 24px;
+  background-color: #4285f4;
+  border-radius: 15px;
+  display: flex;
+  p {
+    margin: auto;
+    font-size: 1.3rem;
+    color: #ffffff;
+  }
+}

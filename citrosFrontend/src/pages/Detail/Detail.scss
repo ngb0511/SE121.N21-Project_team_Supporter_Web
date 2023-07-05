@@ -1,0 +1,87 @@
+.wrapper {
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.header {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  h2 {
+    width: 95%;
+    background-color: #ffffff;
+    margin: auto;
+    padding: 20px;
+    border-radius: 15px;
+  }
+}
+
+.context {
+  width: 100%;
+  min-height: 1000px;
+  ul {
+    width: 96%;
+    height: 95%;
+    margin: auto;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    li {
+      height: 100%;
+      border-radius: 15px;
+
+      h2 {
+        margin-bottom: 15px;
+      }
+      table {
+        border-radius: 15px;
+        background-color: #ffffff;
+        width: 96%;
+        margin: auto;
+      }
+
+      th {
+        height: 50px;
+        border-bottom: 1px solid #efefefef;
+        border-left: 1px solid #efefefef;
+        text-align: center;
+        font-size: 1.4rem;
+      }
+
+      td {
+        height: 50px;
+        font-size: 1.2rem;
+        text-align: center;
+        button {
+          height: 20px;
+          width: 20px;
+        }
+      }
+    }
+  }
+}
+#stt {
+  width: 5%;
+  border-left: none;
+}
+
+#name {
+  width: 25%;
+}
+
+#date,
+#progress,
+#status,
+#member {
+  width: 15%;
+}
+.context-work {
+  width: 74%;
+}
+
+.context-member {
+  width: 25%;
+}

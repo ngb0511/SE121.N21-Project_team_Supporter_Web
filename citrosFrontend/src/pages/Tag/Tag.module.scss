@@ -1,0 +1,131 @@
+.wrapper {
+  height: 100%;
+  width: 100%;
+  border-radius: 15px;
+  display: flex;
+}
+
+.inner {
+  height: 1000px;
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.header {
+  margin-top: 50px;
+  height: 30%;
+  width: 100%;
+  border: 1px solid black;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-tittle {
+  padding: 0;
+  margin-top: -15px;
+  margin-left: 10px;
+  width: 15%;
+  background-color: #fff;
+}
+
+.header-input {
+  margin: auto;
+  margin-top: 30px;
+  height: 90%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  button {
+    width: 20%;
+    margin-bottom: 15px;
+    margin-left: 80%;
+    height: 20%;
+    background-color: #4164e3;
+    font-size: 1.6rem;
+    font-weight: 600;
+    align-items: center;
+    border-radius: 15px;
+    color: #ffffff;
+  }
+}
+
+.header-input-name {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  input {
+    width: 80%;
+    font-size: 1.6rem;
+  }
+}
+
+.header-input-detail {
+  display: flex;
+  justify-content: space-between;
+  height: 80%;
+  textarea {
+    width: 80%;
+    height: 80%;
+    font-size: 1.6rem;
+  }
+}
+
+.cointainer {
+  margin-top: 20px;
+  height: 60%;
+  width: 100%;
+  h2 {
+    margin-bottom: 15px;
+  }
+  .wrapper-table {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: fit-content;
+    text-align: center;
+  }
+  table tbody tr:nth-child(even) {
+    background-color: #40513b14;
+  }
+  td,
+  th {
+    width: 300px;
+    padding: 15px 10px;
+    font-size: 1.6rem;
+    color: #675d50;
+    button {
+      height: 40px;
+      width: 100px;
+      color: #ffffff;
+      border: 1px solid #fff;
+      font-size: 1.4rem;
+    }
+    .delete {
+      background-color: #ee3507;
+      font-weight: 600;
+    }
+  }
+  th {
+    cursor: pointer;
+  }
+  th,
+  tbody {
+    border-bottom: 3px solid #40513b;
+  }
+
+  @media (max-width: 280px) {
+    .slider-container-content {
+      display: block;
+    }
+    .input-container {
+      margin: 2rem 0;
+    }
+  }
+}

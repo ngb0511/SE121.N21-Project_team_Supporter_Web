@@ -1,0 +1,28 @@
+.wrapper {
+  min-height: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cointainer {
+  margin-top: 50px;
+  margin-bottom: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  min-height: 750px;
+}
+
+.content {
+  min-height: 100%;
+  border-radius: 15px;
+  width: 100%;
+  padding: 10px;
+  padding-left: 1px;
+  //margin-top: 0px;
+  margin-bottom: 10px;
+  //margin-top: 100px;
+  //align-items: center;
+  display: flex;
+  //background-color: #efefefef;
+}

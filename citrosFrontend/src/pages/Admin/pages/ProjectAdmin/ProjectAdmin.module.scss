@@ -1,0 +1,114 @@
+.wrapper {
+  min-height: 100%;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  //border-radius: 15px;
+  //display: flex;
+  //flex-direction: column;
+}
+
+.project-cointainer {
+  width: 900px;
+}
+
+.banner {
+  width: 100%;
+  height: 230px;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  border: 1px solid #1f57c3;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url('/assets/images/background-anime-4k.jpg');
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  padding-left: 50px;
+  h1,
+  p {
+    width: 50%;
+    word-wrap: break-word;
+    color: #ffffff;
+    text-shadow: 0.1em 0.1em 0.05em #333;
+  }
+  button {
+    height: 30px;
+    width: 100px;
+    background-color: #ffffff;
+    margin-top: 20px;
+    border: 2px solid #95dce0;
+    border-radius: 24px;
+    a {
+      color: #95dce0;
+      font-weight: 700;
+    }
+  }
+}
+
+.work-list {
+  border-radius: 25px;
+  border: 2px solid #a5a8a5;
+  margin-top: 40px;
+  h2,
+  p {
+    padding: 30px;
+    padding-bottom: 10px;
+  }
+}
+
+.nav {
+  overflow: hidden;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-bottom: 1px solid #a5a8a5;
+}
+.active {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 1.8rem;
+  border-bottom: #4164e3 solid 2px;
+  background-color: #ffffff;
+}
+
+.nav-btn {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 1.8rem;
+}
+
+.search-wrapper {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  input {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    border-radius: 15px 0px 0px 15px;
+    border: 2px solid #e6ede6;
+    border-right: none;
+  }
+  button {
+    margin: auto;
+    width: 10%;
+    height: 100%;
+    border-radius: 0px 15px 15px 0px;
+    border: 2px solid #108a00;
+    border-left: none;
+    background-color: #108a00;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
+}

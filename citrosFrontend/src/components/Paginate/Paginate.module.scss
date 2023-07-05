@@ -1,0 +1,25 @@
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px;
+}
+.pagination ul {
+  width: 15%;
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-item,
+.page-link {
+  padding: 2px;
+  cursor: pointer;
+  margin-left: 2px;
+  //color: #108a00;
+}
+
+.active {
+  opacity: 0.5;
+  //color: #108a00;
+}
