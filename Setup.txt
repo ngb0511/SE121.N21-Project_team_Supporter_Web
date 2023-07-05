@@ -1,0 +1,12 @@
+Công cụ cần có: Visual Studio Code (hoặc tương đương), MySQL Workbench (hoặc tương đương), node (khuyến cáo dùng version 16.14.0).
+
+Bước 1: Tạo database 'citrosweb' bằng file 'citrosweb.sql'
+
+Bước 2: Setup Backend
+	+ Sửa biến đường dẫn 'db' trong file 'citrosbackend/src/config/dg-config.js'
+	+ Mở terminal, chạy lệnh 'npm i' để cài đặt môi trường
+	+ Chạy lệnh 'npm start' để chạy backend
+
+Bước 3: Setup Frontend
+	+ Mở terminal, chạy lệnh 'npm i' để cài đặt môi trường
+	+ Chạy lệnh 'npm start' để chạy backend
