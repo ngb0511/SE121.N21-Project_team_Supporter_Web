@@ -5,101 +5,118 @@ SET SQL_SAFE_UPDATES = 0;
 -- **************************************************************************************************************
 -- create table --
 CREATE TABLE ACCOUNT (
-    accountID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,				-- Mã tài khoản
-    email VARCHAR(40),												-- Tên đăng nhập
-    password TEXT,													-- Mật khẩu
+    accountID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(40),
+    password TEXT,
     permission VARCHAR(10),	
-    userID INT,														-- Mã người dùng
-    verificationCode INT,											-- Mã xác thực
-    isVerified BOOL													-- Biến kiểm tra tài khoản đã xác thực
+    userID INT,
+    verificationCode INT,
+    isVerified BOOL
 ) ENGINE=INNODB;
 
 CREATE TABLE USER (
-    userID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,					-- Mã người dùng
-    surname VARCHAR(40),											-- Họ
-    forename VARCHAR(40),											-- Tên
-    gender VARCHAR(10),												-- Giới tính
-    dateOfBirth DATE,												-- Ngày sinh
-    email VARCHAR(40),												-- Email
-    phoneNumber VARCHAR(10),										-- Số điện thoại
-    idNumber VARCHAR(15),											-- CMND/CCCD
-    address VARCHAR(50),											-- Địa chỉ
-    job VARCHAR(40),												-- Nghề nghiệp
-    degree VARCHAR(15),												-- Trình độ/bằng cấp
-    experience INT,													-- Kinh nghiệm
-    majorID INT,													-- Mã chuyên ngành
-    avatar TEXT, 													-- Ảnh đại diện
-    CV TEXT,														-- CV
-    description TEXT												-- Mô tả bản thân
+    userID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    surname VARCHAR(40),
+    forename VARCHAR(40),
+    gender VARCHAR(10),
+    dateOfBirth DATE,
+    email VARCHAR(40),
+    phoneNumber VARCHAR(10),
+    idNumber VARCHAR(15),
+    address VARCHAR(50),
+    job VARCHAR(40),
+    degree VARCHAR(15),
+    experience INT,
+    majorID INT,
+    avatar TEXT,
+    CV TEXT,
+    description TEXT
 ) ENGINE=INNODB;
 
 CREATE TABLE PROJECT (
-    projectID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,				-- Mã dự án
-    projectName VARCHAR(40),										-- Tên dự án
-    projectOwner INT,												-- Mã chủ dự án (Mã người dùng)
-    description TEXT,												-- Mô tả dự án
-    startTime DATE,													-- Thời gian bắt đầu
-    endTime DATE,													-- Thời gian kết thúc	
-    maxParticipantAmount INT,										-- Số người tham gia tối đa
-    gitHubLink TEXT,												-- Link GitHub của đồ án
-    majorID INT,													-- Mã chuyên ngành
+    projectID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    projectName VARCHAR(40),
+    projectOwner INT,
+    description TEXT,
+    startTime DATE,
+    endTime DATE,
+    maxParticipantAmount INT,
+    gitHubLink TEXT,
+    majorID INT,
     projectStatus VARCHAR(20)
 ) ENGINE=INNODB;
 
 CREATE TABLE PARTICIPATE (
-    userID INT,														-- Mã người dùng tham gia dự án
-    projectID INT,													-- Mã dự án
+    userID INT,
+    projectID INT,
     rate INT
 ) ENGINE=INNODB;
 
 CREATE TABLE PROGRESS (
-    progressID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,				-- Mã tiến độ
-    projectID INT,													-- Mã dự án
-    userID INT,														-- Mã thành viên được phân công
-    task VARCHAR(40),												-- Công việc
-    startTime DATE,													-- Thời gian bắt đầu
-    endTime DATE,													-- Thời gian kết thúc
-    taskStatus VARCHAR(40),											-- Trạng thái
-    notice TEXT														-- Ghi chú
+    progressID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    projectID INT,
+    userID INT,
+    task VARCHAR(40),
+    startTime DATE,
+    endTime DATE,
+    taskStatus VARCHAR(40),
+    notice TEXT
 ) ENGINE=INNODB;
 
 CREATE TABLE MAJOR (
-    majorID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,				-- Mã chuyên ngành
-    majorName VARCHAR(40),											-- Tên chuyên ngành
-    description TEXT												-- Mô tả
+    majorID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    majorName VARCHAR(40),
+    description TEXT
 ) ENGINE=INNODB;
 
 -- CREATE TABLE CONTACT_INFO (
---     contactInfoID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,		-- Mã thông tin liên hệ
---     userID INT,													-- Mã người dùng
---     platform VARCHAR(10),										-- Nền tảng (face, gmail, twitter, ...)
---     link TEXT													-- Đường dẫn
+--     contactInfoID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--     userID INT,
+--     platform VARCHAR(10),
+--     link TEXT
 -- ) ENGINE=INNODB;
 
 CREATE TABLE REGISTRANT (
-	registrantID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,			-- Mã ứng tuyển
-    userID INT,														-- Mã người dùng
-	projectID INT,													-- Mã dự án ứng tuyển
-    projectName VARCHAR(40)											-- Tên dự án
+    registrantID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    userID INT,
+    projectID INT,
+    projectName VARCHAR(40)
 ) ENGINE=INNODB;
 
 CREATE TABLE STARREDPROJECT (
-    userID INT,														-- Mã người dùng
-	projectID INT													-- Mã dự án 
+    userID INT,
+    projectID INT
 ) ENGINE=INNODB;
 
 -- CREATE TABLE REPORT (
--- 	reportID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,				-- Mã rp
---     userID INT,													-- Mã người dùng
--- 	projectID INT,													-- Mã dự án
---     reason TEXT													-- Ly do
+-- 	reportID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--     userID INT,
+-- 	projectID INT,
+--     reason TEXT
 -- ) ENGINE=INNODB;
 
 CREATE TABLE PROJECTFILE (
-	fileID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,					-- Mã file
-	projectID INT,													-- Mã dự án
-    file TEXT														-- Đường dẫn file
+    fileID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    projectID INT,
+    file TEXT
 ) ENGINE=INNODB;
+
+-- foreign key --
+-- PARTICIPATE
+ALTER TABLE PARTICIPATE ADD CONSTRAINT PARTICIPATE_PROJECT_FK FOREIGN KEY(projectID) REFERENCES PROJECT(projectID);
+
+-- PROGRESS
+ALTER TABLE PROGRESS ADD CONSTRAINT PROGRESS_PROJECT_FK FOREIGN KEY(projectID) REFERENCES PROJECT(projectID);
+
+-- REGISTRANT
+ALTER TABLE REGISTRANT ADD CONSTRAINT REGISTRANTS_USER_FK FOREIGN KEY(userID) REFERENCES USER(userID);
+ALTER TABLE REGISTRANT ADD CONSTRAINT REGISTRANTS_PROJECT_FK FOREIGN KEY(projectID) REFERENCES PROJECT(projectID);
+
+-- STARREDPROJECT
+ALTER TABLE STARREDPROJECT ADD CONSTRAINT STARREDPROJECT_PROJECT_FK FOREIGN KEY(projectID) REFERENCES PROJECT(projectID);
+
+-- PROJECTFILE
+ALTER TABLE PROJECTFILE ADD CONSTRAINT PROJECTFILE_PROJECT_FK FOREIGN KEY(projectID) REFERENCES PROJECT(projectID);
 
 -- insert MAJOR
 INSERT INTO MAJOR (majorName, description) VALUES ('Web', 'Lập trình web');
